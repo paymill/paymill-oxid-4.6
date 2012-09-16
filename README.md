@@ -1,4 +1,4 @@
-Paymill-Magento
+Paymill module for OXID eShop 4
 ====================
 
 Paymill extension for Oxid (Version 4.6.x). Tested on Community Edition. Supports Azure template.
