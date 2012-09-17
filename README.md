@@ -4,6 +4,10 @@ Paymill extension for Oxid (Version 4.6.x). Tested on Community Edition. Support
 
 # Installation
 
+You have to clone with `--recursive` flag in order to get all required submodules. IMPORTANT: Without submodules the source code will not work!
+
+    git clone --recursive https://github.com/Paymill/Paymill-Oxid.git
+    
 - Merge the content of the Paymill-Oxid-Module directory with your Oxid installation. 
 - Clean your cache and refresh your administration backend.
 - In the main menu goto **Erweiterungen -> Module**
