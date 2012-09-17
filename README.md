@@ -1,15 +1,30 @@
-Paymill module for OXID eShop 4
-====================
+# Paymill module for OXID eShop 4
 
 Paymill extension for Oxid (Version 4.6.x). Tested on Community Edition. Supports Azure template.
 
 # Installation
 
-Merge the content of the copy_this directory with your Oxid installation. Clean your cache and refresh your administration backend. In the main menu click on **Paymill > Konfiguration** and insert your Paymill Test- or Livekeys. Afterwards click on **Speichern**, then on **Installiere Tpl-Blöcke** and finally on **Zahlungsart installieren**. You will then have a new payment method **Kreditkartenzahlung** under **Shopeinstellungen > Zahlungsarten**. 
+- Merge the content of the copy_this directory with your Oxid installation. 
+- Clean your cache and refresh your administration backend.
+- In the main menu goto **Erweiterungen -> Module**
+- Select module "Paymill" and choose **Aktivieren**
+- Reload the admin page
+- In the main menu goto **Paymill -> Konfiguration** 
+- Enter your Paymill Test- or Livekeys and click on **Speichern**
+- Click on **Installiere Tpl-Blöcke** and on **Zahlungsart installieren**
 
-To activate that payment method you may need to assign user groups, countries and shipping methods.
+# Activate Paymill Payment
 
-Additionally go to **Extensions > Modules** and activate the Paymill Module.
+After installation you have a new payment method **Kreditkartenzahlung**. To activate Paymill payment follow these steps:
+
+- In the main menu goto **Shopeinstellungen > Zahlungsarten**
+- Choose **Kreditkartenzahlung**
+- Click on **Benutzergruppen zuordnen** and assign the right user groups
+- Go to tab **Länder**, click on **Länder zuordnen**, and assign the right countries
+- In the main menu goto **Shopeinstellungen > Versandarten**
+- Choose a shipping type (e.g. **Standard**) and go to tab **Zahlungsarten** 
+- Click on **Zahlungsarten zuordnen** and assign **Kreditkartenzahlung**
+- Repeat last 2 steps for other shipping types
 
 # Support for other templates than Azure
 
