@@ -70,7 +70,7 @@
         
         function paymill_resonse_handler(error, result) {
           if (error) {
-            console.log(error.apierror);
+            alert(error.apierror);
           } else {
             console.log(result.token);
             $('#paymill_transaction_token').val(result.token);
