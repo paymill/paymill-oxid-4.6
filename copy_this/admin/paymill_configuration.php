@@ -93,7 +93,7 @@ class paymill_configuration extends Shop_Config
 
   public function uninstallPayments() {
     $oxidPaymentId = 'paymill_credit_card';
-    $sQuery .= 'DELETE FROM `oxpayments` WHERE `OXID` = "' . $oxidPaymentId . '"';
+    $sQuery = 'DELETE FROM `oxpayments` WHERE `OXID` = "' . $oxidPaymentId . '"';
     oxDb::getDb()->Execute($sQuery);
   }
 
