@@ -4,7 +4,7 @@ Paymill extension for Oxid (Version 4.6.x). Tested on Community Edition. Support
 
 # Installation
 
-- Merge the content of the copy_this directory with your Oxid installation. 
+- Merge the content of the Paymill-Oxid-Module directory with your Oxid installation. 
 - Clean your cache and refresh your administration backend.
 - In the main menu goto **Erweiterungen -> Module**
 - Select module "Paymill" and choose **Aktivieren**

@@ -1,0 +1,3 @@
+[submodule "Paymill-Oxid-Module/modules/paymill/lib"]
+	path = Paymill-Oxid-Module/modules/paymill/lib
+	url = git://github.com/Paymill/Paymill-PHP.git
