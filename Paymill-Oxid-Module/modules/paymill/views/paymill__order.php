@@ -154,8 +154,8 @@ class paymill__order extends paymill__order_parent {
     
     public static function logAction($message) {
         $logfile = dirname(dirname(__FILE__)) . '/log.txt';
-        if (is_writable($logfile)) {
-            $handle = fopen($logfile, 'a'); //
+        if (oxConfig::getInstance()->getShopConfVar('paymill_private_key') == "1" && is_writable($logfile)) {
+            $handle = fopen($logfile, 'a');
             fwrite($handle, "[" . date(DATE_RFC822) . "] " . $message . "\n");
             fclose($handle);
         }
