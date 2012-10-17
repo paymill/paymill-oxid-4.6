@@ -64,15 +64,14 @@
     <script type="text/javascript">
       var PAYMILL_PUBLIC_KEY = '[{$oxConfig->getShopConfVar('paymill_public_key')}]';
     </script>
-    <script type="text/javascript" src="https://bridge.paymill.de/"></script>
+    <script type="text/javascript" src="[{$oxConfig->getShopConfVar('paymill_bridge_url')}]"></script>
     <script type="text/javascript">
       (function () {
         
         function paymill_resonse_handler(error, result) {
           if (error) {
-            alert(error.apierror);
+            console.log(error.apierror);
           } else {
-            console.log(result.token);
             $('#paymill_transaction_token').val(result.token);
             $('#payment').get(0).submit();
           }
@@ -114,11 +113,6 @@
           }, paymill_resonse_handler);
           return false;
         }
-
-        var oldWindowOnload = function () {};
-        if (typeof window.onload != 'undefined') {
-          oldWindowOnload = window.onload;
-        }
         
         window.onload = function () {
           var form = document.getElementById('paymill_transaction_token').form;
@@ -134,11 +128,9 @@
               return paymill_handler();
             }
           };
-          
-          oldWindowOnload();
         };
+        
       })();
     </script>
-    
   </dd>
 </dl>

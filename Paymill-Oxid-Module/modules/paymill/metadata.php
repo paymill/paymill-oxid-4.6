@@ -1,5 +1,4 @@
 <?php
-
 $sMetadataVersion = '1.0';
 $aModule = array(
     'id'           => 'paymill',
@@ -17,3 +16,4 @@ $aModule = array(
     'blocks' => array(
     )
 );
+?>

@@ -1,5 +1,4 @@
 <?php
-
 class paymill__payment extends paymill__payment_parent {
     
     /**
@@ -23,3 +22,4 @@ class paymill__payment extends paymill__payment_parent {
         return $parentResult;
     }
 }
+?>

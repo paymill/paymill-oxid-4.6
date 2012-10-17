@@ -1,5 +1,4 @@
 <?php
-
 class paymill_configuration extends Shop_Config
 {
   const PAYMILL_MODULE_NAME = 'paymill';
