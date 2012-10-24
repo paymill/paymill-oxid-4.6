@@ -3,7 +3,7 @@ Paymill-Oxid
 
 Paymill extension for Oxid (Version 4.6.x). Tested on Community Edition. Supports Azure template.
 
-![Paymill creditcard payment form](https://raw.github.com/Paymill/Paymill-Xid/master/Paymill-Oxid-Module/modules/paymill/paymill_form_de.png)
+![Paymill creditcard payment form](https://raw.github.com/Paymill/Paymill-Oxid/master/Paymill-Oxid-Module/modules/paymill/paymill_form_de.png)
 
 # Installation
 
@@ -41,6 +41,8 @@ After installation you have a new payment method **Kreditkartenzahlung**. To act
 # Support for other templates than Azure
 
 Adapt the template structure within the out/azure diretory to your custom theme.
+
+# Error debugging
 
 In case of any errors turn on the debug mode in the Paymill payment method configuration. Open the javascript console in your browser and check what's being logged during the checkout process. Additionally you can check the logfile in modules/paymill/log.txt.
 
