@@ -24,6 +24,8 @@ Afterwards merge the contents of the Paymill-Oxid-Module directory with your Oxi
 - In the main menu goto **Paymill -> Konfiguration** 
 - Enter your Paymill Test- or Livekeys and click on **Speichern**
 - Click on **Installiere Tpl-Blöcke** and on **Zahlungsart installieren**
+- The field **Paymill API URL** should contain https://api.paymill.de/v1/
+- The field **Paymill Bridge URL** should contain https://bridge.paymill.de/v1/
 
 # Activate Paymill Payment
 
@@ -42,11 +44,9 @@ After installation you have a new payment method **Kreditkartenzahlung**. To act
 
 Adapt the template structure within the out/azure diretory to your custom theme.
 
-# Error debugging
+# Error handling
 
 In case of any errors turn on the debug mode in the Paymill payment method configuration. Open the javascript console in your browser and check what's being logged during the checkout process. Additionally you can check the logfile in modules/paymill/log.txt.
-
-Depending on the Paymill API Version you use, select the Paymill-Wrapper version in the configuration.
 
 # Notes about the payment process
 
