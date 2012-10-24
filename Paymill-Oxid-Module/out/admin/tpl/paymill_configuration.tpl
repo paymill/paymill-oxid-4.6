@@ -12,21 +12,64 @@
             <tr>
                 <td valign="top" class="edittext" style="padding:10px;">
                     <table cellspacing="0" cellpadding="5" border="0" class="edittext" style="text-align: left;">
-
+                        
+                        <tr>
+                            <td colspan="2">
+                                [{ oxmultilang ident="PAYMILL_ACCOUNT_HEADER" }] <a href="http://www.paymill.de" target="_blank">Paymill</a>
+                            </td>
+                        </tr>
+                        
                         <tr> 
                             <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_API_URL" }]</td>
                             <td valign="top" class="edittext">
                                 <input type=text class="editinput" style="width:410px" name=confstrs[paymill_api_url] value="[{if $confstrs.paymill_api_url == ""}]https://api.paymill.de/v1/[{else}][{$confstrs.paymill_api_url}][{/if}]" />
                             </td>
                         </tr>
-
+                        
                         <tr> 
                             <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_BRIDGE_URL" }]</td>
                             <td valign="top" class="edittext">
                                 <input type=text class="editinput" style="width:410px" name=confstrs[paymill_bridge_url] value="[{if $confstrs.paymill_bridge_url == ""}]https://bridge.paymill.de/[{else}][{$confstrs.paymill_bridge_url}][{/if}]" />
                             </td>
                         </tr>
+                        
+                        <tr> 
+                            <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_ACCEPTED_CURRENCIES" }]</td>
+                            <td valign="top" class="edittext">
+                                <input type=text class="editinput" style="width:410px" name=confstrs[paymill_accepted_currencies] value="[{if $confstrs.paymill_accepted_currencies == ""}]eur[{else}][{$confstrs.paymill_accepted_currencies}][{/if}]" />
+                            </td>
+                        </tr>
+                        
+                        <tr> 
+                            <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_LIB_VERSION" }]</td>
+                            <td valign="top" class="edittext">
+                                <select name="confstrs[paymill_lib_version]">
+                                    <option value="v1"[{if $confstrs.paymill_lib_version == "v1"}] selected="selected"[{/if}]>V1</option>
+                                    <option value="v2"[{if $confstrs.paymill_lib_version == "v2"}] selected="selected"[{/if}]>V2</option>
+                                </select>
+                            </td>
+                        </tr>
                             
+                        <tr> 
+                            <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_SHOW_LABEL" }]</td>
+                            <td valign="top" class="edittext">
+                                <select name="confstrs[paymill_show_label]">
+                                    <option value="yes"[{if $confstrs.paymill_show_label == "yes" || $confstrs.paymill_show_label == ""}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_YES" }]</option>
+                                    <option value="no"[{if $confstrs.paymill_show_label == "no"}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_NO" }]</option>
+                                </select>
+                            </td>
+                        </tr>
+                        
+                        <tr> 
+                            <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_DEBUG_MODE" }]</td>
+                            <td valign="top" class="edittext">
+                                <select name="confstrs[paymill_debug_mode]">
+                                    <option value="yes"[{if $confstrs.paymill_debug_mode == "yes"}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_YES" }]</option>
+                                    <option value="no"[{if $confstrs.paymill_debug_mode == "no" || $confstrs.paymill_debug_mode == ""}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_NO" }]</option>
+                                </select>
+                            </td>
+                        </tr>
+                        
                         <tr> 
                             <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_PUBLIC_KEY" }]</td>
                             <td valign="top" class="edittext">

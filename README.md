@@ -1,14 +1,22 @@
-# Paymill module for OXID eShop 4
+Paymill-Oxid
+====================
 
 Paymill extension for Oxid (Version 4.6.x). Tested on Community Edition. Supports Azure template.
 
+![Paymill creditcard payment form](https://raw.github.com/Paymill/Paymill-Xid/master/Paymill-Oxid-Module/modules/paymill/paymill_form_de.png)
+
 # Installation
 
-You have to clone with `--recursive` flag in order to get all required submodules. IMPORTANT: Without submodules the source code will not work!
+## Installation from this git repository 
 
-    git clone --recursive https://github.com/Paymill/Paymill-Oxid.git
+Use the following command to clone the complete repository including the submodules:
     
-- Merge the content of the Paymill-Oxid-Module directory with your Oxid installation. 
+    git clone --recursive https://github.com/Paymill/Paymill-Oxid.git
+
+Afterwards merge the contents of the Paymill-Oxid-Module directory with your Oxid installation. 
+
+# Configuration
+
 - Clean your cache and refresh your administration backend.
 - In the main menu goto **Erweiterungen -> Module**
 - Select module "Paymill" and choose **Aktivieren**
@@ -32,4 +40,12 @@ After installation you have a new payment method **Kreditkartenzahlung**. To act
 
 # Support for other templates than Azure
 
-Adapt the template structure within the out/azure diretory to your custom theme. 
+Adapt the template structure within the out/azure diretory to your custom theme.
+
+In case of any errors turn on the debug mode in the Paymill payment method configuration. Open the javascript console in your browser and check what's being logged during the checkout process. Additionally you can check the logfile in modules/paymill/log.txt.
+
+Depending on the Paymill API Version you use, select the Paymill-Wrapper version in the configuration.
+
+# Notes about the payment process
+
+The payment is processed when an order is placed in the shop frontend.

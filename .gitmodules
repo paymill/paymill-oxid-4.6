@@ -1,3 +1,6 @@
-[submodule "Paymill-Oxid-Module/modules/paymill/lib"]
-	path = Paymill-Oxid-Module/modules/paymill/lib
-	url = git://github.com/Paymill/Paymill-PHP.git
+[submodule "Paymill-Oxid-Module/modules/paymill/lib/v1"]
+	path = Paymill-Oxid-Module/modules/paymill/lib/v1
+	url = https://github.com/Paymill/Paymill-PHP.git
+[submodule "Paymill-Oxid-Module/modules/paymill/lib/v2"]
+	path = Paymill-Oxid-Module/modules/paymill/lib/v2
+	url = https://github.com/Paymill/Paymill-v2-PHP.git
