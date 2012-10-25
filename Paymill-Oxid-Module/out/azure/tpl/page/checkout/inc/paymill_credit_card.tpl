@@ -12,7 +12,7 @@
         <ul class="form">
             <li>
                 <img src="[{ $oViewConf->getBaseDir() }]/modules/paymill/icon_mastercard.png" />
-                <!--<img src="[{ $oViewConf->getBaseDir() }]/modules/paymill/icon_visa.png" />-->
+                <img src="[{ $oViewConf->getBaseDir() }]/modules/paymill/icon_visa.png" />
             </li>
             <li>
                 <label>[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]</label>
