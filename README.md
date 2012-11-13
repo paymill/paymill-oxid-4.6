@@ -27,6 +27,13 @@ Afterwards merge the contents of the Paymill-Oxid-Module directory with your Oxi
 - The field **Paymill API URL** should contain https://api.paymill.de/v1/
 - The field **Paymill Bridge URL** should contain https://bridge.paymill.de/
 
+# Migrate to Paymill Wrapper Version V2
+
+- Change the field **Paymill API URL** should contain https://api.paymill.de/v2/
+
+... and set **Paymill Wrapper Version** to **V2** 
+
+
 # Activate Paymill Payment
 
 After installation you have a new payment method **Kreditkartenzahlung**. To activate Paymill payment follow these steps:
