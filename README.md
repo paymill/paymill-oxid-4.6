@@ -25,7 +25,7 @@ Afterwards merge the contents of the Paymill-Oxid-Module directory with your Oxi
 - Enter your Paymill Test- or Livekeys and click on **Speichern**
 - Click on **Installiere Tpl-Blöcke** and on **Zahlungsart installieren**
 - The field **Paymill API URL** should contain https://api.paymill.de/v1/
-- The field **Paymill Bridge URL** should contain https://bridge.paymill.de/v1/
+- The field **Paymill Bridge URL** should contain https://bridge.paymill.de/
 
 # Activate Paymill Payment
 
