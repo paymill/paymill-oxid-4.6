@@ -13,6 +13,10 @@ class paymill__order extends paymill__order_parent {
             return parent::_getNextStep($orderState);    
         }
 
+        if (oxSession::getVar('paymill_transaction_token') == "") {
+            throw new Exception("No transaction code was provided");
+        }
+
         // check if order is paymill order
         if ($order->oxorder__oxpaymenttype->value == "paymill_credit_card") { 
             
@@ -38,7 +42,7 @@ class paymill__order extends paymill__order_parent {
                 'libVersion' => oxConfig::getInstance()->getShopConfVar('paymill_lib_version'),
                 'token' => oxSession::getVar('paymill_transaction_token'),
                 'amount' => $amount,
-                'currency' => 'eur',
+                'currency' => $order->oxorder__oxcurrency->value,
                 'name' => $name,
                 'email' => $order->oxorder__oxbillemail->value,
                 'description' => 'Order ' . $order->oxorder__oxordernr->value . '; ' . $name,

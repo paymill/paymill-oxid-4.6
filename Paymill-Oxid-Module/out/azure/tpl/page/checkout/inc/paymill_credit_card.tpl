@@ -1,5 +1,4 @@
 [{assign var="oxConfig" value=$oView->getConfig()}]
-
 <link rel="stylesheet" type="text/css" href="[{ $oViewConf->getBaseDir() }]/modules/paymill/paymill_styles.css" />
 
 <dl>
@@ -131,7 +130,13 @@
                         exp_month: $('#paymill_exp_month').val(), 
                         exp_year: $('#paymill_exp_year').val(), 
                         cvc: $('#paymill_cvc').val(), 
-                        cardholder: $('#paymill_card_holder').val() 
+                        amount: [{php}]
+                            $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
+                            $amount = number_format($amount, 2, '.', '');
+                            print $amount;
+                        [{/php}],
+                        cardholdername: $('#paymill_card_holder').val(),
+                        currency: '[{$currency->name}]' 
                         }, paymill_resonse_handler
                     );
                     return false;
