@@ -19,7 +19,6 @@ $aLang = array(
     'PAYMILL_SHOW_LABEL' => 'Paymill Label anzeigen',
     'PAYMILL_YES' => 'Ja',
     'PAYMILL_NO' => 'Nein',
-    'PAYMILL_ACCEPTED_CURRENCIES' => 'Erlaubte W&auml;hrungen f&uuml;r Paymill (Komma-getrennt, z.B. eur,usd)',
     'PAYMILL_DEBUG_MODE' => 'Debug modus aktivieren (Log-Ausgaben in der Browser-Konsole)',
     'PAYMILL_ACCOUNT_HEADER' => 'Hier einen Paymill Konto anlegen: '
 );

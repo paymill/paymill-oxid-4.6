@@ -34,17 +34,9 @@
                         </tr>
                         
                         <tr> 
-                            <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_ACCEPTED_CURRENCIES" }]</td>
-                            <td valign="top" class="edittext">
-                                <input type=text class="editinput" style="width:410px" name=confstrs[paymill_accepted_currencies] value="[{if $confstrs.paymill_accepted_currencies == ""}]eur[{else}][{$confstrs.paymill_accepted_currencies}][{/if}]" />
-                            </td>
-                        </tr>
-                        
-                        <tr> 
                             <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_LIB_VERSION" }]</td>
                             <td valign="top" class="edittext">
                                 <select name="confstrs[paymill_lib_version]">
-                                    <option value="v1"[{if $confstrs.paymill_lib_version == "v1"}] selected="selected"[{/if}]>V1</option>
                                     <option value="v2"[{if $confstrs.paymill_lib_version == "v2"}] selected="selected"[{/if}]>V2</option>
                                 </select>
                             </td>
@@ -56,16 +48,6 @@
                                 <select name="confstrs[paymill_show_label]">
                                     <option value="yes"[{if $confstrs.paymill_show_label == "yes" || $confstrs.paymill_show_label == ""}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_YES" }]</option>
                                     <option value="no"[{if $confstrs.paymill_show_label == "no"}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_NO" }]</option>
-                                </select>
-                            </td>
-                        </tr>
-                        
-                        <tr> 
-                            <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_DEBUG_MODE" }]</td>
-                            <td valign="top" class="edittext">
-                                <select name="confstrs[paymill_debug_mode]">
-                                    <option value="yes"[{if $confstrs.paymill_debug_mode == "yes"}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_YES" }]</option>
-                                    <option value="no"[{if $confstrs.paymill_debug_mode == "no" || $confstrs.paymill_debug_mode == ""}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_NO" }]</option>
                                 </select>
                             </td>
                         </tr>
@@ -90,6 +72,16 @@
                                 <input type=text class="editinput" style="width:410px" name=confstrs[paymill_logging] value="[{if $confstrs.paymill_logging == ""}]0[{else}][{$confstrs.paymill_logging}][{/if}]" />
                             </td>
                         </tr>
+
+                        <tr> 
+                            <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_DEBUG_MODE" }]</td>
+                            <td valign="top" class="edittext">
+                                <select name="confstrs[paymill_debug_mode]">
+                                    <option value="yes"[{if $confstrs.paymill_debug_mode == "yes"}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_YES" }]</option>
+                                    <option value="no"[{if $confstrs.paymill_debug_mode == "no" || $confstrs.paymill_debug_mode == ""}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_NO" }]</option>
+                                </select>
+                            </td>
+                        </tr>
                         
                         <tr> 
                             <td valign="top" class="edittext" width="250" nowrap=""></td>
@@ -105,7 +97,6 @@
                                 <input type="button" value="[{ oxmultilang ident="PAYMILL_INSTALL_PAYMENTS" }]" onclick="window.location.href='[{$oViewConf->getSelfLink()}]cl=paymill_configuration&fnc=installPayments';" />          
                             </td>
                         </tr>
-
 
                     </table>
                 </td>
