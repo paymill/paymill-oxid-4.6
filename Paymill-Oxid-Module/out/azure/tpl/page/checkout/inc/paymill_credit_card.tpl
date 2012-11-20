@@ -130,11 +130,11 @@
                         exp_month: $('#paymill_exp_month').val(), 
                         exp_year: $('#paymill_exp_year').val(), 
                         cvc: $('#paymill_cvc').val(), 
-                        amount: [{php}]
+                        amount: '[{php}]
                             $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
                             $amount = number_format($amount, 2, '.', '');
                             print $amount;
-                        [{/php}],
+                        [{/php}]',
                         cardholdername: $('#paymill_card_holder').val(),
                         currency: '[{$currency->name}]' 
                         }, paymill_resonse_handler
