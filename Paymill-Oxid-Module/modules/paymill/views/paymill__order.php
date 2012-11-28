@@ -45,7 +45,7 @@ class paymill__order extends paymill__order_parent {
                 'libVersion' => oxConfig::getInstance()->getShopConfVar('paymill_lib_version'),
                 'token' => oxSession::getVar('paymill_transaction_token'),
                 'amount' => $amount,
-                'currency' => $order->oxorder__oxcurrency->value,
+                'currency' => strtoupper($order->oxorder__oxcurrency->value),
                 'name' => $name,
                 'email' => $order->oxorder__oxbillemail->value,
                 'description' => 'Order ' . $order->oxorder__oxordernr->value . '; ' . $name,
@@ -76,9 +76,6 @@ class paymill__order extends paymill__order_parent {
         
         // setup the logger
         $logger = $params['loggerCallback'];
-               
-        // reformat paramters
-        $params['currency'] = strtolower($params['currency']);
         
         // setup client params
         $clientParams = array(
