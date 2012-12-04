@@ -13,12 +13,8 @@ class paymill__order extends paymill__order_parent {
             return parent::_getNextStep($orderState);    
         }
 
-        if (oxSession::getVar('paymill_transaction_token') == "") {
-            throw new Exception("No transaction code was provided");
-        }
-
         // check if order is paymill order
-        if ($order->oxorder__oxpaymenttype->value == "paymill_credit_card") { 
+        if ($order->oxorder__oxpaymenttype->value == "paymill_credit_card" || $order->oxorder__oxpaymenttype->value == "paymill_elv" ) { 
             
             // build amount
             $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
@@ -27,7 +23,6 @@ class paymill__order extends paymill__order_parent {
             
             // build name
             $name = $order->oxorder__oxbilllname->value . ', ' . $order->oxorder__oxbillfname->value;
-            
 
             // seems unnecessary but for v3,v4 etc. this should sty here
             $paymillLibraryVersion = oxConfig::getInstance()->getShopConfVar('paymill_lib_version');
@@ -39,11 +34,22 @@ class paymill__order extends paymill__order_parent {
                 $libBase = getShopBasePath(). 'modules/paymill/lib/v2/lib/';
                 $libVersion = 'v2';
             }
-            
+
+            if (oxSession::getVar('paymill_cc_transaction_token')) {
+                $token = oxSession::getVar('paymill_cc_transaction_token');
+                $type = 'creditcard';
+            } else if (oxSession::getVar('paymill_elv_transaction_token')) {
+                $token = oxSession::getVar('paymill_elv_transaction_token');
+                $type = 'debit';
+            } else {
+                throw new Exception("No transaction code was provided");
+            }
+
             // process the payment
             $result = $this->processPayment(array(
                 'libVersion' => oxConfig::getInstance()->getShopConfVar('paymill_lib_version'),
-                'token' => oxSession::getVar('paymill_transaction_token'),
+                'token' => $token,
+                'type' => $type,
                 'amount' => $amount,
                 'currency' => strtoupper($order->oxorder__oxcurrency->value),
                 'name' => $name,
@@ -76,7 +82,7 @@ class paymill__order extends paymill__order_parent {
         
         // setup the logger
         $logger = $params['loggerCallback'];
-        
+                       
         // setup client params
         $clientParams = array(
             'email' => $params['email'],
@@ -84,9 +90,13 @@ class paymill__order extends paymill__order_parent {
         );
 
         // setup credit card params
-        $creditcardParams = array(
+        $paymentParams = array(
             'token' => $params['token']
         );
+
+        if ($params['type'] == 'debit') {
+            $paymentParams['type'] = 'debit';
+        }
 
         // setup transaction params
         $transactionParams = array(
@@ -105,24 +115,13 @@ class paymill__order extends paymill__order_parent {
         $transactionsObject = new Services_Paymill_Transactions(
             $params['privateKey'], $params['apiUrl']
         );
-        $creditcardsObject = new Services_Paymill_Payments(
+        $paymentsObject = new Services_Paymill_Payments(
             $params['privateKey'], $params['apiUrl']
         );
         
         // perform conection to the Paymill API and trigger the payment
         try {
 
-            // create card
-            $creditcard = $creditcardsObject->create($creditcardParams);
-            if (!isset($creditcard['id'])) {
-                call_user_func_array($logger, array("No creditcard created: " . var_export($creditcard, true)));
-                return false;
-            } else {
-                call_user_func_array($logger, array("Creditcard created: " . $creditcard['id']));
-            }
-
-            // create client
-            $clientParams['creditcard'] = $creditcard['id'];
             $client = $clientsObject->create($clientParams);
             if (!isset($client['id'])) {
                 call_user_func_array($logger, array("No client created" . var_export($client, true)));
@@ -131,9 +130,18 @@ class paymill__order extends paymill__order_parent {
                 call_user_func_array($logger, array("Client created: " . $client['id']));
             }
 
+            // create card
+            $paymentParams['client'] = $client['id'];
+            $payment = $paymentsObject->create($paymentParams);
+            if (!isset($payment['id'])) {
+                call_user_func_array($logger, array("No payment created: " . var_export($payment, true) . " with params " . var_export($paymentParams, true)));
+                return false;
+            } else {
+                call_user_func_array($logger, array("Payment created: " . $payment['id']));
+            }            
+
             // create transaction
-            $transactionParams['client'] = $client['id'];
-            $transactionParams['payment'] = $creditcard['id'];
+            $transactionParams['payment'] = $payment['id'];
             $transaction = $transactionsObject->create($transactionParams);
             if (!isset($transaction['id'])) {
                 call_user_func_array($logger, array("No transaction created" . var_export($transaction, true)));

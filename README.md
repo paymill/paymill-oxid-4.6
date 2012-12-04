@@ -1,7 +1,7 @@
 Paymill-Oxid
 ====================
 
-Paymill extension for Oxid (Version 4.6.x). Tested on Community Edition. Supports Azure template.
+Paymill extension (credit card and direct debit) for Oxid (Version 4.6.x). Tested on Community Edition. Supports Azure template.
 
 ![Paymill creditcard payment form](https://raw.github.com/Paymill/Paymill-Oxid/master/Paymill-Oxid-Module/modules/paymill/paymill_form_de.png)
 
@@ -24,27 +24,20 @@ Afterwards merge the contents of the Paymill-Oxid-Module directory with your Oxi
 - In the main menu goto **Paymill -> Konfiguration** 
 - Enter your Paymill Test- or Livekeys and click on **Speichern**
 - Click on **Installiere Tpl-Blöcke** and on **Zahlungsart installieren**
-- The field **Paymill API URL** should contain https://api.paymill.de/v1/
+- The field **Paymill API URL** should contain https://api.paymill.de/v2/
 - The field **Paymill Bridge URL** should contain https://bridge.paymill.de/
-
-# Migrate to Paymill Wrapper Version V2
-
-- Change the field **Paymill API URL** should contain https://api.paymill.de/v2/
-
-... and set **Paymill Wrapper Version** to **V2** 
-
 
 # Activate Paymill Payment
 
-After installation you have a new payment method **Kreditkartenzahlung**. To activate Paymill payment follow these steps:
+To activate Paymill payment follow these steps:
 
 - In the main menu goto **Shopeinstellungen > Zahlungsarten**
-- Choose **Kreditkartenzahlung**
+- Choose the payment method you want to activate
 - Click on **Benutzergruppen zuordnen** and assign the right user groups
 - Go to tab **Länder**, click on **Länder zuordnen**, and assign the right countries
 - In the main menu goto **Shopeinstellungen > Versandarten**
 - Choose a shipping type (e.g. **Standard**) and go to tab **Zahlungsarten** 
-- Click on **Zahlungsarten zuordnen** and assign **Kreditkartenzahlung**
+- Click on **Zahlungsarten zuordnen** and assign the payment method
 - Repeat last 2 steps for other shipping types
 
 # Support for other templates than Azure

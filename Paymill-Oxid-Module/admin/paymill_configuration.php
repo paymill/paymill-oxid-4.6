@@ -91,8 +91,9 @@ class paymill_configuration extends Shop_Config
   }
 
   public function uninstallPayments() {
-    $oxidPaymentId = 'paymill_credit_card';
-    $sQuery = 'DELETE FROM `oxpayments` WHERE `OXID` = "' . $oxidPaymentId . '"';
+    $sQuery = 'DELETE FROM `oxpayments` WHERE `OXID` = "paymill_credit_card"';
+    oxDb::getDb()->Execute($sQuery);
+    $sQuery = 'DELETE FROM `oxpayments` WHERE `OXID` = "paymill_elv"';
     oxDb::getDb()->Execute($sQuery);
   }
 
@@ -123,6 +124,45 @@ class paymill_configuration extends Shop_Config
     $this->uninstallPayments();
     $this->installModules();
     $oxidPaymentId = 'paymill_credit_card';
+
+    $aLanguageParams = array_values($this->getConfig()->getConfigParam('aLanguageParams'));
+
+    $sQuery = "INSERT INTO `oxpayments` (`OXID`, `OXACTIVE`, `OXTOAMOUNT`, ";
+
+    $queryLanguageColumnNames = '';
+    foreach ($aLanguageParams as $aLanguageParam) {
+      if (!empty($queryLanguageColumnNames)) {
+        $queryLanguageColumnNames .= ", ";
+      }
+      if ($aLanguageParam["baseId"] > 0) {
+        $queryLanguageColumnNames .= "`OXDESC_".$aLanguageParam["baseId"]."` ";
+      } else {
+        $queryLanguageColumnNames .= "`OXDESC` ";
+      }
+    }
+    $sQuery .= $queryLanguageColumnNames;
+
+    $sQuery .= ") VALUES ('" . $oxidPaymentId . "', 1, 1000000, ";
+    
+    $langKey = $this->getLanguageKeyForOxidPaymentId($oxidPaymentId);
+    $oxLang = oxLang::getInstance();
+    
+    $queryLanguageColumnValues = '';
+    foreach ($aLanguageParams as $aLanguageParam) {
+      if (!empty($queryLanguageColumnValues)) {
+        $queryLanguageColumnValues .= ', ';
+      }
+      $queryLanguageColumnValues .= 
+        oxDb::getDb()->quote($oxLang->translateString($langKey, $aLanguageParam['baseId']));
+    }
+    $sQuery .= $queryLanguageColumnValues;
+    
+    $sQuery .= ")";
+    oxDb::getDb()->Execute($sQuery);
+
+
+    // elv
+    $oxidPaymentId = 'paymill_elv';
 
     $aLanguageParams = array_values($this->getConfig()->getConfigParam('aLanguageParams'));
 

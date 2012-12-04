@@ -41,6 +41,26 @@
                                 </select>
                             </td>
                         </tr>
+
+                        <tr> 
+                            <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_CC_ACTIVE" }]</td>
+                            <td valign="top" class="edittext">
+                                <select name="confstrs[paymill_cc_active]">
+                                    <option value="yes"[{if $confstrs.paymill_cc_active == "yes" || $confstrs.paymill_cc_active == ""}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_YES" }]</option>
+                                    <option value="no"[{if $confstrs.paymill_cc_active == "no"}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_NO" }]</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr> 
+                            <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_ELV_ACTIVE" }]</td>
+                            <td valign="top" class="edittext">
+                                <select name="confstrs[paymill_elv_active]">
+                                    <option value="yes"[{if $confstrs.paymill_elv_active == "yes" || $confstrs.paymill_elv_active == ""}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_YES" }]</option>
+                                    <option value="no"[{if $confstrs.paymill_elv_active == "no"}] selected="selected"[{/if}]>[{ oxmultilang ident="PAYMILL_NO" }]</option>
+                                </select>
+                            </td>
+                        </tr>
                             
                         <tr> 
                             <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_SHOW_LABEL" }]</td>

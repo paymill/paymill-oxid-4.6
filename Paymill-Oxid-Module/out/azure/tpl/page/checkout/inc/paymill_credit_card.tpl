@@ -1,6 +1,6 @@
 [{assign var="oxConfig" value=$oView->getConfig()}]
 <link rel="stylesheet" type="text/css" href="[{ $oViewConf->getBaseDir() }]/modules/paymill/paymill_styles.css" />
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <dl>
     <dt>
         <input id="payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]>
@@ -71,30 +71,34 @@
             [{/if}]
         </ul>
         
-        
-        
-        <input type="hidden" id="paymill_transaction_token" name="paymill_transaction_token" value="" />
+        <input type="hidden" id="paymill_cc_transaction_token" name="paymill_cc_transaction_token" value="" />
         <script type="text/javascript">
             var PAYMILL_PUBLIC_KEY = '[{$oxConfig->getShopConfVar('paymill_public_key')}]';
         </script>
         <script type="text/javascript" src="[{$oxConfig->getShopConfVar('paymill_bridge_url')}]"></script>
         <script type="text/javascript">
-            (function () {
+            $(document).ready(function() {
 
-                function paymill_resonse_handler(error, result) {
-                    paymill_debug("Started Paymill response handler");
+                function paymill_cc_select() {
+                    var form = document.getElementById('paymill_cc_transaction_token').form;
+                    form.onsubmit = function() { paymill_cc_handler(); return false; }   
+                }
+
+                function paymill_cc_resonse_handler(error, result) {
+                    paymill_cc_debug("Started Paymill response handler");
                     if (error) {
-                        paymill_debug("API returned error" + error.apierror);
+                        paymill_cc_debug("API returned error" + error.apierror);
                     } else {
-                        paymill_debug("Received token from Paymill API: " + result.token);
-                        $('#paymill_transaction_token').val(result.token);
+                        paymill_cc_debug("Received token from Paymill API: " + result.token);
+                        $('#paymill_cc_transaction_token').val(result.token);
+                        $('#paymill_elv_transaction_token').val("");
                         $('#payment').get(0).submit();
                     }
                 }
 
-                function paymill_handler() {
+                function paymill_cc_handler() {
                 
-                    paymill_debug("Paymill handler triggered");
+                    paymill_cc_debug("Paymill handler triggered");
                 
                     $('#cvcErrors').hide();
                     $('#expErrors').hide();
@@ -123,7 +127,7 @@
                         return false;
                     }
                 
-                    paymill_debug("Validations successful");
+                    paymill_cc_debug("Validations successful");
                 
                     paymill.createToken({
                         number: $('#paymill_card_number').val(), 
@@ -137,34 +141,39 @@
                         [{/php}]',
                         cardholdername: $('#paymill_card_holder').val(),
                         currency: '[{$currency->name}]' 
-                        }, paymill_resonse_handler
+                        }, paymill_cc_resonse_handler
                     );
                     return false;
                 }
                 
-                function paymill_debug(message) {
+                function paymill_cc_debug(message) {
                     if ("[{$oxConfig->getShopConfVar('paymill_debug_mode')}]" == "yes") {
-                        console.log(message);
+                        console.log("[PaymillCC] " + message);
                     }
                 }
 
-                window.onload = function () {
-                    var form = document.getElementById('paymill_transaction_token').form;
+                function paymill_cc_is_paymill_payment() {
                     var radioButton = document.getElementById('payment_[{$sPaymentID}]');
+                    return radioButton.checked;
+                }
 
-                    var oldOnSubmit = function () { return true };
-                    if (typeof form.onsubmit != 'undefined') {
-                        oldOnSubmit = form.onsubmit;
-                    }
+                function paymill_cc_select() {
+                    paymill_cc_debug("Select CC as onSubmit");
+                    var form = document.getElementById('paymill_cc_transaction_token').form;
+                    form.onsubmit = function() { paymill_cc_handler(); return false; }                      
+                } 
 
-                    form.onsubmit = function () {
-                        if (radioButton.checked) {
-                            return paymill_handler();
-                        }
-                    };
-                };
+                if (paymill_cc_is_paymill_payment()) {
+                    paymill_cc_select();
+                }
 
-            })();
+                $('#payment_[{$sPaymentID}]').click(function() {
+                    paymill_cc_select();
+                });
+
+
+
+            });
         </script>
     </dd>
 </dl>
