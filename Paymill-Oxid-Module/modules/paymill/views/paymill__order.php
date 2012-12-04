@@ -19,7 +19,7 @@ class paymill__order extends paymill__order_parent {
             // build amount
             $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
             $amount = number_format($amount, 2, '.', '');
-            $amount = $amount * 100;
+            $amount = round($amount * 100);
             
             // build name
             $name = $order->oxorder__oxbilllname->value . ', ' . $order->oxorder__oxbillfname->value;
@@ -134,6 +134,8 @@ class paymill__order extends paymill__order_parent {
             $paymentParams['client'] = $client['id'];
             $payment = $paymentsObject->create($paymentParams);
             if (!isset($payment['id'])) {
+                print_r($paymentParams);
+                die();
                 call_user_func_array($logger, array("No payment created: " . var_export($payment, true) . " with params " . var_export($paymentParams, true)));
                 return false;
             } else {

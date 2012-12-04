@@ -22,7 +22,7 @@
                         <tr> 
                             <td valign="top" class="edittext" width="250" nowrap="">[{ oxmultilang ident="PAYMILL_API_URL" }]</td>
                             <td valign="top" class="edittext">
-                                <input type=text class="editinput" style="width:410px" name=confstrs[paymill_api_url] value="[{if $confstrs.paymill_api_url == ""}]https://api.paymill.de/v1/[{else}][{$confstrs.paymill_api_url}][{/if}]" />
+                                <input type=text class="editinput" style="width:410px" name=confstrs[paymill_api_url] value="[{if $confstrs.paymill_api_url == ""}]https://api.paymill.de/v2/[{else}][{$confstrs.paymill_api_url}][{/if}]" />
                             </td>
                         </tr>
                         
