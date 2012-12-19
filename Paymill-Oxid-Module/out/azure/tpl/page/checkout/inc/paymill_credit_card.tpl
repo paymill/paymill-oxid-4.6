@@ -167,6 +167,13 @@
                     paymill_cc_select();
                 }
 
+                $('input[name="paymentid"]').click(function(e) {
+                    if ($(this).val() != "paymill_credit_card" && $(this).val() != "paymill_elv") {
+                        var form = document.getElementById('paymill_cc_transaction_token').form;
+                        form.onsubmit = function() {}
+                    }
+                });
+
                 $('#payment_[{$sPaymentID}]').click(function() {
                     paymill_cc_select();
                 });
