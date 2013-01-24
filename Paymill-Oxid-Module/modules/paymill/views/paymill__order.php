@@ -1,37 +1,40 @@
 <?php
-class paymill__order extends paymill__order_parent {
+
+class paymill__order extends paymill__order_parent
+{
 
     /**
      * @overload
      */
-    protected function _getNextStep($orderState) {
+    protected function _getNextStep($orderState)
+    {
 
         $order = oxNew('oxorder');
         $order->load(oxSession::getVar('sess_challenge'));
 
-        if (!$order->isLoaded()) { 
-            return parent::_getNextStep($orderState);    
+        if (!$order->isLoaded()) {
+            return parent::_getNextStep($orderState);
         }
 
         // check if order is paymill order
-        if ($order->oxorder__oxpaymenttype->value == "paymill_credit_card" || $order->oxorder__oxpaymenttype->value == "paymill_elv" ) { 
-            
+        if ($order->oxorder__oxpaymenttype->value == "paymill_credit_card" || $order->oxorder__oxpaymenttype->value == "paymill_elv") {
+
             // build amount
             $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
             $amount = number_format($amount, 2, '.', '');
             $amount = round($amount * 100);
-            
+
             // build name
             $name = $order->oxorder__oxbilllname->value . ', ' . $order->oxorder__oxbillfname->value;
 
             // seems unnecessary but for v3,v4 etc. this should sty here
             $paymillLibraryVersion = oxConfig::getInstance()->getShopConfVar('paymill_lib_version');
             if ($paymillLibraryVersion == "v2") {
-                $libBase = getShopBasePath(). 'modules/paymill/lib/v2/lib/';
+                $libBase = getShopBasePath() . 'modules/paymill/lib/v2/lib/';
                 $libVersion = 'v2';
             } else {
                 // FALLBACK
-                $libBase = getShopBasePath(). 'modules/paymill/lib/v2/lib/';
+                $libBase = getShopBasePath() . 'modules/paymill/lib/v2/lib/';
                 $libVersion = 'v2';
             }
 
@@ -42,7 +45,8 @@ class paymill__order extends paymill__order_parent {
                 $token = oxSession::getVar('paymill_elv_transaction_token');
                 $type = 'debit';
             } else {
-                throw new Exception("No transaction code was provided");
+                $this->getSession()->setVar("paymill_error", "No transaction code was provided");
+                return 'payment';
             }
 
             // process the payment
@@ -59,30 +63,31 @@ class paymill__order extends paymill__order_parent {
                 'privateKey' => oxConfig::getInstance()->getShopConfVar('paymill_private_key'),
                 'apiUrl' => oxConfig::getInstance()->getShopConfVar('paymill_api_url'),
                 'loggerCallback' => array('paymill__order', 'logAction')
-            ));
-            
+                    ));
+
             // finish the order of payment was successfully processed
             if ($result === true) {
-                return parent::_getNextStep($orderState);  
+                return parent::_getNextStep($orderState);
             } else {
-                throw new Exception("Payment could not be processed");
+                $this->getSession()->setVar("paymill_error", "Payment could not be processed");
+                return 'payment';
             }
-            
         } else {
-            return parent::_getNextStep($orderState);  
+            return parent::_getNextStep($orderState);
         }
-    }  
-    
+    }
+
     /**
      * Processes the payment against the paymill API
      * @param $params array The settings array
      * @return boolean
      */
-    private function processPayment($params) {  
-        
+    private function processPayment($params)
+    {
+
         // setup the logger
         $logger = $params['loggerCallback'];
-                       
+
         // setup client params
         $clientParams = array(
             'email' => $params['email'],
@@ -104,21 +109,21 @@ class paymill__order extends paymill__order_parent {
             'currency' => $params['currency'],
             'description' => $params['description']
         );
-                
+
         require_once $params['libBase'] . 'Services/Paymill/Transactions.php';
         require_once $params['libBase'] . 'Services/Paymill/Clients.php';
         require_once $params['libBase'] . 'Services/Paymill/Payments.php';
 
         $clientsObject = new Services_Paymill_Clients(
-            $params['privateKey'], $params['apiUrl']
+                        $params['privateKey'], $params['apiUrl']
         );
         $transactionsObject = new Services_Paymill_Transactions(
-            $params['privateKey'], $params['apiUrl']
+                        $params['privateKey'], $params['apiUrl']
         );
         $paymentsObject = new Services_Paymill_Payments(
-            $params['privateKey'], $params['apiUrl']
+                        $params['privateKey'], $params['apiUrl']
         );
-        
+
         // perform conection to the Paymill API and trigger the payment
         try {
 
@@ -138,7 +143,7 @@ class paymill__order extends paymill__order_parent {
                 return false;
             } else {
                 call_user_func_array($logger, array("Payment (credit card) created: " . $payment['id']));
-            }            
+            }
 
             // create transaction
             $transactionParams['payment'] = $payment['id'];
@@ -169,17 +174,17 @@ class paymill__order extends paymill__order_parent {
                 call_user_func_array($logger, array("Transaction could not be issued."));
                 return false;
             }
-
         } catch (Services_Paymill_Exception $ex) {
             // paymill wrapper threw an exception
             call_user_func_array($logger, array("Exception thrown from paymill wrapper: " . $ex->getMessage()));
             return false;
-        }        
-        
+        }
+
         return true;
     }
-    
-    public static function logAction($message) {
+
+    public static function logAction($message)
+    {
         $logfile = dirname(dirname(__FILE__)) . '/log.txt';
         if (oxConfig::getInstance()->getShopConfVar('paymill_private_key') == "1" && is_writable($logfile)) {
             $handle = fopen($logfile, 'a');
@@ -187,5 +192,5 @@ class paymill__order extends paymill__order_parent {
             fclose($handle);
         }
     }
+
 }
-?>

@@ -14,6 +14,6 @@ $aModule = array(
     'files' => array(
     ),
     'blocks' => array(
+        
     )
 );
-?>

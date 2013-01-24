@@ -71,6 +71,20 @@ class paymill_configuration extends Shop_Config
         "oxfile = 'page/checkout/payment/select_payment'," .
         "oxmodule = " . $oxDb->quote(self::PAYMILL_MODULE_NAME)
       );
+      
+      $id = md5('paymill__checkout_payment_errors' . $shopId);
+      
+      oxDb::getDb()->Execute(
+        'INSERT INTO oxtplblocks SET ' . 
+        "oxid = '$id'," .
+        "oxactive = 1," .
+        "oxshopid = '$shopId'," .
+        "oxtemplate = 'page/checkout/payment.tpl'," .
+        "oxblockname = 'checkout_payment_errors'," .
+        "oxpos = '1'," .
+        "oxfile = 'payment_paymill_error'," .
+        "oxmodule = " . $oxDb->quote(self::PAYMILL_MODULE_NAME)
+      );
     }
   }
 
