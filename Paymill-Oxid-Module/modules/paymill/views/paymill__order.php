@@ -21,7 +21,6 @@ class paymill__order extends paymill__order_parent
 
             // build amount
             $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
-            $amount = number_format($amount, 2, '.', '');
             $amount = round($amount * 100);
 
             // build name
