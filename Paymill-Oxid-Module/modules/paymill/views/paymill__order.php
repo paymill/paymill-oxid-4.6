@@ -6,73 +6,113 @@ class paymill__order extends paymill__order_parent
     /**
      * @overload
      */
-    protected function _getNextStep($orderState)
+    protected function paymillPayment()
     {
 
-        $order = oxNew('oxorder');
-        $order->load(oxSession::getVar('sess_challenge'));
 
-        if (!$order->isLoaded()) {
-            return parent::_getNextStep($orderState);
+        // build amount
+        $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
+        $amount = round($amount * 100);
+
+        // build name
+        $basket = $this->getBasket();
+        $user = $basket->getBasketUser();
+        $name = $user->oxuser__oxlname . ', ' . $user->oxuser__oxfname;
+
+        // seems unnecessary but for v3,v4 etc. this should sty here
+        $paymillLibraryVersion = oxConfig::getInstance()->getShopConfVar('paymill_lib_version');
+        if ($paymillLibraryVersion == "v2") {
+            $libBase = getShopBasePath() . 'modules/paymill/lib/v2/lib/';
+            $libVersion = 'v2';
+        } else {
+            // FALLBACK
+            $libBase = getShopBasePath() . 'modules/paymill/lib/v2/lib/';
+            $libVersion = 'v2';
+        }
+        echo 3;
+        if (oxSession::getVar('paymill_cc_transaction_token')) {
+            $token = oxSession::getVar('paymill_cc_transaction_token');
+            $type = 'creditcard';
+        } else if (oxSession::getVar('paymill_elv_transaction_token')) {
+            $token = oxSession::getVar('paymill_elv_transaction_token');
+            $type = 'debit';
+        } else {
+            $this->getSession()->setVar("paymill_error", "No transaction code was provided");
+            return 'payment';
+        }
+        echo 4;
+        // process the payment
+        $result = $this->processPayment(array(
+            'libVersion' => oxConfig::getInstance()->getShopConfVar('paymill_lib_version'),
+            'token' => $token,
+            'type' => $type,
+            'amount' => $amount,
+            'currency' => strtoupper($basket->getBasketCurrency()->name),
+            'name' => $name,
+            'email' => $user->oxuser__oxusername,
+            'description' => 'Order ' . $basket->getOrderId(). '; ' . $name,
+            'libBase' => $libBase,
+            'privateKey' => oxConfig::getInstance()->getShopConfVar('paymill_private_key'),
+            'apiUrl' => oxConfig::getInstance()->getShopConfVar('paymill_api_url'),
+            'loggerCallback' => array('paymill__order', 'logAction')
+                ));
+        echo 5;
+        return $result === true;
+    }
+
+    public function execute()
+    {
+        if (!in_array($this->getBasket()->getPaymentId(), array("paymill_credit_card", "paymill_elv"))) {
+            return;
         }
 
-        // check if order is paymill order
-        if ($order->oxorder__oxpaymenttype->value == "paymill_credit_card" || $order->oxorder__oxpaymenttype->value == "paymill_elv") {
+        if (!$this->getSession()->checkSessionChallenge()) {
+            return;
+        }
 
-            // build amount
-            $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
-            $amount = round($amount * 100);
+        $myConfig = $this->getConfig();
 
-            // build name
-            $name = $order->oxorder__oxbilllname->value . ', ' . $order->oxorder__oxbillfname->value;
+        if (!oxConfig::getParameter('ord_agb') && $myConfig->getConfigParam('blConfirmAGB')) {
+            $this->_blConfirmAGBError = 1;
+            return;
+        }
 
-            // seems unnecessary but for v3,v4 etc. this should sty here
-            $paymillLibraryVersion = oxConfig::getInstance()->getShopConfVar('paymill_lib_version');
-            if ($paymillLibraryVersion == "v2") {
-                $libBase = getShopBasePath() . 'modules/paymill/lib/v2/lib/';
-                $libVersion = 'v2';
-            } else {
-                // FALLBACK
-                $libBase = getShopBasePath() . 'modules/paymill/lib/v2/lib/';
-                $libVersion = 'v2';
+        // for compatibility reasons for a while. will be removed in future
+        if (oxConfig::getParameter('ord_custinfo') !== null && !oxConfig::getParameter('ord_custinfo') && $this->isConfirmCustInfoActive()) {
+            $this->_blConfirmCustInfoError = 1;
+            return;
+        }
+
+        // additional check if we really really have a user now
+        if (!$oUser = $this->getUser()) {
+            return 'user';
+        }
+
+        // get basket contents
+        $oBasket = $this->getSession()->getBasket();
+        if ($oBasket->getProductsCount()) {
+
+            try {
+                $oOrder = oxNew('oxorder');
+                  if (!$this->paymillPayment()) {
+                    $this->getSession()->setVar("paymill_error", "Payment could not be processed");
+                    return 'payment';
+                }
+                // finalizing ordering process (validating, storing order into DB, executing payment, setting status ...)
+                $iSuccess = $oOrder->finalizeOrder($oBasket, $oUser);
+
+                // performing special actions after user finishes order (assignment to special user groups)
+                $oUser->onOrderExecute($oBasket, $iSuccess);
+
+                // proceeding to next view
+                return $this->_getNextStep($iSuccess);
+            } catch (oxOutOfStockException $oEx) {
+                oxUtilsView::getInstance()->addErrorToDisplay($oEx, false, true, 'basket');
+            } catch (oxNoArticleException $oEx) {
+                oxUtilsView::getInstance()->addErrorToDisplay($oEx);
+            } catch (oxArticleInputException $oEx) {
+                oxUtilsView::getInstance()->addErrorToDisplay($oEx);
             }
-
-            if (oxSession::getVar('paymill_cc_transaction_token')) {
-                $token = oxSession::getVar('paymill_cc_transaction_token');
-                $type = 'creditcard';
-            } else if (oxSession::getVar('paymill_elv_transaction_token')) {
-                $token = oxSession::getVar('paymill_elv_transaction_token');
-                $type = 'debit';
-            } else {
-                $this->getSession()->setVar("paymill_error", "No transaction code was provided");
-                return 'payment';
-            }
-
-            // process the payment
-            $result = $this->processPayment(array(
-                'libVersion' => oxConfig::getInstance()->getShopConfVar('paymill_lib_version'),
-                'token' => $token,
-                'type' => $type,
-                'amount' => $amount,
-                'currency' => strtoupper($order->oxorder__oxcurrency->value),
-                'name' => $name,
-                'email' => $order->oxorder__oxbillemail->value,
-                'description' => 'Order ' . $order->oxorder__oxordernr->value . '; ' . $name,
-                'libBase' => $libBase,
-                'privateKey' => oxConfig::getInstance()->getShopConfVar('paymill_private_key'),
-                'apiUrl' => oxConfig::getInstance()->getShopConfVar('paymill_api_url'),
-                'loggerCallback' => array('paymill__order', 'logAction')
-                    ));
-
-            // finish the order of payment was successfully processed
-            if ($result === true) {
-                return parent::_getNextStep($orderState);
-            } else {
-                $this->getSession()->setVar("paymill_error", "Payment could not be processed");
-                return 'payment';
-            }
-        } else {
-            return parent::_getNextStep($orderState);
         }
     }
 
