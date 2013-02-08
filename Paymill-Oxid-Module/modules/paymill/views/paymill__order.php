@@ -29,7 +29,6 @@ class paymill__order extends paymill__order_parent
             $libBase = getShopBasePath() . 'modules/paymill/lib/v2/lib/';
             $libVersion = 'v2';
         }
-        echo 3;
         if (oxSession::getVar('paymill_cc_transaction_token')) {
             $token = oxSession::getVar('paymill_cc_transaction_token');
             $type = 'creditcard';
@@ -40,7 +39,6 @@ class paymill__order extends paymill__order_parent
             $this->getSession()->setVar("paymill_error", "No transaction code was provided");
             return 'payment';
         }
-        echo 4;
         // process the payment
         $result = $this->processPayment(array(
             'libVersion' => oxConfig::getInstance()->getShopConfVar('paymill_lib_version'),
@@ -50,16 +48,18 @@ class paymill__order extends paymill__order_parent
             'currency' => strtoupper($basket->getBasketCurrency()->name),
             'name' => $name,
             'email' => $user->oxuser__oxusername,
-            'description' => 'Order ' . $basket->getOrderId(). '; ' . $name,
+            'description' => 'Order ' . $basket->getOrderId() . '; ' . $name,
             'libBase' => $libBase,
             'privateKey' => oxConfig::getInstance()->getShopConfVar('paymill_private_key'),
             'apiUrl' => oxConfig::getInstance()->getShopConfVar('paymill_api_url'),
             'loggerCallback' => array('paymill__order', 'logAction')
                 ));
-        echo 5;
         return $result === true;
     }
 
+    /**
+     * @overload
+     */
     public function execute()
     {
         if (!in_array($this->getBasket()->getPaymentId(), array("paymill_credit_card", "paymill_elv"))) {
@@ -94,7 +94,7 @@ class paymill__order extends paymill__order_parent
 
             try {
                 $oOrder = oxNew('oxorder');
-                  if (!$this->paymillPayment()) {
+                if (!$this->paymillPayment()) {
                     $this->getSession()->setVar("paymill_error", "Payment could not be processed");
                     return 'payment';
                 }
