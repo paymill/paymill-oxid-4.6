@@ -29,8 +29,8 @@
                     Bitte geben Sie eine g&uuml;ltige Kontonummer ein.
                 </p>
             </li>
-            
-            
+
+
             <li>
                 <label>Bankleitzahl</label>
                 <input type="text" size="20" maxlength="20" value=""  autocomplete="off" id="paymill_banknumber" />
@@ -44,7 +44,7 @@
             </li>
             [{/if}]
         </ul>
-        
+
         <input type="hidden" id="paymill_elv_transaction_token" name="paymill_elv_transaction_token" value="" />
         <script type="text/javascript">
             var PAYMILL_PUBLIC_KEY = '[{$oxConfig->getShopConfVar('paymill_public_key')}]';
@@ -56,6 +56,7 @@
                 function paymill_elv_resonse_handler(error, result) {
                     paymill_elv_debug("Started Paymill response handler");
                     if (error) {
+                        alert("API returned error" + error.apierror);
                         paymill_elv_debug("API returned error" + error.apierror);
                     } else {
                         paymill_elv_debug("Received token from Paymill API: " + result.token);
@@ -66,9 +67,9 @@
                 }
 
                 function paymill_elv_handler() {
-                
+
                     paymill_elv_debug("Paymill handler triggered");
-                
+
                     $('#banknumberErrors').hide();
                     $('#accountnumberErrors').hide();
                     $('#holderErrors').hide();
@@ -90,18 +91,18 @@
                     if (error) {
                         return false;
                     }
-                
+
                     paymill_elv_debug("Validations successful");
-                
+
                     paymill.createToken({
-                        number: $('#paymill_accountnumber').val(), 
-                        bank: $('#paymill_banknumber').val(), 
+                        number: $('#paymill_accountnumber').val(),
+                        bank: $('#paymill_banknumber').val(),
                         accountholder: $('#paymill_accountholder').val()
                     }, paymill_elv_resonse_handler
                     );
                     return false;
                 }
-                
+
                 function paymill_elv_debug(message) {
                     if ("[{$oxConfig->getShopConfVar('paymill_debug_mode')}]" == "yes") {
                         console.log("[PaymillELV] " + message);
@@ -116,8 +117,8 @@
                 function paymill_elv_select() {
                     paymill_elv_debug("Select ELV as onSubmit");
                     var form = document.getElementById('paymill_elv_transaction_token').form;
-                    form.onsubmit = function() { paymill_elv_handler(); return false; }                      
-                } 
+                    form.onsubmit = function() { paymill_elv_handler(); return false; }
+                }
 
                 if (paymill_elv_is_paymill_payment()) {
                     paymill_elv_select();

@@ -70,7 +70,7 @@
             </li>
             [{/if}]
         </ul>
-        
+
         <input type="hidden" id="paymill_cc_transaction_token" name="paymill_cc_transaction_token" value="" />
         <script type="text/javascript">
             var PAYMILL_PUBLIC_KEY = '[{$oxConfig->getShopConfVar('paymill_public_key')}]';
@@ -81,12 +81,13 @@
 
                 function paymill_cc_select() {
                     var form = document.getElementById('paymill_cc_transaction_token').form;
-                    form.onsubmit = function() { paymill_cc_handler(); return false; }   
+                    form.onsubmit = function() { paymill_cc_handler(); return false; }
                 }
 
                 function paymill_cc_resonse_handler(error, result) {
                     paymill_cc_debug("Started Paymill response handler");
                     if (error) {
+                        alert("API returned error" + error.apierror);
                         paymill_cc_debug("API returned error" + error.apierror);
                     } else {
                         paymill_cc_debug("Received token from Paymill API: " + result.token);
@@ -97,9 +98,9 @@
                 }
 
                 function paymill_cc_handler() {
-                
+
                     paymill_cc_debug("Paymill handler triggered");
-                
+
                     $('#cvcErrors').hide();
                     $('#expErrors').hide();
                     $('#cardErrors').hide();
@@ -126,26 +127,26 @@
                     if (error) {
                         return false;
                     }
-                
+
                     paymill_cc_debug("Validations successful");
-                
+
                     paymill.createToken({
-                        number: $('#paymill_card_number').val(), 
-                        exp_month: $('#paymill_exp_month').val(), 
-                        exp_year: $('#paymill_exp_year').val(), 
-                        cvc: $('#paymill_cvc').val(), 
+                        number: $('#paymill_card_number').val(),
+                        exp_month: $('#paymill_exp_month').val(),
+                        exp_year: $('#paymill_exp_year').val(),
+                        cvc: $('#paymill_cvc').val(),
                         amount_int: '[{php}]
                             $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
                             $amount = round($amount * 100);
                             print $amount;
                         [{/php}]',
                         cardholdername: $('#paymill_card_holder').val(),
-                        currency: '[{$currency->name}]' 
+                        currency: '[{$currency->name}]'
                         }, paymill_cc_resonse_handler
                     );
                     return false;
                 }
-                
+
                 function paymill_cc_debug(message) {
                     if ("[{$oxConfig->getShopConfVar('paymill_debug_mode')}]" == "yes") {
                         console.log("[PaymillCC] " + message);
@@ -160,8 +161,8 @@
                 function paymill_cc_select() {
                     paymill_cc_debug("Select CC as onSubmit");
                     var form = document.getElementById('paymill_cc_transaction_token').form;
-                    form.onsubmit = function() { paymill_cc_handler(); return false; }                      
-                } 
+                    form.onsubmit = function() { paymill_cc_handler(); return false; }
+                }
 
                 if (paymill_cc_is_paymill_payment()) {
                     paymill_cc_select();
