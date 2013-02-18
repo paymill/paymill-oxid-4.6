@@ -62,57 +62,57 @@ class paymill__order extends paymill__order_parent
      */
     public function execute()
     {
-        if (!in_array($this->getBasket()->getPaymentId(), array("paymill_credit_card", "paymill_elv"))) {
-            return;
-        }
-
-        if (!$this->getSession()->checkSessionChallenge()) {
-            return;
-        }
-
-        $myConfig = $this->getConfig();
-
-        if (!oxConfig::getParameter('ord_agb') && $myConfig->getConfigParam('blConfirmAGB')) {
-            $this->_blConfirmAGBError = 1;
-            return;
-        }
-
-        // for compatibility reasons for a while. will be removed in future
-        if (oxConfig::getParameter('ord_custinfo') !== null && !oxConfig::getParameter('ord_custinfo') && $this->isConfirmCustInfoActive()) {
-            $this->_blConfirmCustInfoError = 1;
-            return;
-        }
-
-        // additional check if we really really have a user now
-        if (!$oUser = $this->getUser()) {
-            return 'user';
-        }
-
-        // get basket contents
-        $oBasket = $this->getSession()->getBasket();
-        if ($oBasket->getProductsCount()) {
-
-            try {
-                $oOrder = oxNew('oxorder');
-                if (!$this->paymillPayment()) {
-                    $this->getSession()->setVar("paymill_error", "Payment could not be processed");
-                    return 'payment';
-                }
-                // finalizing ordering process (validating, storing order into DB, executing payment, setting status ...)
-                $iSuccess = $oOrder->finalizeOrder($oBasket, $oUser);
-
-                // performing special actions after user finishes order (assignment to special user groups)
-                $oUser->onOrderExecute($oBasket, $iSuccess);
-
-                // proceeding to next view
-                return $this->_getNextStep($iSuccess);
-            } catch (oxOutOfStockException $oEx) {
-                oxUtilsView::getInstance()->addErrorToDisplay($oEx, false, true, 'basket');
-            } catch (oxNoArticleException $oEx) {
-                oxUtilsView::getInstance()->addErrorToDisplay($oEx);
-            } catch (oxArticleInputException $oEx) {
-                oxUtilsView::getInstance()->addErrorToDisplay($oEx);
+        if (in_array($this->getBasket()->getPaymentId(), array("paymill_credit_card", "paymill_elv"))) {
+            if (!$this->getSession()->checkSessionChallenge()) {
+                return;
             }
+
+            $myConfig = $this->getConfig();
+
+            if (!oxConfig::getParameter('ord_agb') && $myConfig->getConfigParam('blConfirmAGB')) {
+                $this->_blConfirmAGBError = 1;
+                return;
+            }
+
+            // for compatibility reasons for a while. will be removed in future
+            if (oxConfig::getParameter('ord_custinfo') !== null && !oxConfig::getParameter('ord_custinfo') && $this->isConfirmCustInfoActive()) {
+                $this->_blConfirmCustInfoError = 1;
+                return;
+            }
+
+            // additional check if we really really have a user now
+            if (!$oUser = $this->getUser()) {
+                return 'user';
+            }
+
+            // get basket contents
+            $oBasket = $this->getSession()->getBasket();
+            if ($oBasket->getProductsCount()) {
+
+                try {
+                    $oOrder = oxNew('oxorder');
+                    if (!$this->paymillPayment()) {
+                        $this->getSession()->setVar("paymill_error", "Payment could not be processed");
+                        return 'payment';
+                    }
+                    // finalizing ordering process (validating, storing order into DB, executing payment, setting status ...)
+                    $iSuccess = $oOrder->finalizeOrder($oBasket, $oUser);
+
+                    // performing special actions after user finishes order (assignment to special user groups)
+                    $oUser->onOrderExecute($oBasket, $iSuccess);
+
+                    // proceeding to next view
+                    return $this->_getNextStep($iSuccess);
+                } catch (oxOutOfStockException $oEx) {
+                    oxUtilsView::getInstance()->addErrorToDisplay($oEx, false, true, 'basket');
+                } catch (oxNoArticleException $oEx) {
+                    oxUtilsView::getInstance()->addErrorToDisplay($oEx);
+                } catch (oxArticleInputException $oEx) {
+                    oxUtilsView::getInstance()->addErrorToDisplay($oEx);
+                }
+            }
+        } else {
+            return parent::execute();
         }
     }
 
