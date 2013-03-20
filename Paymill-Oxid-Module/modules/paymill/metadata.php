@@ -1,5 +1,5 @@
 <?php
-$sMetadataVersion = '1.5';
+$sMetadataVersion = '1.0';
 $aModule = array(
     'id'           => 'paymill',
     'title'        => 'Paymill',
