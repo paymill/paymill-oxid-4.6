@@ -1,11 +1,11 @@
 <?php
-$sMetadataVersion = '1.4';
+$sMetadataVersion = '1.5';
 $aModule = array(
     'id'           => 'paymill',
     'title'        => 'Paymill',
     'description'  => 'Paymill Payment',
     'thumbnail'    => 'logo.jpeg',
-    'version'      => '1.4',
+    'version'      => '1.5',
     'author'       => 'Paymill GmbH',
     'url'          => 'http://www.paymill.de',
     'email'        => 'support@paymill.de',
@@ -14,6 +14,6 @@ $aModule = array(
     'files' => array(
     ),
     'blocks' => array(
-        
+
     )
 );

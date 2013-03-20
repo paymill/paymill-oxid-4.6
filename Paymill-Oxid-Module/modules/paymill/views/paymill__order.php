@@ -37,7 +37,7 @@ class paymill__order extends paymill__order_parent
             $type = 'debit';
         } else {
             $this->getSession()->setVar("paymill_error", "No transaction code was provided");
-            return 'payment';
+            return false;
         }
         // process the payment
         $result = $this->processPayment(array(
@@ -191,7 +191,7 @@ class paymill__order extends paymill__order_parent
                 call_user_func_array($logger, array("An Error occured: " . var_export($transaction, true)));
                 return false;
             }
-            
+
             if (!isset($transaction['id'])) {
                 call_user_func_array($logger, array("No transaction created" . var_export($transaction, true)));
                 return false;
