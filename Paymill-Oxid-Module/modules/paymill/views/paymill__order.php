@@ -47,7 +47,7 @@ class paymill__order extends paymill__order_parent
             'amount' => $amount,
             'currency' => strtoupper($basket->getBasketCurrency()->name),
             'name' => $name,
-            'email' => $user->oxuser__oxusername,
+            'email' => $user->oxuser__oxusername->rawValue,
             'description' => 'Order ' . $basket->getOrderId() . '; ' . $name,
             'libBase' => $libBase,
             'privateKey' => oxConfig::getInstance()->getShopConfVar('paymill_private_key'),
