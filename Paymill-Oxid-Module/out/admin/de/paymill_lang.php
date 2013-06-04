@@ -18,11 +18,11 @@
 $aLang = array(
     'charset' => 'UTF-8',
     'SHOP_MODULE_GROUP_main'              => 'Paymill',
-    'SHOP_MODULE_privatekey'              => 'Privatekey',
-    'SHOP_MODULE_publickey'               => 'Publickey',
-    'SHOP_MODULE_activate_cc'             => 'Kreditkarte aktivieren',
-    'SHOP_MODULE_activate_elv'            => 'Elektronisches Lastschriftverfahren aktivieren',
-    'SHOP_MODULE_activate_debug'          => 'Debugging aktivieren',
-    'SHOP_MODULE_activate_logging'        => 'Logging aktivieren',
-    'SHOP_MODULE_activate_fastcheckout'   => 'FastCheckout aktivieren',
+    'SHOP_MODULE_PAYMILL_PRIVATEKEY' => 'Privatekey',
+    'SHOP_MODULE_PAYMILL_PUBLICKEY' => 'Publickey',
+    'SHOP_MODULE_PAYMILL_ACTIVATE_ELV' => 'Elektronisches Lastschriftverfahren aktivieren',
+    'SHOP_MODULE_PAYMILL_ACTIVATE_CC' => 'Kreditkarte aktivieren',
+    'SHOP_MODULE_PAYMILL_ACTIVATE_DEBUG' => 'Debugging aktivieren',
+    'SHOP_MODULE_PAYMILL_ACTIVATE_LOGGING' => 'Logging aktivieren',
+    'SHOP_MODULE_PAYMILL_ACTIVATE_FASTCHECKOUT' => 'FastCheckout aktivieren'
 );

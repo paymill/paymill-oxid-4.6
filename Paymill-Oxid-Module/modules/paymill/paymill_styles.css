@@ -1,0 +1,30 @@
+/*
+    Document   : paymill_styles.css
+    Created on : 04.06.2013, 16:43:16
+    Author     : Stefan
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.paymill_powered {
+	border: 1px solid #ccc;
+	width: 300px;
+	padding: 4px;
+	background: white url('icon_paymill.png') no-repeat center right;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+.paymill_powered > .paymill_credits {
+	width: 160px;
+	color: #666;
+}
+.paymill_powered > a {
+	color: #666;
+	text-decoration: underline;
+}
+.payment-errors {
+    color: red;
+    font-weight: bold;
+    border: 1px solid black;
+    padding: 5px;
+}

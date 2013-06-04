@@ -14,15 +14,16 @@ $aModule = array(
     'files' => array(
     ),
     'blocks' => array(
-
+        array('template' => 'page/checkout/payment.tpl', 'block'=>'select_payment', 'file'=>'paymill_select_payment.tpl'),
+        array('template' => 'page/checkout/payment.tpl', 'block'=>'checkout_payment_main', 'file'=>'paymill_select_header.tpl')
     ),
     'settings' => array(
-        array( 'group' => 'main','name' => 'privatekey', 'type' => 'str', 'value' => ''),
-        array( 'group' => 'main','name' => 'publickey', 'type' => 'str', 'value' => ''),
-        array( 'group' => 'main','name' => 'activate_elv', 'type' => 'bool', 'value' => 'false'),
-        array( 'group' => 'main','name' => 'activate_cc', 'type' => 'bool', 'value' => 'false'),
-        array( 'group' => 'main','name' => 'activate_debug', 'type' => 'bool', 'value' => 'false'),
-        array( 'group' => 'main','name' => 'activate_logging', 'type' => 'bool', 'value' => 'false'),
-        array( 'group' => 'main','name' => 'activate_fastcheckout', 'type' => 'bool', 'value' => 'false'),
+        array( 'group' => 'main','name' => 'PAYMILL_PRIVATEKEY', 'type' => 'str', 'value' => ''),
+        array( 'group' => 'main','name' => 'PAYMILL_PUBLICKEY', 'type' => 'str', 'value' => ''),
+        array( 'group' => 'main','name' => 'PAYMILL_ACTIVATE_ELV', 'type' => 'bool', 'value' => 'false'),
+        array( 'group' => 'main','name' => 'PAYMILL_ACTIVATE_CC', 'type' => 'bool', 'value' => 'false'),
+        array( 'group' => 'main','name' => 'PAYMILL_ACTIVATE_DEBUG', 'type' => 'bool', 'value' => 'false'),
+        array( 'group' => 'main','name' => 'PAYMILL_ACTIVATE_LOGGING', 'type' => 'bool', 'value' => 'false'),
+        array( 'group' => 'main','name' => 'PAYMILL_ACTIVATE_FASTCHECKOUT', 'type' => 'bool', 'value' => 'false'),
     )
 );
