@@ -39,39 +39,40 @@ jQuery(document).ready(function ($) {
         } else {
             $(".payment-errors").css("display","none");
             $(".payment-errors").text("");
-            var form = $("#payment");
+            var form = $('form[name="order"]');
             // Token
             var token = result.token;
             // Token in das Formular einfügen damit es an den Server übergeben wird
             form.append("<input type='hidden' name='paymillToken' value='" + token + "'/>");
             form.get(0).submit();
         }
-        $("#paymentNextStepBottom").removeAttr("disabled");
+        $("#test_PaymentNextStepBottom").removeAttr("disabled");
     }
 
-    $("#payment").submit(function (event) {
+    $('form[name="order"]').submit(function (event) {
         // Absenden Button deaktivieren um weitere Klicks zu vermeiden
-        $('#paymentNextStepBottom').attr("disabled", "disabled");
-        paymenttype = $('#payment_paymill_cc').attr('checked') ? 'cc' : $('#payment_paymill_elv').attr('checked') ? 'elv': 'other';
+        $('#test_PaymentNextStepBottom').attr("disabled", "disabled");
+        paymenttype = $('#test_Payment_paymill_cc').attr('checked') ? 'cc' : $('#test_Payment_paymill_elv').attr('checked') ? 'elv': 'other';
+        console.log(paymenttype);
         switch (paymenttype) {
             case "cc":
                 if (false == paymill.validateCardNumber($('.card-number').val())) {
                     $(".payment-errors.cc").text('[{ oxmultilang ident="PAYMILL_VALIDATION_CARDNUMBER" }]');
                     $(".payment-errors.cc").css("display","inline-block");
-                    $("#paymentNextStepBottom").removeAttr("disabled");
+                    $("#test_PaymentNextStepBottom").removeAttr("disabled");
                     return false;
                 }
                 if (false == paymill.validateExpiry($('.card-expiry-month').val(), $('.card-expiry-year').val())) {
                     $(".payment-errors.cc").text('[{ oxmultilang ident="PAYMILL_VALIDATION_EXP" }]');
                     $(".payment-errors.cc").css("display","inline-block");
-                    $("#paymentNextStepBottom").removeAttr("disabled");
+                    $("#test_PaymentNextStepBottom").removeAttr("disabled");
                     return false;
                 }
 
                 if ($('.card-holdername').val() == '') {
                     $(".payment-errors.cc").text('[{ oxmultilang ident="PAYMILL_VALIDATION_CARDHOLDER" }]');
                     $(".payment-errors.cc").css("display","inline-block");
-                    $("#paymentNextStepBottom").removeAttr("disabled");
+                    $("#test_PaymentNextStepBottom").removeAttr("disabled");
                     return false;
                 }
                 var params = {
@@ -88,19 +89,19 @@ jQuery(document).ready(function ($) {
                 if (false == $('.elv-holdername').val()) {
                     $(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]');
                     $(".payment-errors.elv").css("display","inline-block");
-                    $("#paymentNextStepBottom").removeAttr("disabled");
+                    $("#test_PaymentNextStepBottom").removeAttr("disabled");
                     return false;
                 }
                 if (false == paymill.validateAccountNumber($('.elv-account').val())) {
                     $(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTNUMBER" }]');
                     $(".payment-errors.elv").css("display","inline-block");
-                    $("#paymentNextStepBottom").removeAttr("disabled");
+                    $("#test_PaymentNextStepBottom").removeAttr("disabled");
                     return false;
                 }
                 if (false == paymill.validateBankCode($('.elv-bankcode').val())) {
                     $(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_BANKCODE" }]');
                     $(".payment-errors.elv").css("display","inline-block");
-                    $("#paymentNextStepBottom").removeAttr("disabled");
+                    $("#test_PaymentNextStepBottom").removeAttr("disabled");
                     return false;
                 }
                 var params = {
@@ -110,7 +111,7 @@ jQuery(document).ready(function ($) {
                 };
                 break;
              default:
-                 $("#paymentNextStepBottom").removeAttr("disabled");
+                 $("#test_PaymentNextStepBottom").removeAttr("disabled");
                  return true;
                  break;
         }
@@ -119,4 +120,3 @@ jQuery(document).ready(function ($) {
     });
 });
 </script>
-[{$smarty.block.parent}]
