@@ -4,10 +4,11 @@
     <input id="payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]>
     <label for="payment_[{$sPaymentID}]"><b>[{ $paymentmethod->oxpayments__oxdesc->value}]</b></label>
     </dt>
+    [{if ($sPaymentID == 'paymill_cc' && $paymillShowForm_cc) || ($sPaymentID == 'paymill_elv' && $paymillShowForm_elv)}]
     <dd class="[{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]activePayment[{/if}]">
         <ul class="form">
             <li class="controls controls-row">
-                [{if $sPaymentID == 'paymill_cc'}]
+                [{if $sPaymentID == 'paymill_cc' && $paymillShowForm_cc}]
                 <p class="payment-errors cc" style="display:none;"></p>
                 <div id="payment-form-cc">
                     <div class="controls controls-row">
@@ -49,7 +50,7 @@
                         </select>
                     </div>
                 </div>
-                [{elseif $sPaymentID == 'paymill_elv'}]
+                [{elseif $sPaymentID == 'paymill_elv' && $paymillShowForm_elv}]
                 <p class="payment-errors elv" style="display:none;"></p>
                 <div id="payment-form-elv">
                     <div class="controls controls-row">
@@ -69,4 +70,5 @@
             </li>
         </ul>
     </dd>
+    [{/if}]
 </dl>

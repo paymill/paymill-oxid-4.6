@@ -10,12 +10,16 @@ $aModule = array(
     'url'          => 'http://www.paymill.de',
     'email'        => 'support@paymill.de',
     'extend'       => array(
+        'payment' => 'paymill/views/paymill_payment',
+        'order' => 'paymill/views/paymill_order'
     ),
     'files' => array(
+        'PaymentProcessor' => 'paymill/lib/Services/PaymentProcessor.php'
     ),
     'blocks' => array(
         array('template' => 'page/checkout/payment.tpl', 'block'=>'select_payment', 'file'=>'paymill_select_payment.tpl'),
-        array('template' => 'page/checkout/payment.tpl', 'block'=>'checkout_payment_main', 'file'=>'paymill_select_header.tpl')
+        array('template' => 'page/checkout/payment.tpl', 'block'=>'checkout_payment_main', 'file'=>'paymill_select_header.tpl'),
+        array('template' => 'page/checkout/payment.tpl', 'block'=>'checkout_payment_errors', 'file'=>'paymill_select_error.tpl')
     ),
     'settings' => array(
         array( 'group' => 'main','name' => 'PAYMILL_PRIVATEKEY', 'type' => 'str', 'value' => ''),

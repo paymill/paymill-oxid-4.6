@@ -10,6 +10,8 @@
                             print $amount;
                           [{/php}]';
     var PAYMILL_CURRENCY = '[{$currency->name}]';
+    var PAYMILL_SHOWFORM_CC = '[{$paymillShowForm_cc}]';
+    var PAYMILL_SHOWFORM_ELV = '[{$paymillShowForm_elv}]';
 </script>
 <script type="text/javascript" src="https://bridge.paymill.de/"></script>
 <script type="text/javascript">
@@ -53,9 +55,7 @@ jQuery(document).ready(function ($) {
         // Absenden Button deaktivieren um weitere Klicks zu vermeiden
         $('#test_PaymentNextStepBottom').attr("disabled", "disabled");
         paymenttype = $('#test_Payment_paymill_cc').attr('checked') ? 'cc' : $('#test_Payment_paymill_elv').attr('checked') ? 'elv': 'other';
-        console.log(paymenttype);
-        switch (paymenttype) {
-            case "cc":
+        if(paymenttype == "cc" && PAYMILL_SHOWFORM_CC){
                 if (false == paymill.validateCardNumber($('.card-number').val())) {
                     $(".payment-errors.cc").text('[{ oxmultilang ident="PAYMILL_VALIDATION_CARDNUMBER" }]');
                     $(".payment-errors.cc").css("display","inline-block");
@@ -84,8 +84,7 @@ jQuery(document).ready(function ($) {
                     cvc:            $('.card-cvc').val(),
                     cardholder:     $('.card-holdername').val()
                 };
-                break;
-            case "elv":
+           }else if(paymenttype == "elv" && PAYMILL_SHOWFORM_ELV){
                 if (false == $('.elv-holdername').val()) {
                     $(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]');
                     $(".payment-errors.elv").css("display","inline-block");
@@ -109,12 +108,10 @@ jQuery(document).ready(function ($) {
                     bank:           $('.elv-bankcode').val(),
                     accountholder:  $('.elv-holdername').val()
                 };
-                break;
-             default:
+            }else{
                  $("#test_PaymentNextStepBottom").removeAttr("disabled");
                  return true;
-                 break;
-        }
+            }
         paymill.createToken(params, PaymillResponseHandler);
         return false;
     });

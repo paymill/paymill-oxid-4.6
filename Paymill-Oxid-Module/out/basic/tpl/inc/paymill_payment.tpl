@@ -7,7 +7,7 @@
         <label><b>[{ $paymentmethod->oxpayments__oxdesc->value}]</b></label>
     </td>
 </tr>
-[{if $sPaymentID == 'paymill_cc'}]
+[{if $sPaymentID == 'paymill_cc' && $paymillShowForm_cc}]
 <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
     <td colspan="3">
         <p class="payment-errors cc" style="display:none;"></p>
@@ -53,30 +53,30 @@
     </td>
     <td>
         <select class="card-expiry-month span1" />
-            <option>01</option>
-            <option>02</option>
-            <option>03</option>
-            <option>04</option>
-            <option>05</option>
-            <option>06</option>
-            <option>07</option>
-            <option>08</option>
-            <option>09</option>
-            <option>10</option>
-            <option>11</option>
-            <option>12</option>
-        </select>
+<option>01</option>
+<option>02</option>
+<option>03</option>
+<option>04</option>
+<option>05</option>
+<option>06</option>
+<option>07</option>
+<option>08</option>
+<option>09</option>
+<option>10</option>
+<option>11</option>
+<option>12</option>
+</select>
 
-        <span> / </span>
+<span> / </span>
 
-        <select class="card-expiry-year span1" />
-        [{foreach from=$oView->getCreditYears() item=year}]
-        <option>[{$year}]</option>
-        [{/foreach}]
-        </select>
-    </td>
+<select class="card-expiry-year span1" />
+[{foreach from=$oView->getCreditYears() item=year}]
+<option>[{$year}]</option>
+[{/foreach}]
+</select>
+</td>
 </tr>
-[{elseif $sPaymentID == 'paymill_elv'}]
+[{elseif $sPaymentID == 'paymill_elv' && $paymillShowForm_elv}]
 <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
     <td colspan="3">
         <p class="payment-errors elv" style="display:none;"></p>
@@ -85,7 +85,7 @@
 <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
     <td></td>
     <td>
-       <label class="elv-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNTHOLDER" }]:</label>
+        <label class="elv-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNTHOLDER" }]:</label>
     </td>
     <td>
         <input class="elv-holdername span3" type="text" size="20" value="[{$oxcmp_user->oxuser__oxfname->value}] [{$oxcmp_user->oxuser__oxlname->value}]" />
