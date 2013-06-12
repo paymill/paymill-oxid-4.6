@@ -12,6 +12,7 @@
     var PAYMILL_CURRENCY = '[{$currency->name}]';
     var PAYMILL_SHOWFORM_CC = '[{$paymillShowForm_cc}]';
     var PAYMILL_SHOWFORM_ELV = '[{$paymillShowForm_elv}]';
+    var PAYMILL_DEBUG = '[{$oxConfig->getShopConfVar('PAYMILL_ACTIVATE_DEBUG')}]';
 </script>
 <script type="text/javascript" src="https://bridge.paymill.de/"></script>
 <script type="text/javascript">
@@ -35,6 +36,7 @@ jQuery(document).ready(function ($) {
 
     function PaymillResponseHandler(error, result) {
         if (error) {
+            paymillDebug('An API error occured:' + error.apierror);
             // Zeigt den Fehler überhalb des Formulars an
             $(".payment-errors").text(error.apierror);
             $(".payment-errors").css("display","inline-block");
@@ -44,6 +46,7 @@ jQuery(document).ready(function ($) {
             var form = $("#payment");
             // Token
             var token = result.token;
+            paymillDebug('Received a token: ' + token);
             // Token in das Formular einfügen damit es an den Server übergeben wird
             form.append("<input type='hidden' name='paymillToken' value='" + token + "'/>");
             form.get(0).submit();
@@ -51,9 +54,16 @@ jQuery(document).ready(function ($) {
         $("#paymentNextStepBottom").removeAttr("disabled");
     }
 
+    function paymillDebug(message){
+        if(PAYMILL_DEBUG == "1"){
+            console.log(message);
+        }
+    }
+
     $("#payment").submit(function (event) {
         // Absenden Button deaktivieren um weitere Klicks zu vermeiden
         $('#paymentNextStepBottom').attr("disabled", "disabled");
+        paymillDebug('Paymill: Start form validation');
         paymenttype = $('#payment_paymill_cc').attr('checked') ? 'cc' : $('#payment_paymill_elv').attr('checked') ? 'elv': 'other';
             if(paymenttype == "cc" && PAYMILL_SHOWFORM_CC){
                 if (false == paymill.validateCardNumber($('.card-number').val())) {
