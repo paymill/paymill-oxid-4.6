@@ -123,7 +123,6 @@ class paymill_order extends paymill_order_parent
         $result = $paymentProcessor->processPayment();
         $this->log($result ? 'Payment results in success' : 'Payment results in failure', null);
         if ($fastCheckout == "1" && $result === true) {
-            $this->log('Save data for fastCheckout.', null);
             $paymentColumn = $paymentType == "cc" ? 'paymentID_CC' : 'paymentID_ELV';
             if (!$paymillShowForm_cc || !$paymillShowForm_elv) {
                 //update existing data
@@ -139,7 +138,6 @@ class paymill_order extends paymill_order_parent
                 $newPaymentId = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->quote($paymentProcessor->getPaymentId());
                 $sql = "INSERT INTO `paymill_fastcheckout` (`userID`, `clientID`, `$paymentColumn`)VALUES ($userId, $newClientId, $newPaymentId)";
             }
-            $this->log("DEBUG: " . var_export($sql, true), null);
             try {
                 oxDb::getDb(oxDB::FETCH_MODE_ASSOC)->Execute($sql);
             } catch (Exception $exception) {
