@@ -15,15 +15,8 @@ class paymill_payment extends paymill_payment_parent
         $publicKey = trim(oxConfig::getInstance()->getShopConfVar('PAYMILL_PUBLICKEY'));
 
         //clear values
-        oxSession::deleteVar('paymill_authorized_amount');
         oxSession::deleteVar('paymillShowForm_cc');
         oxSession::deleteVar('paymillShowForm_elv');
-
-        //save authorized Amount for secure Paymentprocessing
-        $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
-        $amount = round($amount * 100);
-        oxSession::setVar('paymill_authorized_amount', $amount);
-
 
         if ($this->getSession()->hasVar('paymill_error')) {
             $this->addTplParam('piPaymillError', $this->getSession()->getVar('paymill_error'));
@@ -45,10 +38,25 @@ class paymill_payment extends paymill_payment_parent
         }
         $this->addTplParam('paymillShowForm_cc', $fastcheckout_cc);
         $this->addTplParam('paymillShowForm_elv', $fastcheckout_elv);
-        $this->addTplParam('paymillAmount', $amount);
         $this->addTplParam('paymillPublicKey', $publicKey);
         return parent::render();
     }
+
+    public function getPaymentList()
+    {
+        //clear values
+        oxSession::deleteVar('paymill_authorized_amount');
+
+        //save authorized Amount for secure Paymentprocessing
+        $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
+        $amount = round($amount * 100);
+        oxSession::setVar('paymill_authorized_amount', $amount);
+        $this->addTplParam('paymillAmount', $amount);
+
+        return parent::getPaymentList();
+    }
+
+
 
     /**
      * @overload

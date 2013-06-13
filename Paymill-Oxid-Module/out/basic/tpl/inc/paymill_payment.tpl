@@ -112,17 +112,18 @@
 [{/if}]
 [{if $oxConfig->getShopConfVar('PAYMILL_SHOW_LABEL') }]
 <tr>
-    <td colspan="3" class="paymill-label">
-        [{if $sPaymentID == 'paymill_cc'}]
-        [{ oxmultilang ident="PAYMILL_CC_POWERED_TEXT" }]
-        [{elseif $sPaymentID == 'paymill_elv'}]
-        [{ oxmultilang ident="PAYMILL_ELV_POWERED_TEXT" }]
-        [{/if}]
-    </td>
-</tr>
-<tr>
-    <td colspan="3" class="paymill-label">
-        <img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/logo.png">
+    <td></td>
+    <td colspan="2">
+        <div class="paymill_powered">
+            <div class="paymill_credits">
+                [{if $sPaymentID == 'paymill_cc'}]
+                [{ oxmultilang ident="PAYMILL_CC_POWERED_TEXT" }]
+                [{elseif $sPaymentID == 'paymill_elv'}]
+                [{ oxmultilang ident="PAYMILL_ELV_POWERED_TEXT" }]
+                [{/if}]
+                <a href="http://www.paymill.de" target="_blank">Paymill</a>
+            </div>
+        </div>
     </td>
 </tr>
 [{/if}]
