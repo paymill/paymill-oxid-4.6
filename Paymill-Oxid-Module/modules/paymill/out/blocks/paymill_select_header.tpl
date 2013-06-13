@@ -74,7 +74,12 @@ jQuery(document).ready(function ($) {
                     $("#paymentNextStepBottom").removeAttr("disabled");
                     return false;
                 }
-
+                if (false == paymill.validateCvc($('.card-cvc').val(), $('.card-number').val())) {
+                    $(".payment-errors.cc").text('[{ oxmultilang ident="PAYMILL_VALIDATION_CVC" }]');
+                    $(".payment-errors.cc").css("display","inline-block");
+                    $("#paymentNextStepBottom").removeAttr("disabled");
+                    return false;
+                }
                 if ($('.card-holdername').val() == '') {
                     $(".payment-errors.cc").text('[{ oxmultilang ident="PAYMILL_VALIDATION_CARDHOLDER" }]');
                     $(".payment-errors.cc").css("display","inline-block");
