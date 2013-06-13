@@ -24,5 +24,6 @@ $aLang = array(
     'SHOP_MODULE_PAYMILL_ACTIVATE_CC' => 'Kreditkarte aktivieren',
     'SHOP_MODULE_PAYMILL_ACTIVATE_DEBUG' => 'Debugging aktivieren',
     'SHOP_MODULE_PAYMILL_ACTIVATE_LOGGING' => 'Logging aktivieren',
-    'SHOP_MODULE_PAYMILL_ACTIVATE_FASTCHECKOUT' => 'FastCheckout aktivieren'
+    'SHOP_MODULE_PAYMILL_ACTIVATE_FASTCHECKOUT' => 'FastCheckout aktivieren',
+    'SHOP_MODULE_PAYMILL_SHOW_LABEL' => 'Paymill-Label anzeigen'
 );

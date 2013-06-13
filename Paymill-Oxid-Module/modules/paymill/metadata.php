@@ -29,5 +29,6 @@ $aModule = array(
         array( 'group' => 'main','name' => 'PAYMILL_ACTIVATE_DEBUG', 'type' => 'bool', 'value' => 'false'),
         array( 'group' => 'main','name' => 'PAYMILL_ACTIVATE_LOGGING', 'type' => 'bool', 'value' => 'false'),
         array( 'group' => 'main','name' => 'PAYMILL_ACTIVATE_FASTCHECKOUT', 'type' => 'bool', 'value' => 'false'),
+        array( 'group' => 'main','name' => 'PAYMILL_SHOW_LABEL', 'type' => 'bool', 'value' => 'true'),
     )
 );

@@ -68,7 +68,20 @@
                 </div>
                 [{/if}]
             </li>
+            [{if $oxConfig->getShopConfVar('PAYMILL_SHOW_LABEL') }]
+            <li class="paymill-label">
+                [{if $sPaymentID == 'paymill_cc'}]
+                [{ oxmultilang ident="PAYMILL_CC_POWERED_TEXT" }]
+                [{elseif $sPaymentID == 'paymill_elv'}]
+                [{ oxmultilang ident="PAYMILL_ELV_POWERED_TEXT" }]
+                [{/if}]
+            </li>
+            <li class="paymill-label">
+                <img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/logo.png">
+            </li>
+            [{/if}]
         </ul>
     </dd>
     [{/if}]
+
 </dl>

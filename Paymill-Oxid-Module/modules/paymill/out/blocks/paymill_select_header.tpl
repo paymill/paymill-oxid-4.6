@@ -3,29 +3,25 @@
 <link rel="stylesheet" type="text/css" href="[{ $oViewConf->getBaseDir() }]modules/paymill/paymill_styles.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
-    var PAYMILL_PUBLIC_KEY = '[{$oxConfig->getShopConfVar('PAYMILL_PUBLICKEY')}]';
-    var PAYMILL_AMOUNT = '[{php}]
-                            $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
-                            $amount = round($amount * 100);
-                            print $amount;
-                          [{/php}]';
+    var PAYMILL_PUBLIC_KEY = '[{$paymillPublicKey}]';
+    var PAYMILL_AMOUNT = '[{$paymillAmount}]';
     var PAYMILL_CURRENCY = '[{$currency->name}]';
     var PAYMILL_SHOWFORM_CC = '[{$paymillShowForm_cc}]';
     var PAYMILL_SHOWFORM_ELV = '[{$paymillShowForm_elv}]';
     var PAYMILL_DEBUG = '[{$oxConfig->getShopConfVar('PAYMILL_ACTIVATE_DEBUG')}]';
 </script>
-<script type="text/javascript" src="https://bridge.paymill.de/"></script>
+<script type="text/javascript" src="https://bridge.paymill.com/"></script>
 <script type="text/javascript">
 $.noConflict();
 jQuery(document).ready(function ($) {
     $('.card-number').keyup(function() {
         switch(paymill.cardType($('.card-number').val())){
             case 'Visa':
-                $('.card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/icon_visa.png" >');
+                $('.card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/icon_visa.png" >');
                 $('.card-icon').show();
                 break;
             case 'MasterCard':
-                $('.card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/icon_mastercard.png" >');
+                $('.card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/icon_mastercard.png" >');
                 $('.card-icon').show();
                 break;
             default:

@@ -9,9 +9,10 @@ class paymill_payment extends paymill_payment_parent
      *
      * @return array
      */
-    public function getPaymentList()
+    public function render()
     {
         $fastCheckout = oxConfig::getInstance()->getShopConfVar('PAYMILL_ACTIVATE_FASTCHECKOUT');
+        $publicKey = trim(oxConfig::getInstance()->getShopConfVar('PAYMILL_PUBLICKEY'));
 
         //clear values
         oxSession::deleteVar('paymill_authorized_amount');
@@ -29,22 +30,24 @@ class paymill_payment extends paymill_payment_parent
             $this->getSession()->deleteVar('paymill_error');
         }
 
-        $fastcheckout_cc = 'true';
-        $fastcheckout_elv = 'true';
+        $fastcheckout_cc = true;
+        $fastcheckout_elv = true;
         if ($fastCheckout == "1") {
             $userId = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->quote($this->getUser()->getId());
             $sql = "SELECT * FROM `paymill_fastcheckout` WHERE `userID`=$userId";
             $fastcheckoutData = oxDb::getDb(oxDB::FETCH_MODE_ASSOC)->Execute($sql);
 
             $fastcheckout_cc = $fastcheckoutData->fields['paymentID_CC'] == null;
-            $fastcheckout_elv =  $fastcheckoutData->fields['paymentID_ELV'] == null;
+            $fastcheckout_elv = $fastcheckoutData->fields['paymentID_ELV'] == null;
 
             oxSession::setVar('paymillShowForm_cc', $fastcheckout_cc);
             oxSession::setVar('paymillShowForm_elv', $fastcheckout_elv);
         }
         $this->addTplParam('paymillShowForm_cc', $fastcheckout_cc);
         $this->addTplParam('paymillShowForm_elv', $fastcheckout_elv);
-        return parent::getPaymentList();
+        $this->addTplParam('paymillAmount', $amount);
+        $this->addTplParam('paymillPublicKey', $publicKey);
+        return parent::render();
     }
 
     /**

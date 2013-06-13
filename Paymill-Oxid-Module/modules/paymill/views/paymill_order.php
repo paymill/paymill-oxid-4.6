@@ -69,7 +69,7 @@ class paymill_order extends paymill_order_parent
      */
     protected function paymillPayment()
     {
-        $privateKey = oxConfig::getInstance()->getShopConfVar('PAYMILL_PRIVATEKEY');
+        $privateKey = trim(oxConfig::getInstance()->getShopConfVar('PAYMILL_PRIVATEKEY'));
         $fastCheckout = oxConfig::getInstance()->getShopConfVar('PAYMILL_ACTIVATE_FASTCHECKOUT');
         $apiUrl = "https://api.paymill.com/v2/";
 
