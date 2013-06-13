@@ -28,6 +28,79 @@ To activate Paymill payment follow these steps:
 - Basic- & Azure-template are supported by default.
 - To support a custom template adapt the template structure within the out/azure diretory to your custom theme.
 
+## Enable Basic Templatesupport
+- Open "Shoproot/out/basic/tpl/page/checkout/paymnet.tpl" in your preferred editor.
+- Change the following lines:
+Old:
+```php
+[{include file="_header.tpl" title=$template_title location=$template_title}]
+<!-- ordering steps -->
+[{include file="inc/steps_item.tpl" highlight=3}]
+```
+New:
+```php
+[{include file="_header.tpl" title=$template_title location=$template_title}]
+<!--PAYMILL START-->
+	[{include file="inc/paymill_header.tpl"}]
+<!--PAYMILL END-->
+<!-- ordering steps -->
+[{include file="inc/steps_item.tpl" highlight=3}]
+```
+
+Old:
+```php
+[{assign var="iPayError" value=$oView->getPaymentError() }]
+```
+
+New:
+```php
+[{assign var="iPayError" value=$oView->getPaymentError() }]
+<!--PAYMILL START-->
+  [{ if $piPaymillError}]
+	<br><div class="errorbox" style="color:red;">[{ $piPaymillError }]</div>
+  [{ /if }]
+<!--PAYMILL END-->
+```
+
+Old:
+```php
+[{elseif $sPaymentID == "oxiddebitnote"}]
+    [{ assign var="dynvalue" value=$oView->getDynValue()}]
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+      <td><input id="test_Payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]></td>
+      <td id="test_PaymentDesc_[{$smarty.foreach.PaymentSelect.iteration}]" colspan="2"><label><b>[{ $paymentmethod->oxpayments__oxdesc->value}]</b></label></td>
+    </tr>
+    ...
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+      <td></td>
+      <td><label>[{ oxmultilang ident="PAYMENT_ACCOUNTHOLDER2" }]</label></td>
+      <td><input type="text" size="20" maxlength="64" name="dynvalue[lsktoinhaber]" value="[{ if $dynvalue.lsktoinhaber }][{ $dynvalue.lsktoinhaber }][{else}][{$oxcmp_user->oxuser__oxfname->value}] [{$oxcmp_user->oxuser__oxlname->value}][{/if}]"></td>
+    </tr>
+[{else}]
+```
+New:
+```php
+[{elseif $sPaymentID == "oxiddebitnote"}]
+    [{ assign var="dynvalue" value=$oView->getDynValue()}]
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+      <td><input id="test_Payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]></td>
+      <td id="test_PaymentDesc_[{$smarty.foreach.PaymentSelect.iteration}]" colspan="2"><label><b>[{ $paymentmethod->oxpayments__oxdesc->value}]</b></label></td>
+    </tr>
+    ...
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+      <td></td>
+      <td><label>[{ oxmultilang ident="PAYMENT_ACCOUNTHOLDER2" }]</label></td>
+      <td><input type="text" size="20" maxlength="64" name="dynvalue[lsktoinhaber]" value="[{ if $dynvalue.lsktoinhaber }][{ $dynvalue.lsktoinhaber }][{else}][{$oxcmp_user->oxuser__oxfname->value}] [{$oxcmp_user->oxuser__oxlname->value}][{/if}]"></td>
+    </tr>
+<!--PAYMILL START-->
+[{elseif $sPaymentID == "paymill_cc"}]
+      [{include file="inc/paymill_payment.tpl"}]
+[{elseif $sPaymentID == "paymill_elv"}]
+      [{include file="inc/paymill_payment.tpl"}]
+<!--PAYMILL END-->
+[{else}]
+```
+
 # Error handling
 
 In case of any errors turn on the debug mode in the Paymill payment method configuration.
