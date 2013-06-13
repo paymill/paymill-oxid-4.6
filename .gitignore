@@ -15,3 +15,6 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 .idea
+/nbproject/private/
+/Paymill-Oxid-Module/nbproject/private/*
+/Paymill-Oxid-Module/nbproject/*

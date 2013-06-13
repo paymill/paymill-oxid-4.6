@@ -1,31 +1,14 @@
-Paymill-Oxid
-====================
+Paymill-Oxid 4.6
+==================
 
-Paymill extension (credit card and direct debit) for Oxid (Version 4.6.x). Tested on Community Edition. Supports Azure template.
+Payment plugin for Oxid Version 4.6.5
 
-![Paymill creditcard payment form](https://raw.github.com/Paymill/Paymill-Oxid/master/Paymill-Oxid-Module/modules/paymill/paymill_form_de.png)
+Download the module here: https://github.com/Paymill/Paymill-Oxid/archive/master.zip
 
-# Installation
-
-## Installation from this git repository 
-
-Use the following command to clone the complete repository including the submodules:
-    
-    git clone --recursive https://github.com/Paymill/Paymill-Oxid.git
-
-Afterwards merge the contents of the Paymill-Oxid-Module directory with your Oxid installation. 
-
-# Configuration
-
-- Clean your cache and refresh your administration backend.
-- In the main menu goto **Erweiterungen -> Module**
-- Select module "Paymill" and choose **Aktivieren**
-- Reload the admin page
-- In the main menu goto **Paymill -> Konfiguration** 
-- Enter your Paymill Test- or Livekeys and click on **Speichern**
-- Click on **Installiere Tpl-Blöcke** and on **Zahlungsart installieren**
-- The field **Paymill API URL** should contain https://api.paymill.de/v2/
-- The field **Paymill Bridge URL** should contain https://bridge.paymill.de/
+- Merge the content of the Paymill-Oxid-Module directory with your Oxid installation.
+- Import the install.sql to your database.
+- In your administration backend activate the Paymill plugin.
+- Go to the configuration section where you can insert your private and public key (that you can find in your Paymill cockpit [https://app.paymill.de/](https://app.paymill.de/ "Paymill cockpit")).
 
 # Activate Paymill Payment
 
@@ -36,17 +19,97 @@ To activate Paymill payment follow these steps:
 - Click on **Benutzergruppen zuordnen** and assign the right user groups
 - Go to tab **Länder**, click on **Länder zuordnen**, and assign the right countries
 - In the main menu goto **Shopeinstellungen > Versandarten**
-- Choose a shipping type (e.g. **Standard**) and go to tab **Zahlungsarten** 
+- Choose a shipping type (e.g. **Standard**) and go to tab **Zahlungsarten**
 - Click on **Zahlungsarten zuordnen** and assign the payment method
 - Repeat last 2 steps for other shipping types
 
-# Support for other templates than Azure
+# Template-Support
 
-Adapt the template structure within the out/azure diretory to your custom theme.
+- Basic- & Azure-template are supported by default.
+- To support a custom template adapt the template structure within the out/azure diretory to your custom theme.
+
+## Enable Basic Templatesupport
+- Open "Shoproot/out/basic/tpl/page/checkout/paymnet.tpl" in your preferred editor.
+- Change the following lines:
+Old:
+```php
+[{include file="_header.tpl" title=$template_title location=$template_title}]
+<!-- ordering steps -->
+[{include file="inc/steps_item.tpl" highlight=3}]
+```
+New:
+```php
+[{include file="_header.tpl" title=$template_title location=$template_title}]
+<!--PAYMILL START-->
+	[{include file="inc/paymill_header.tpl"}]
+<!--PAYMILL END-->
+<!-- ordering steps -->
+[{include file="inc/steps_item.tpl" highlight=3}]
+```
+
+Old:
+```php
+[{assign var="iPayError" value=$oView->getPaymentError() }]
+```
+
+New:
+```php
+[{assign var="iPayError" value=$oView->getPaymentError() }]
+<!--PAYMILL START-->
+  [{ if $piPaymillError}]
+	<br><div class="errorbox" style="color:red;">[{ $piPaymillError }]</div>
+  [{ /if }]
+<!--PAYMILL END-->
+```
+
+Old:
+```php
+[{elseif $sPaymentID == "oxiddebitnote"}]
+    [{ assign var="dynvalue" value=$oView->getDynValue()}]
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+      <td><input id="test_Payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]></td>
+      <td id="test_PaymentDesc_[{$smarty.foreach.PaymentSelect.iteration}]" colspan="2"><label><b>[{ $paymentmethod->oxpayments__oxdesc->value}]</b></label></td>
+    </tr>
+    ...
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+      <td></td>
+      <td><label>[{ oxmultilang ident="PAYMENT_ACCOUNTHOLDER2" }]</label></td>
+      <td><input type="text" size="20" maxlength="64" name="dynvalue[lsktoinhaber]" value="[{ if $dynvalue.lsktoinhaber }][{ $dynvalue.lsktoinhaber }][{else}][{$oxcmp_user->oxuser__oxfname->value}] [{$oxcmp_user->oxuser__oxlname->value}][{/if}]"></td>
+    </tr>
+[{else}]
+```
+New:
+```php
+[{elseif $sPaymentID == "oxiddebitnote"}]
+    [{ assign var="dynvalue" value=$oView->getDynValue()}]
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+      <td><input id="test_Payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]></td>
+      <td id="test_PaymentDesc_[{$smarty.foreach.PaymentSelect.iteration}]" colspan="2"><label><b>[{ $paymentmethod->oxpayments__oxdesc->value}]</b></label></td>
+    </tr>
+    ...
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+      <td></td>
+      <td><label>[{ oxmultilang ident="PAYMENT_ACCOUNTHOLDER2" }]</label></td>
+      <td><input type="text" size="20" maxlength="64" name="dynvalue[lsktoinhaber]" value="[{ if $dynvalue.lsktoinhaber }][{ $dynvalue.lsktoinhaber }][{else}][{$oxcmp_user->oxuser__oxfname->value}] [{$oxcmp_user->oxuser__oxlname->value}][{/if}]"></td>
+    </tr>
+<!--PAYMILL START-->
+[{elseif $sPaymentID == "paymill_cc"}]
+      [{include file="inc/paymill_payment.tpl"}]
+[{elseif $sPaymentID == "paymill_elv"}]
+      [{include file="inc/paymill_payment.tpl"}]
+<!--PAYMILL END-->
+[{else}]
+```
 
 # Error handling
 
-In case of any errors turn on the debug mode in the Paymill payment method configuration. Open the javascript console in your browser and check what's being logged during the checkout process. Additionally you can check the logfile in modules/paymill/log.txt.
+In case of any errors turn on the debug mode in the Paymill payment method configuration.
+Open the javascript console in your browser and check what's being logged during the checkout process.
+
+# Logging
+
+- If you enable logging in the plugin configuration make sure that log.txt inside the plugin directory is writable. Otherwise logging information will not be stored to the logfile.
+- You can access the Logging with your shop-backend under Paymill -> Log
 
 # Notes about the payment process
 
