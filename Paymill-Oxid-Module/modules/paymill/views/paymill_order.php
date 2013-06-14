@@ -49,6 +49,11 @@ class paymill_order extends paymill_order_parent
                     // performing special actions after user finishes order (assignment to special user groups)
                     $oUser->onOrderExecute($oBasket, $iSuccess);
 
+                    //clear values
+                    oxSession::deleteVar('paymillShowForm_cc');
+                    oxSession::deleteVar('paymillShowForm_elv');
+                    oxSession::deleteVar('paymill_authorized_amount');
+                    
                     // proceeding to next view
                     return $this->_getNextStep($iSuccess);
                 } catch (oxOutOfStockException $oEx) {
