@@ -14,7 +14,11 @@ capybara-*.html
 **.orig
 rerun.txt
 pickle-email-*.html
+<<<<<<< .merge_file_a17016
 .idea
 /nbproject/private/
 /Paymill-Oxid-Module/nbproject/private/*
 /Paymill-Oxid-Module/nbproject/*
+=======
+.idea
+>>>>>>> .merge_file_a19552
