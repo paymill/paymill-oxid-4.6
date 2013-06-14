@@ -29,8 +29,9 @@ To activate Paymill payment follow these steps:
 - To support a custom template adapt the template structure within the out/azure diretory to your custom theme.
 
 ## Enable Basic Templatesupport
-- Open "Shoproot/out/basic/tpl/page/checkout/paymnet.tpl" in your preferred editor.
+- Open "Shoproot/out/basic/tpl/page/checkout/payment.tpl" in your preferred editor.
 - Change the following lines:
+
 Old:
 ```php
 [{include file="_header.tpl" title=$template_title location=$template_title}]
