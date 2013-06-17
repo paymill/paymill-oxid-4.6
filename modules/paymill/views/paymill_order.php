@@ -37,14 +37,20 @@ class paymill_order extends paymill_order_parent
 
                 try {
                     $oOrder = oxNew('oxorder');
+
+                    // finalizing ordering process (validating, storing order into DB, executing payment, setting status ...)
+                    $iSuccess = $oOrder->finalizeOrder($oBasket, $oUser);
+
                     if (!$this->paymillPayment()) {
                         if (!$this->getSession()->hasVar("paymill_error")) {
                             $this->getSession()->setVar("paymill_error", "Payment could not be processed.");
                         }
+                        $oOrder->delete();
                         return 'payment';
                     }
-                    // finalizing ordering process (validating, storing order into DB, executing payment, setting status ...)
-                    $iSuccess = $oOrder->finalizeOrder($oBasket, $oUser);
+
+                    $oOrder->oxorder__oxpaid->value = (string) date('Y-m-d H:i:s');
+                    $oOrder->save();
 
                     // performing special actions after user finishes order (assignment to special user groups)
                     $oUser->onOrderExecute($oBasket, $iSuccess);
@@ -53,7 +59,7 @@ class paymill_order extends paymill_order_parent
                     oxSession::deleteVar('paymillShowForm_cc');
                     oxSession::deleteVar('paymillShowForm_elv');
                     oxSession::deleteVar('paymill_authorized_amount');
-                    
+
                     // proceeding to next view
                     return $this->_getNextStep($iSuccess);
                 } catch (oxOutOfStockException $oEx) {
@@ -104,19 +110,19 @@ class paymill_order extends paymill_order_parent
             'currency' => strtoupper($basket->getBasketCurrency()->name),
             'name' => $name,
             'email' => $user->oxuser__oxusername->rawValue,
-            'description' => $name
+            'description' => 'OrderID: ' . $basket->getOrderId() . ' - ' . $name
         );
         $paymentProcessor = new PaymentProcessor($privateKey, $apiUrl, null, $parameter, $this);
 
         if ($fastCheckout == "1") {
             // Be sure Data is aviable
             $sql = "SELECT * FROM `paymill_fastcheckout` WHERE `userID`=$userId";
-                $fastcheckoutData = oxDb::getDb(oxDB::FETCH_MODE_ASSOC)->Execute($sql);
-                try {
-                    oxDb::getDb(oxDB::FETCH_MODE_ASSOC)->Execute($sql);
-                } catch (Exception $exception) {
-                    $this->log($exception->getMessage(), $exception->getLine());
-                }
+            $fastcheckoutData = oxDb::getDb(oxDB::FETCH_MODE_ASSOC)->Execute($sql);
+            try {
+                oxDb::getDb(oxDB::FETCH_MODE_ASSOC)->Execute($sql);
+            } catch (Exception $exception) {
+                $this->log($exception->getMessage(), $exception->getLine());
+            }
             if (!$paymillShowForm_cc && $paymentType == "cc" || !$paymillShowForm_elv && $paymentType == "elv") {
                 $paymentProcessor->setPaymentId($paymentType == "cc" ? $fastcheckoutData->fields['paymentID_CC'] : $fastcheckoutData->fields['paymentID_ELV']);
             }
