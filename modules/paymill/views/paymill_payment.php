@@ -25,7 +25,7 @@ class paymill_payment extends paymill_payment_parent
 
         $fastcheckout_cc = true;
         $fastcheckout_elv = true;
-        if ($fastCheckout == "1") {
+        if ($fastCheckout && $this->getUser()) {
             $userId = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->quote($this->getUser()->getId());
             $sql = "SELECT * FROM `paymill_fastcheckout` WHERE `userID`=$userId";
             $fastcheckoutData = oxDb::getDb(oxDB::FETCH_MODE_ASSOC)->Execute($sql);
