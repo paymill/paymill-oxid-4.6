@@ -17,6 +17,8 @@
  */
 $aLang = array(
     'charset' => 'UTF-8',
+    'PAYMILL' => 'Paymill',
+    'LOG' => 'Log',
     'SHOP_MODULE_GROUP_main'              => 'Paymill',
     'SHOP_MODULE_PAYMILL_PRIVATEKEY' => 'Privatekey',
     'SHOP_MODULE_PAYMILL_PUBLICKEY' => 'Publickey',
