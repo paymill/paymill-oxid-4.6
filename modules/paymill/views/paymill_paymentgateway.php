@@ -1,105 +1,36 @@
 <?php
 
-class paymill_order extends paymill_order_parent
+class paymill_paymentgateway extends paymill_paymentgateway_parent
 {
 
     /**
      * @overload
      */
-    public function execute()
+    public function executePayment( $dAmount, & $oOrder)
     {
-        if (in_array($this->getBasket()->getPaymentId(), array("paymill_cc", "paymill_elv"))) {
-            if (!$this->getSession()->checkSessionChallenge()) {
-                return;
-            }
+        $this->_iLastErrorNo = null;
+        $this->_sLastError = null;
 
-            $myConfig = $this->getConfig();
-
-            if (!oxConfig::getParameter('ord_agb') && $myConfig->getConfigParam('blConfirmAGB')) {
-                $this->_blConfirmAGBError = 1;
-                return;
-            }
-
-            // for compatibility reasons for a while. will be removed in future
-            if (oxConfig::getParameter('ord_custinfo') !== null && !oxConfig::getParameter('ord_custinfo') && $this->isConfirmCustInfoActive()) {
-                $this->_blConfirmCustInfoError = 1;
-                return;
-            }
-
-            // additional check if we really really have a user now
-            if (!$oUser = $this->getUser()) {
-                return 'user';
-            }
-
-            // get basket contents
-            $oBasket = $this->getSession()->getBasket();
-            if ($oBasket->getProductsCount()) {
-
-                try {
-                    $oOrder = oxNew('oxorder');
-
-                    // finalizing ordering process (validating, storing order into DB, executing payment, setting status ...)
-                    $iSuccess = $oOrder->finalizeOrder($oBasket, $oUser);
-
-                    if (!$this->paymillPayment()) {
-                        if (!$this->getSession()->hasVar("paymill_error")) {
-                            $this->getSession()->setVar("paymill_error", "Payment could not be processed.");
-                        }
-                        $oOrder->delete();
-                        return 'payment';
-                    }
-
-                    $oOrder->oxorder__oxpaid->value = (string) date('Y-m-d H:i:s');
-                    $oOrder->save();
-
-                    // performing special actions after user finishes order (assignment to special user groups)
-                    $oUser->onOrderExecute($oBasket, $iSuccess);
-
-                    //clear values
-                    oxSession::deleteVar('paymillShowForm_cc');
-                    oxSession::deleteVar('paymillShowForm_elv');
-                    oxSession::deleteVar('paymill_authorized_amount');
-
-                    // proceeding to next view
-                    return $this->_getNextStep($iSuccess);
-                } catch (oxOutOfStockException $oEx) {
-                    oxUtilsView::getInstance()->addErrorToDisplay($oEx, false, true, 'basket');
-                } catch (oxNoArticleException $oEx) {
-                    oxUtilsView::getInstance()->addErrorToDisplay($oEx);
-                } catch (oxArticleInputException $oEx) {
-                    oxUtilsView::getInstance()->addErrorToDisplay($oEx);
-                }
-            }
-        } else {
-            return parent::execute();
+        if(!in_array($oOrder->oxorder__oxpaymenttype->rawValue, array("paymill_cc", "paymill_elv"))){
+            return parent::executePayment($dAmount, & $oOrder);
         }
-    }
 
-    /**
-     * @overload
-     */
-    protected function paymillPayment()
-    {
         $privateKey = trim(oxConfig::getInstance()->getShopConfVar('PAYMILL_PRIVATEKEY'));
         $fastCheckout = oxConfig::getInstance()->getShopConfVar('PAYMILL_ACTIVATE_FASTCHECKOUT');
         $apiUrl = "https://api.paymill.com/v2/";
 
-        $basket = $this->getBasket();
-        $user = $basket->getBasketUser();
-
         $paymillShowForm_cc = oxSession::getVar('paymillShowForm_cc');
         $paymillShowForm_elv = oxSession::getVar('paymillShowForm_elv');
-        $userId = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->quote($this->getUser()->getId());
+        $userId = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->quote($oOrder->oxorder__oxuserid->rawValue);
 
-        $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
-        $amount = round($amount * 100);
-        $name = $user->oxuser__oxlname . ', ' . $user->oxuser__oxfname;
+        $amount = round($dAmount * 100);
+        $name = $oOrder->oxorder__oxbilllname->value . ', ' . $oOrder->oxorder__oxbillfname->value;
 
         if (oxSession::getVar('paymill_token') != null) {
             $token = oxSession::getVar('paymill_token');
             $paymentType = oxSession::getVar('paymill_payment');
         } else {
-            $this->getSession()->setVar("paymill_error", "No Token was provided");
+            $oOrder->getSession()->setVar("paymill_error", "No Token was provided");
             return false;
         }
 
@@ -107,10 +38,10 @@ class paymill_order extends paymill_order_parent
             'token' => $token,
             'amount' => (int) $amount,
             'authorizedAmount' => (int) oxSession::getVar('paymill_authorized_amount'),
-            'currency' => strtoupper($basket->getBasketCurrency()->name),
+            'currency' => strtoupper($oOrder->oxorder__oxcurrency->rawValue),
             'name' => $name,
-            'email' => $user->oxuser__oxusername->rawValue,
-            'description' => 'OrderID: ' . $basket->getOrderId() . ' - ' . $name
+            'email' => $oOrder->oxorder__oxbillemail->value,
+            'description' => 'OrderID: ' . $oOrder->oxorder__oxid . ' - ' . $name
         );
         $paymentProcessor = new PaymentProcessor($privateKey, $apiUrl, null, $parameter, $this);
 
