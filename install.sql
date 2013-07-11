@@ -4,7 +4,7 @@ VALUES
 ('paymill_elv', 1, 'Elektronisches Lastschriftverfahren', 0, 'abs', 0, 0, 99999, '', 1, 'PAYMILL', '', '', '', '', '', '', '', '', '', 0, '');
 
 CREATE TABLE IF NOT EXISTS `paymill_fastcheckout` (
-  `userID` varchar(100) COLLATE latin1_general_ci NOT NULL,
+  `oxid` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `clientID` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `paymentID_CC` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
   `paymentID_ELV` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,

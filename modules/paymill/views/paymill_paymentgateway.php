@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * paymill_paymentgateway
+ *
+ * @author     Copyright (c) 2013 PayIntelligent GmbH (http://www.payintelligent.de)
+ * @copyright  Copyright (c) 2013 Paymill GmbH (https://www.paymill.com)
+ */
 class paymill_paymentgateway extends paymill_paymentgateway_parent
 {
 
@@ -21,7 +26,7 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent
 
         $paymillShowForm_cc = oxSession::getVar('paymillShowForm_cc');
         $paymillShowForm_elv = oxSession::getVar('paymillShowForm_elv');
-        $userId = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->quote($oOrder->oxorder__oxuserid->rawValue);
+        $userId = $oOrder->oxorder__oxuserid->rawValue;
 
         $amount = round($dAmount * 100);
         $name = $oOrder->oxorder__oxbilllname->value . ', ' . $oOrder->oxorder__oxbillfname->value;
@@ -44,21 +49,18 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent
             'description' => 'OrderID: ' . $oOrder->oxorder__oxid . ' - ' . $name
         );
         $paymentProcessor = new PaymentProcessor($privateKey, $apiUrl, null, $parameter, $this);
-
+        $fastcheckoutData = oxNew('paymill_fastcheckout');
         if ($fastCheckout == "1") {
             // Be sure Data is aviable
-            $sql = "SELECT * FROM `paymill_fastcheckout` WHERE `userID`=$userId";
-            $fastcheckoutData = oxDb::getDb(oxDB::FETCH_MODE_ASSOC)->Execute($sql);
-            try {
-                oxDb::getDb(oxDB::FETCH_MODE_ASSOC)->Execute($sql);
-            } catch (Exception $exception) {
-                $this->log($exception->getMessage(), $exception->getLine());
-            }
+            $fastcheckoutData->load($this->getUser()->getId());
+            $fastdata_cc = $fastcheckoutData->paymill_fastcheckout__paymentid_cc->rawValue;
+            $fastdata_elv = $fastcheckoutData->paymill_fastcheckout__paymentid_elv->rawValue;
+            $fastdata_client = $fastcheckoutData->paymill_fastcheckout__paymentid_clientid->rawValue;
             if (!$paymillShowForm_cc && $paymentType == "cc" || !$paymillShowForm_elv && $paymentType == "elv") {
-                $paymentProcessor->setPaymentId($paymentType == "cc" ? $fastcheckoutData->fields['paymentID_CC'] : $fastcheckoutData->fields['paymentID_ELV']);
+                $paymentProcessor->setPaymentId($paymentType == "cc" ? $fastdata_cc : $fastdata_elv);
             }
             if (!$paymillShowForm_cc || !$paymillShowForm_elv) {
-                $paymentProcessor->setClientId($fastcheckoutData->fields['clientID']);
+                $paymentProcessor->setClientId($fastdata_client);
             }
         }
 
@@ -68,28 +70,35 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent
             $paymentColumn = $paymentType == "cc" ? 'paymentID_CC' : 'paymentID_ELV';
             if (!$paymillShowForm_cc || !$paymillShowForm_elv) {
                 //update existing data
-                $newPaymentId = $paymentType == "cc" ? $fastcheckoutData->fields['paymentID_CC'] : $fastcheckoutData->fields['paymentID_ELV'];
+                $newPaymentId = $paymentType == "cc" ? $fastdata_cc : $fastdata_elv;
                 if ($newPaymentId == null) {
                     $newPaymentId = $paymentProcessor->getPaymentId();
                 }
-                $newPaymentId = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->quote($newPaymentId);
-                $sql = "UPDATE `paymill_fastcheckout`SET `$paymentColumn`=$newPaymentId WHERE `userID`=$userId";
+                $fastcheckoutData->assign(array(
+                    'oxid' => $userId,
+                    $paymentColumn => $newPaymentId
+                ));
+                $fastcheckoutData->save();
             } else {
                 //insert new data
-                $newClientId = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->quote($paymentProcessor->getClientId());
-                $newPaymentId = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->quote($paymentProcessor->getPaymentId());
-                $sql = "INSERT INTO `paymill_fastcheckout` (`userID`, `clientID`, `$paymentColumn`)VALUES ($userId, $newClientId, $newPaymentId)";
-            }
-            try {
-                oxDb::getDb(oxDB::FETCH_MODE_ASSOC)->Execute($sql);
-            } catch (Exception $exception) {
-                $this->log($exception->getMessage(), $exception->getLine());
+                $fastcheckoutData->assign(array(
+                    'oxid' => $userId,
+                    'clientid' => $paymentProcessor->getClientId(),
+                    $paymentColumn => $paymentProcessor->getPaymentId()
+                ));
+                $fastcheckoutData->save();
             }
         }
 
         return $result === true;
     }
 
+    /**
+     * log the gien message
+     *
+     * @param string $message
+     * @param string $debuginfo
+     */
     public function log($message, $debuginfo)
     {
         $logfile = dirname(dirname(__FILE__)) . '/log.txt';

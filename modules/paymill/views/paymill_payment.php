@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * paymill_payment
+ *
+ * @author     Copyright (c) 2013 PayIntelligent GmbH (http://www.payintelligent.de)
+ * @copyright  Copyright (c) 2013 Paymill GmbH (https://www.paymill.com)
+ */
 class paymill_payment extends paymill_payment_parent
 {
 
@@ -7,7 +12,7 @@ class paymill_payment extends paymill_payment_parent
      * Rewrite of oxid's getPaymentList method
      * adds some errors to the payment selection if necessary
      *
-     * @return array
+     * @overload
      */
     public function render()
     {
@@ -26,12 +31,11 @@ class paymill_payment extends paymill_payment_parent
         $fastcheckout_cc = true;
         $fastcheckout_elv = true;
         if ($fastCheckout && $this->getUser()) {
-            $userId = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->quote($this->getUser()->getId());
-            $sql = "SELECT * FROM `paymill_fastcheckout` WHERE `userID`=$userId";
-            $fastcheckoutData = oxDb::getDb(oxDB::FETCH_MODE_ASSOC)->Execute($sql);
+            $fastcheckoutData = oxNew('paymill_fastcheckout');
+            $fastcheckoutData->load($this->getUser()->getId());
 
-            $fastcheckout_cc = $fastcheckoutData->fields['paymentID_CC'] == null;
-            $fastcheckout_elv = $fastcheckoutData->fields['paymentID_ELV'] == null;
+            $fastcheckout_cc = $fastcheckoutData->paymill_fastcheckout__paymentid_cc->rawValue == null;
+            $fastcheckout_elv = $fastcheckoutData->paymill_fastcheckout__paymentid_elv->rawValue == null;
 
             oxSession::setVar('paymillShowForm_cc', $fastcheckout_cc);
             oxSession::setVar('paymillShowForm_elv', $fastcheckout_elv);
@@ -42,6 +46,11 @@ class paymill_payment extends paymill_payment_parent
         return parent::render();
     }
 
+    /**
+     * loads the paymentlist
+     *
+     * @overload
+     */
     public function getPaymentList()
     {
         //clear values
