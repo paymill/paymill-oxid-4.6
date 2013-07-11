@@ -23,6 +23,10 @@ To activate Paymill payment follow these steps:
 - Click on **Zahlungsarten zuordnen** and assign the payment method
 - Repeat last 2 steps for other shipping types
 
+# Update
+if you want to update from an version earlier than 2.1 you have to run the update.sql first.
+
+
 # Template-Support
 
 - Basic and Azure template are supported by default.
