@@ -21,7 +21,7 @@ $aModule = array(
         'oxpaymentgateway' => 'paymill/views/paymill_paymentgateway'
     ),
     'files' => array(
-        'PaymentProcessor' => 'paymill/lib/Services/PaymentProcessor.php',
+        'PaymentProcessor' => 'paymill/lib/Services/Paymill/PaymentProcessor.php',
         'paymill_fastcheckout' => 'paymill/core/paymill_fastcheckout.php'
     ),
     'blocks' => array(
