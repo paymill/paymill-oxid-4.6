@@ -55,7 +55,7 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent
             $fastcheckoutData->load($this->getUser()->getId());
             $fastdata_cc = $fastcheckoutData->paymill_fastcheckout__paymentid_cc->rawValue;
             $fastdata_elv = $fastcheckoutData->paymill_fastcheckout__paymentid_elv->rawValue;
-            $fastdata_client = $fastcheckoutData->paymill_fastcheckout__paymentid_clientid->rawValue;
+            $fastdata_client = $fastcheckoutData->paymill_fastcheckout__clientid->rawValue;
             if (!$paymillShowForm_cc && $paymentType == "cc" || !$paymillShowForm_elv && $paymentType == "elv") {
                 $paymentProcessor->setPaymentId($paymentType == "cc" ? $fastdata_cc : $fastdata_elv);
             }
