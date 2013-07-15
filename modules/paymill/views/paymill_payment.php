@@ -55,10 +55,11 @@ class paymill_payment extends paymill_payment_parent
     {
         //clear values
         oxSession::deleteVar('paymill_authorized_amount');
-
+        $differentAmount = number_format(intval(oxConfig::getInstance()->getShopConfVar('PAYMILL_ACTIVATE_DIFFERENTAMOUNT')),2,'','');
         //save authorized Amount for secure Paymentprocessing
         $amount = oxSession::getInstance()->getBasket()->getPrice()->getBruttoPrice();
         $amount = round($amount * 100);
+        $amount += $differentAmount;
         oxSession::setVar('paymill_authorized_amount', $amount);
         $this->addTplParam('paymillAmount', $amount);
 
