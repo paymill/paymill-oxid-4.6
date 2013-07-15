@@ -23,5 +23,5 @@ $aLang = array(
     'PAYMILL_VALIDATION_ACCOUNTHOLDER' => 'Bitte geben Sie den Kontoinhaber ein',
     'charset' => 'UTF-8',
     'PAYMILL_CC_POWERED_TEXT' => 'Sichere Kreditkartenzahlung powered by',
-    'PAYMILL_ELV_POWERED_TEXT' => 'Sicheres Lastschriftverfahren powered by'
+    'PAYMILL_ELV_POWERED_TEXT' => 'Lastschriftverfahren powered by'
 );

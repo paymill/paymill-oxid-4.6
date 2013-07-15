@@ -77,7 +77,7 @@
                         [{elseif $sPaymentID == 'paymill_elv'}]
                         [{ oxmultilang ident="PAYMILL_ELV_POWERED_TEXT" }]
                         [{/if}]
-                        <a href="http://www.paymill.de" target="_blank">Paymill</a>
+                        <a href="http://www.paymill.de" target="_blank">PAYMILL</a>
                     </div>
                 </div>
             </li>
