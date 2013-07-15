@@ -21,7 +21,8 @@ $aModule = array(
         'oxpaymentgateway' => 'paymill/views/paymill_paymentgateway'
     ),
     'files' => array(
-        'PaymentProcessor' => 'paymill/lib/Services/Paymill/PaymentProcessor.php',
+        'Services_Paymill_PaymentProcessor' => 'paymill/lib/Services/Paymill/PaymentProcessor.php',
+        'Services_Paymill_LoggingInterface' => 'paymill/lib/Services/Paymill/LoggingInterface.php',
         'paymill_fastcheckout' => 'paymill/core/paymill_fastcheckout.php'
     ),
     'blocks' => array(
@@ -34,6 +35,7 @@ $aModule = array(
         array('group' => 'main', 'name' => 'PAYMILL_PUBLICKEY', 'type' => 'str', 'value' => ''),
         array('group' => 'main', 'name' => 'PAYMILL_ACTIVATE_DEBUG', 'type' => 'bool', 'value' => 'false'),
         array('group' => 'main', 'name' => 'PAYMILL_ACTIVATE_LOGGING', 'type' => 'bool', 'value' => 'false'),
+        array('group' => 'main', 'name' => 'PAYMILL_ACTIVATE_DIFFERENTAMOUNT', 'type' => 'str', 'value' => 0),
         array('group' => 'main', 'name' => 'PAYMILL_ACTIVATE_FASTCHECKOUT', 'type' => 'bool', 'value' => 'false'),
         array('group' => 'main', 'name' => 'PAYMILL_SHOW_LABEL', 'type' => 'bool', 'value' => 'true'),
     )

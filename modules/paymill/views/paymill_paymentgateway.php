@@ -5,7 +5,7 @@
  * @author     Copyright (c) 2013 PayIntelligent GmbH (http://www.payintelligent.de)
  * @copyright  Copyright (c) 2013 Paymill GmbH (https://www.paymill.com)
  */
-class paymill_paymentgateway extends paymill_paymentgateway_parent
+class paymill_paymentgateway extends paymill_paymentgateway_parent implements Services_Paymill_LoggingInterface
 {
 
     /**
@@ -22,6 +22,7 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent
 
         $privateKey = trim(oxConfig::getInstance()->getShopConfVar('PAYMILL_PRIVATEKEY'));
         $fastCheckout = oxConfig::getInstance()->getShopConfVar('PAYMILL_ACTIVATE_FASTCHECKOUT');
+        $differentAmount = number_format(intval(oxConfig::getInstance()->getShopConfVar('PAYMILL_ACTIVATE_DIFFERENTAMOUNT')),2,'','');
         $apiUrl = "https://api.paymill.com/v2/";
 
         $paymillShowForm_cc = oxSession::getVar('paymillShowForm_cc');
@@ -48,7 +49,9 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent
             'email' => $oOrder->oxorder__oxbillemail->value,
             'description' => 'OrderID: ' . $oOrder->oxorder__oxid . ' - ' . $name
         );
-        $paymentProcessor = new PaymentProcessor($privateKey, $apiUrl, null, $parameter, $this);
+        $paymentProcessor = new Services_Paymill_PaymentProcessor($privateKey, $apiUrl, null, $parameter, $this);
+        $paymentProcessor->setDifferentAmount($differentAmount);
+
         $fastcheckoutData = oxNew('paymill_fastcheckout');
         if ($fastCheckout == "1") {
             // Be sure Data is aviable
