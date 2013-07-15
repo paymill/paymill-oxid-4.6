@@ -40,6 +40,10 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
             return false;
         }
 
+        $shopversion = oxConfig::getInstance()->getVersion();
+        $modul = oxNew('oxModule');
+        $modul->load('paymill');
+
         $parameter = array(
             'token' => $token,
             'amount' => (int) $amount,
@@ -51,6 +55,7 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
         );
         $paymentProcessor = new Services_Paymill_PaymentProcessor($privateKey, $apiUrl, null, $parameter, $this);
         $paymentProcessor->setDifferentAmount($differentAmount);
+        $paymentProcessor->setSource($modul->getInfo('version') . '_oxid_'. $shopversion);
 
         $fastcheckoutData = oxNew('paymill_fastcheckout');
         if ($fastCheckout == "1") {
