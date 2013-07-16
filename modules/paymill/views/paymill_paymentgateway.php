@@ -22,7 +22,6 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
 
         $privateKey = trim(oxConfig::getInstance()->getShopConfVar('PAYMILL_PRIVATEKEY'));
         $fastCheckout = oxConfig::getInstance()->getShopConfVar('PAYMILL_ACTIVATE_FASTCHECKOUT');
-        $differentAmount = number_format(intval(oxConfig::getInstance()->getShopConfVar('PAYMILL_ACTIVATE_DIFFERENTAMOUNT')),2,'','');
         $apiUrl = "https://api.paymill.com/v2/";
 
         $paymillShowForm_cc = oxSession::getVar('paymillShowForm_cc');
@@ -47,15 +46,16 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
         $parameter = array(
             'token' => $token,
             'amount' => (int) $amount,
-            'authorizedAmount' => (int) oxSession::getVar('paymill_authorized_amount'),
             'currency' => strtoupper($oOrder->oxorder__oxcurrency->rawValue),
             'name' => $name,
             'email' => $oOrder->oxorder__oxbillemail->value,
             'description' => 'OrderID: ' . $oOrder->oxorder__oxid . ' - ' . $name
         );
         $paymentProcessor = new Services_Paymill_PaymentProcessor($privateKey, $apiUrl, null, $parameter, $this);
-        $paymentProcessor->setDifferentAmount($differentAmount);
         $paymentProcessor->setSource($modul->getInfo('version') . '_oxid_'. $shopversion);
+        if($paymentType == 'cc'){
+            $paymentProcessor->setPreAuthAmount((int) oxSession::getVar('paymill_authorized_amount'));
+        }
 
         $fastcheckoutData = oxNew('paymill_fastcheckout');
         if ($fastCheckout == "1") {
