@@ -15,17 +15,12 @@
 </tr>
 <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
     <td></td>
-    <td colspan="2">
-        <span class="span3 card-icon"></span>
-    </td>
-</tr>
-<tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-    <td></td>
     <td>
         <label class="card-number-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]:</label>
     </td>
     <td>
         <input class="card-number span2" type="text" size="20" />
+        <span class="span3 card-icon"></span>
     </td>
 </tr>
 <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">

@@ -12,11 +12,9 @@
                 <p class="payment-errors cc" style="display:none;"></p>
                 <div id="payment-form-cc">
                     <div class="controls controls-row">
-                        <span class="span3 card-icon"></span>
-                    </div>
-                    <div class="controls controls-row">
                         <label class="card-number-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]:</label>
-                        <input class="card-number span2" type="text" size="20" />
+                        <input class="card-number span1" type="text" size="20" />
+                        <span class="span1 card-icon"></span>
                         <label class="card-cvc-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_SECURITYCODE" }]:</label>
                         <input class="card-cvc span1" type="text" size="4" />
                     </div>
