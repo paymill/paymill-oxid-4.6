@@ -15,19 +15,46 @@
 $.noConflict();
 jQuery(document).ready(function ($) {
     $('.card-number').keyup(function() {
-        switch(paymill.cardType($('.card-number').val())){
-            case 'Visa':
-                $('.card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/icon_visa.png" >');
-                $('.card-icon').show();
-                break;
-            case 'MasterCard':
-                $('.card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/icon_mastercard.png" >');
-                $('.card-icon').show();
-                break;
-            default:
-                $('.card-icon').hide();
-                break;
-        }
+        var brand = paymill.cardType($('#card-number').val());
+            brand = brand.toLowerCase();
+            switch(brand){
+                case 'visa':
+                    $('#card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/32x20_visa.png" >');
+                    $('#card-icon').show();
+                    break;
+                case 'mastercard':
+                    $('#card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/32x20_mastercard.png" >');
+                    $('#card-icon').show();
+                    break;
+                case 'american express':
+                    $('#card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/32x20_amex.png" >');
+                    $('#card-icon').show();
+                    break;
+                case 'jcb':
+                    $('#card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/32x20_jcb.png" >');
+                    $('#card-icon').show();
+                    break;
+                case 'maestro':
+                    $('#card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/32x20_maestro.png" >');
+                    $('#card-icon').show();
+                    break;
+                case 'diners club':
+                    $('#card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/32x20_dinersclub.png" >');
+                    $('#card-icon').show();
+                    break;
+                case 'discover':
+                    $('#card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/32x20_discover.png" >');
+                    $('#card-icon').show();
+                    break;
+                case 'unionpay':
+                    $('#card-icon').html('<img src="[{ $oViewConf->getBaseDir() }]modules/paymill/image/32x20_unionpay.png" >');
+                    $('#card-icon').show();
+                    break;
+                case 'unknown':
+                default:
+                    $('#card-icon').hide();
+                    break;
+            }
     });
 
     function PaymillResponseHandler(error, result) {
