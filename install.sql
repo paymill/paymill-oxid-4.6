@@ -8,6 +8,6 @@ CREATE TABLE IF NOT EXISTS `paymill_fastcheckout` (
   `clientID` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `paymentID_CC` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
   `paymentID_ELV` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
-  PRIMARY KEY (`userID`),
-  UNIQUE KEY `userID` (`userID`)
+  PRIMARY KEY (`oxid`),
+  UNIQUE KEY `userID` (`oxid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
