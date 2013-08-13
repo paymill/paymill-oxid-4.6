@@ -1,4 +1,5 @@
 <?php
+
 /**
  * paymill_paymentgateway
  *
@@ -11,12 +12,12 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
     /**
      * @overload
      */
-    public function executePayment( $dAmount, & $oOrder)
+    public function executePayment($dAmount, & $oOrder)
     {
         $this->_iLastErrorNo = null;
         $this->_sLastError = null;
 
-        if(!in_array($oOrder->oxorder__oxpaymenttype->rawValue, array("paymill_cc", "paymill_elv"))){
+        if (!in_array($oOrder->oxorder__oxpaymenttype->rawValue, array("paymill_cc", "paymill_elv"))) {
             return parent::executePayment($dAmount, & $oOrder);
         }
 
@@ -30,7 +31,7 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
 
         $amount = round($dAmount * 100);
         $name = $oOrder->oxorder__oxbilllname->value . ', ' . $oOrder->oxorder__oxbillfname->value;
-
+        $utf8Name = convertToUtf($name, oxConfig::getInstance()->isUtf());
         if (oxSession::getVar('paymill_token') != null) {
             $token = oxSession::getVar('paymill_token');
             $paymentType = oxSession::getVar('paymill_payment');
@@ -47,13 +48,13 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
             'token' => $token,
             'amount' => (int) $amount,
             'currency' => strtoupper($oOrder->oxorder__oxcurrency->rawValue),
-            'name' => $name,
+            'name' => $utf8Name,
             'email' => $oOrder->oxorder__oxbillemail->value,
-            'description' => 'OrderID: ' . $oOrder->oxorder__oxid . ' - ' . $name
+            'description' => 'OrderID: ' . $oOrder->oxorder__oxid . ' - ' . $utf8Name
         );
         $paymentProcessor = new Services_Paymill_PaymentProcessor($privateKey, $apiUrl, null, $parameter, $this);
-        $paymentProcessor->setSource($modul->getInfo('version') . '_oxid_'. $shopversion);
-        if($paymentType == 'cc'){
+        $paymentProcessor->setSource($modul->getInfo('version') . '_oxid_' . $shopversion);
+        if ($paymentType == 'cc') {
             $paymentProcessor->setPreAuthAmount((int) oxSession::getVar('paymill_authorized_amount'));
         }
 
@@ -115,6 +116,15 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
             fwrite($handle, "[" . date(DATE_RFC822) . "] " . $message . "\n");
             fclose($handle);
         }
+    }
+
+    function convertToUtf($value, $utfMode)
+    {
+        if (!$utfMode) {
+            $value = utf8_encode($value);
+        }
+
+        return $value;
     }
 
 }
