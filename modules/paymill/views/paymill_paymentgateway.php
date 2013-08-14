@@ -31,7 +31,7 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
 
         $amount = round($dAmount * 100);
         $name = $oOrder->oxorder__oxbilllname->value . ', ' . $oOrder->oxorder__oxbillfname->value;
-        $utf8Name = convertToUtf($name, oxConfig::getInstance()->isUtf());
+        $utf8Name = $this->convertToUtf($name, oxConfig::getInstance()->isUtf());
         if (oxSession::getVar('paymill_token') != null) {
             $token = oxSession::getVar('paymill_token');
             $paymentType = oxSession::getVar('paymill_payment');
@@ -118,7 +118,7 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
         }
     }
 
-    function convertToUtf($value, $utfMode)
+    public function convertToUtf($value, $utfMode)
     {
         if (!$utfMode) {
             $value = utf8_encode($value);
