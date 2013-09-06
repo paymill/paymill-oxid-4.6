@@ -19,7 +19,7 @@
         <label class="card-number-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]:</label>
     </td>
     <td>
-        <input class="card-number span2" type="text" size="20" />
+        <input id="paymillCardNumber" class="card-number span2" type="text" size="20" />
         <span class="span3 card-icon"></span>
     </td>
 </tr>
@@ -29,7 +29,7 @@
         <label class="card-cvc-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_SECURITYCODE" }]:</label>
     </td>
     <td>
-        <input class="card-cvc span1" type="text" size="4" />
+        <input id="paymillCardCvc" class="card-cvc span1" type="text" size="4" />
     </td>
 </tr>
 <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
@@ -38,7 +38,7 @@
         <label class="card-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_HOLDERNAME" }]:</label>
     </td>
     <td>
-        <input class="card-holdername span3" type="text" size="20" value="[{$oxcmp_user->oxuser__oxfname->value}] [{$oxcmp_user->oxuser__oxlname->value}]" />
+        <input id="paymillCardHolderName" class="card-holdername span3" type="text" size="20" value="[{$oxcmp_user->oxuser__oxfname->value}] [{$oxcmp_user->oxuser__oxlname->value}]" />
     </td>
 </tr>
 <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
@@ -47,7 +47,7 @@
         <label class="card-expiry-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_VALIDUNTIL" }]:</label>
     </td>
     <td>
-        <select class="card-expiry-month span1" />
+        <select id="paymillCardExpiryMonth" class="card-expiry-month span1" />
 <option>01</option>
 <option>02</option>
 <option>03</option>
@@ -64,7 +64,7 @@
 
 <span> / </span>
 
-<select class="card-expiry-year span1" />
+<select id="paymillCardExpiryYear" class="card-expiry-year span1" />
 [{foreach from=$oView->getCreditYears() item=year}]
 <option>[{$year}]</option>
 [{/foreach}]
@@ -83,7 +83,7 @@
         <label class="elv-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNTHOLDER" }]:</label>
     </td>
     <td>
-        <input class="elv-holdername span3" type="text" size="20" value="[{$oxcmp_user->oxuser__oxfname->value}] [{$oxcmp_user->oxuser__oxlname->value}]" />
+        <input id="paymillElvHolderName" class="elv-holdername span3" type="text" size="20" value="[{$oxcmp_user->oxuser__oxfname->value}] [{$oxcmp_user->oxuser__oxlname->value}]" />
     </td>
 </tr>
 <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
@@ -92,7 +92,7 @@
         <label class="elv-account-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNT" }]:</label>
     </td>
     <td>
-        <input class="elv-account span3" type="text" size="20" />
+        <input id="paymillElvAccount" class="elv-account span3" type="text" size="20" />
     </td>
 </tr>
 <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
@@ -101,7 +101,7 @@
         <label class="elv-bankcode-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_BANKCODE" }]:</label>
     </td>
     <td>
-        <input class="elv-bankcode span3" type="text" size="20" />
+        <input id="paymillElvBankCode" class="elv-bankcode span3" type="text" size="20" />
     </td>
 </tr>
 [{/if}]

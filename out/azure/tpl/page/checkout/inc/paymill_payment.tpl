@@ -13,18 +13,18 @@
                 <div id="payment-form-cc">
                     <div class="controls controls-row">
                         <label class="card-number-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]:</label>
-                        <input class="card-number span1" type="text" size="20" />
+                        <input id="paymillCardNumber" class="card-number span1" type="text" size="20" />
                         <span class="span1 card-icon"></span>
                         <label class="card-cvc-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_SECURITYCODE" }]:</label>
-                        <input class="card-cvc span1" type="text" size="4" />
+                        <input id="paymillCardCvc" class="card-cvc span1" type="text" size="4" />
                     </div>
                     <div class="controls controls-row">
                         <label class="card-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_HOLDERNAME" }]:</label>
-                        <input class="card-holdername span3" type="text" size="20" value="[{$oxcmp_user->oxuser__oxfname->value}] [{$oxcmp_user->oxuser__oxlname->value}]" />
+                        <input id="paymillCardHolderName" class="card-holdername span3" type="text" size="20" value="[{$oxcmp_user->oxuser__oxfname->value}] [{$oxcmp_user->oxuser__oxlname->value}]" />
                     </div>
                     <div class="controls controls-row">
                         <label class="card-expiry-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_VALIDUNTIL" }]:</label>
-                        <select class="card-expiry-month span1" />
+                        <select id="paymillCardExpiryMonth" class="card-expiry-month span1" />
                         <option>01</option>
                         <option>02</option>
                         <option>03</option>
@@ -41,7 +41,7 @@
 
                         <span> / </span>
 
-                        <select class="card-expiry-year span1" />
+                        <select id="paymillCardExpiryYear" class="card-expiry-year span1" />
                         [{foreach from=$oView->getCreditYears() item=year}]
                         <option>[{$year}]</option>
                         [{/foreach}]
@@ -53,15 +53,15 @@
                 <div id="payment-form-elv">
                     <div class="controls controls-row">
                         <label class="elv-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNTHOLDER" }]:</label>
-                        <input class="elv-holdername span3" type="text" size="20" value="[{$oxcmp_user->oxuser__oxfname->value}] [{$oxcmp_user->oxuser__oxlname->value}]" />
+                        <input id="paymillElvHolderName" class="elv-holdername span3" type="text" size="20" value="[{$oxcmp_user->oxuser__oxfname->value}] [{$oxcmp_user->oxuser__oxlname->value}]" />
                     </div>
                     <div class="controls controls-row">
                         <label class="elv-account-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNT" }]:</label>
-                        <input class="elv-account span3" type="text" size="20" />
+                        <input id="paymillElvAccount" class="elv-account span3" type="text" size="20" />
                     </div>
                     <div class="controls controls-row">
                         <label class="elv-bankcode-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_BANKCODE" }]:</label>
-                        <input class="elv-bankcode span3" type="text" size="20" />
+                        <input id="paymillElvBankCode" class="elv-bankcode span3" type="text" size="20" />
                     </div>
                 </div>
                 [{/if}]
