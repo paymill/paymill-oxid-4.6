@@ -99,6 +99,14 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
             }
         }
 
+        if (oxConfig::getInstance()->getShopConfVar('PAYMILL_SET_PAYMENTDATE')) {
+            $oDb = oxDb::getDb();
+            $sDate = date('Y-m-d H:i:s', oxUtilsDate::getInstance()->getTime());
+            $sQ = 'update oxorder set oxpaid=\'' . $sDate . '\' where oxid=' . $oDb->quote($oOrder->getId());
+            $oOrder->oxorder__oxorderdate = new oxField($sDate, oxField::T_RAW);
+            $oDb->execute($sQ);
+        }
+
         return $result === true;
     }
 
