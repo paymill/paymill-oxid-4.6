@@ -1,6 +1,6 @@
 <?php
 
-$sMetadataVersion = '1.1';
+$sMetadataVersion = '1.0';
 $aModule = array(
     'id' => 'paymill',
     'title' => 'Paymill',
@@ -11,8 +11,8 @@ $aModule = array(
     'url' => 'http://www.paymill.de',
     'email' => 'support@paymill.de',
     'extend' => array(
-        'payment' => 'paymill/controllers/paymill_payment',
-        'oxpaymentgateway' => 'paymill/controllers/paymill_paymentgateway'
+        'payment' => 'paymill/views/paymill_payment',
+        'oxpaymentgateway' => 'paymill/views/paymill_paymentgateway'
     ),
     'files' => array(
         'Services_Paymill_PaymentProcessor' => 'paymill/lib/Services/Paymill/PaymentProcessor.php',
@@ -22,22 +22,11 @@ $aModule = array(
         'paymill_fastcheckout' => 'paymill/core/paymill_fastcheckout.php',
         'paymill_logging' => 'paymill/core/paymill_logging.php',
         'paymill_loglist' => 'paymill/core/paymill_loglist.php',
-        'paymill_log' => 'paymill/controllers/admin/paymill_log.php',
-        'paymill_log_list' => 'paymill/controllers/admin/paymill_log_list.php',
-        'paymill_log_entry' => 'paymill/controllers/admin/paymill_log_entry.php',
-        'paymill_log_abstract' => 'paymill/controllers/admin/paymill_log_abstract.php',
         'paymill_util' => 'paymill/util/paymill_util.php'
     ),
     'blocks' => array(
         array('template' => 'page/checkout/payment.tpl', 'block' => 'select_payment', 'file' => 'paymill_select_payment.tpl'),
         array('template' => 'page/checkout/payment.tpl', 'block' => 'checkout_payment_main', 'file' => 'paymill_select_header.tpl'),
-    ),
-    'templates' => array(
-        'paymill_cc.tpl' => 'paymill/views/azure/tpl/page/checkout/inc/paymill_cc.tpl',
-        'paymill_elv.tpl' => 'paymill/views/azure/tpl/page/checkout/inc/paymill_elv.tpl',
-        'paymill_log.tpl' => 'paymill/views/admin/tpl/paymill_log.tpl',
-        'paymill_log_list.tpl' => 'paymill/views/admin/tpl/paymill_log_list.tpl',
-        'paymill_log_entry.tpl' => 'paymill/views/admin/tpl/paymill_log_entry.tpl'
     ),
     'settings' => array(
         array('group' => 'main', 'name' => 'PAYMILL_PRIVATEKEY', 'type' => 'str', 'value' => ''),
