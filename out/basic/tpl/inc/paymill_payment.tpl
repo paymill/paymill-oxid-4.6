@@ -19,7 +19,7 @@
             <label class="card-number-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]:</label>
         </td>
         <td>
-            <input id="paymillCardNumber" class="card-number span1" type="text" size="20" value="[{$paymillCcLastFour}]"/>
+            <input id="paymillCardNumber" class="card-number span1 [{if $brand}]paymill-card-number-[{$brand}][{/if}]" type="text" size="20" value="[{$paymillCcLastFour}]"/>
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
@@ -100,7 +100,7 @@
             <label class="elv-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNTHOLDER" }]:</label>
         </td>
         <td>
-            <input id="paymillElvHolderName" class="elv-holdername span3" type="text" size="20" value="[{$paymillElvHolder}]"/>
+            <input id="paymillElvHolderName" class="elv-holdername span1" type="text" size="20" value="[{$paymillElvHolder}]"/>
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
@@ -108,7 +108,7 @@
             <label class="elv-account-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNT" }]:</label>
         </td>
         <td>
-            <input id="paymillElvAccount" class="elv-account span3" type="text" size="20" value="[{$paymillElvAccount}]"/>
+            <input id="paymillElvAccount" class="elv-account span1" type="text" size="20" value="[{$paymillElvAccount}]"/>
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
@@ -116,7 +116,7 @@
             <label class="elv-bankcode-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_BANKCODE" }]:</label>
         </td>
         <td>
-            <input id="paymillElvBankCode" class="elv-bankcode span3" type="text" size="20" value="[{$paymillElvCode}]"/>
+            <input id="paymillElvBankCode" class="elv-bankcode span1" type="text" size="20" value="[{$paymillElvCode}]"/>
         </td>
     </tr>
     [{if $oxConfig->getShopConfVar('PAYMILL_SHOW_LABEL')}]

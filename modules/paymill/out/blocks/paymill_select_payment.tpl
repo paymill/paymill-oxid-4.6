@@ -14,7 +14,7 @@
                     <div id="payment-form-cc">
                         <div class="controls controls-row">
                             <label class="card-number-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]:</label>
-                            <input id="paymillCardNumber" class="card-number span1" type="text" size="20" value="[{$paymillCcLastFour}]"/>
+                            <input id="paymillCardNumber" class="card-number span1 [{if $brand}]paymill-card-number-[{$brand}][{/if}]" type="text" size="20" value="[{$paymillCcLastFour}]"/>
                         </div>
                         <div class="controls controls-row">
                             <label class="card-cvc-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_SECURITYCODE" }]<span class="tooltip" title='[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_CC_TOOLTIP" }]'>?</span>:</label>
@@ -79,15 +79,15 @@
                     <div id="payment-form-elv">
                         <div class="controls controls-row">
                             <label class="elv-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNTHOLDER" }]:</label>
-                            <input id="paymillElvHolderName" class="elv-holdername span3" type="text" size="20" value="[{$paymillElvHolder}]"/>
+                            <input id="paymillElvHolderName" class="elv-holdername span1" type="text" size="20" value="[{$paymillElvHolder}]"/>
                         </div>
                         <div class="controls controls-row">
                             <label class="elv-account-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNT" }]:</label>
-                            <input id="paymillElvAccount" class="elv-account span3" type="text" size="20" value="[{$paymillElvAccount}]"/>
+                            <input id="paymillElvAccount" class="elv-account span1" type="text" size="20" value="[{$paymillElvAccount}]"/>
                         </div>
                         <div class="controls controls-row">
                             <label class="elv-bankcode-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_BANKCODE" }]:</label>
-                            <input id="paymillElvBankCode" class="elv-bankcode span3" type="text" size="20" value="[{$paymillElvCode}]"/>
+                            <input id="paymillElvBankCode" class="elv-bankcode span1" type="text" size="20" value="[{$paymillElvCode}]"/>
                         </div>
                     </div>
                 </li>

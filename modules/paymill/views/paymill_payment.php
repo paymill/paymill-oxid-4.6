@@ -84,6 +84,11 @@ class paymill_payment extends paymill_payment_parent
             $this->addTplParam('paymillCcCardHolder', $this->_getEntry($this->_payment, 'card_holder'));
             $this->addTplParam('paymillCcExpireMonth', $this->_getEntry($this->_payment, 'expire_month'));
             $this->addTplParam('paymillCcExpireYear', $this->_getEntry($this->_payment, 'expire_year'));
+            if ($this->_getEntry($this->_payment, 'card_type') === 'american express') {
+                $this->addTplParam('brand', 'amex');
+            } else {
+                $this->addTplParam('brand', $this->_getEntry($this->_payment, 'card_type'));
+            }
         }
     }
     
