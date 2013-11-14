@@ -87,7 +87,7 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
         if (oxSession::hasVar('paymill_token')) {
             $this->_token = oxSession::getVar('paymill_token');
         } else {
-            oxRegistry::get("oxUtilsView")->addErrorToDisplay("No Token was provided");
+            oxUtilsView::getInstance()->addErrorToDisplay("No Token was provided");
             oxUtils::getInstance()->redirect($this->getConfig()->getSslShopUrl() . 'index.php?cl=payment', false);
         }
         
@@ -136,7 +136,7 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
                 $this->_setPaymentDate($oOrder);
             }
         } else {
-            oxRegistry::get("oxUtilsView")->addErrorToDisplay($this->_getErrorMessage($this->_paymentProcessor->getErrorCode()));
+            oxUtilsView::getInstance()->addErrorToDisplay($this->_getErrorMessage($this->_paymentProcessor->getErrorCode()));
         }
 
         
