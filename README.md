@@ -1,18 +1,18 @@
-Paymill-Oxid 4.6
+PAYMILL - Oxid 4.6
 ==================
 
 Payment plugin for OXID Version 4.6.5
 
 Download the module here: https://github.com/Paymill/Paymill-Oxid/archive/master.zip
 
-- Merge the content of the Paymill-Oxid-Module directory with your OXID installation.
+- Merge the content of the PAYMILL-Oxid-Module directory with your OXID installation.
 - Import the install.sql to your database.
 - In your administration backend activate the Paymill plugin.
 - Go to the configuration section where you can insert your private and public key (that you can find in your Paymill cockpit [https://app.paymill.de/](https://app.paymill.de/ "Paymill cockpit")).
 
-# Activate Paymill Payment
+# Activate PAYMILL Payment
 
-To activate Paymill payment follow these steps:
+To activate PAYMILL payment follow these steps:
 
 - In the main menu goto **Shopeinstellungen > Zahlungsarten**
 - Choose the payment method you want to activate
@@ -50,21 +50,6 @@ New:
 <!--PAYMILL END-->
 <!-- ordering steps -->
 [{include file="inc/steps_item.tpl" highlight=3}]
-```
-
-Old:
-```php
-[{assign var="iPayError" value=$oView->getPaymentError() }]
-```
-
-New:
-```php
-[{assign var="iPayError" value=$oView->getPaymentError() }]
-<!--PAYMILL START-->
-  [{ if $piPaymillError}]
-	<br><div class="errorbox" style="color:red;">[{ $piPaymillError }]</div>
-  [{ /if }]
-<!--PAYMILL END-->
 ```
 
 Old:
@@ -117,5 +102,7 @@ Open the javascript console in your browser and check the debug messages during 
 - You can access the logging within your administration backend under Paymill -> Log
 
 # Notes about the payment process
+
+Fast Checkout: Fast checkout can be enabled by selecting the option in the PAYMILL Basic Settings. If any customer completes a purchase while the option is active this customer will not be asked for data again. Instead a reference to the customer data will be saved allowing comfort during checkout.
 
 The payment is processed when an order is placed in the shop frontend.
