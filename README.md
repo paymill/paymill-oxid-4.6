@@ -1,7 +1,7 @@
 PAYMILL - Oxid 4.6
 ==================
 
-Payment plugin for OXID Version 4.6.5
+Payment plugin for OXID Version 4.6.x
 
 Download the module here: https://github.com/Paymill/Paymill-Oxid/archive/master.zip
 
