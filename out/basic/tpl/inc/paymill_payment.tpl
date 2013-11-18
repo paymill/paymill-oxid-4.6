@@ -15,7 +15,9 @@
             <p class="payment-errors cc" style="display:none;"></p>
         </td>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td colspan="2">
+        <td>
+        </td>
+        <td>
             <label class="card-number-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]:</label>
         </td>
         <td>
@@ -23,7 +25,9 @@
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td colspan="2">
+        <td>
+        </td>
+        <td>
             <label class="card-cvc-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_SECURITYCODE" }]<span class="tooltip" title='[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_CC_TOOLTIP" }]'>?</span>:</label>
         </td>
         <td>
@@ -31,7 +35,9 @@
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td colspan="2">
+        <td>
+        </td>
+        <td>
             <label class="card-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_HOLDERNAME" }]:</label>
         </td>
         <td>
@@ -39,7 +45,9 @@
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td colspan="2">
+        <td>
+        </td>
+        <td>
             <label class="card-expiry-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_VALIDUNTIL" }]:</label>
         </td>
         <td>
@@ -96,7 +104,9 @@
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td colspan="2">
+        <td>
+        </td>
+        <td>
             <label class="elv-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNTHOLDER" }]:</label>
         </td>
         <td>
@@ -104,7 +114,9 @@
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td colspan="2">
+        <td>
+        </td>
+        <td>
             <label class="elv-account-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNT" }]:</label>
         </td>
         <td>
@@ -112,7 +124,9 @@
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td colspan="2">
+        <td>
+        </td>
+        <td>
             <label class="elv-bankcode-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_BANKCODE" }]:</label>
         </td>
         <td>
