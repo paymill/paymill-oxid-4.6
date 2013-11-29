@@ -77,18 +77,6 @@
             </select>
         </td>
     </tr>
-    [{if $oxConfig->getShopConfVar('PAYMILL_SHOW_LABEL')}]
-    <tr>
-        <td colspan="3">
-            <div class="paymill_powered">
-                <div class="paymill_credits">
-                    [{ oxmultilang ident="PAYMILL_CC_POWERED_TEXT" }]
-                    <a href="http://www.paymill.de" target="_blank">PAYMILL</a>
-                </div>
-            </div>
-        </td>
-    </tr>
-    [{/if}]
 [{elseif $sPaymentID == 'paymill_elv'}]
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
         <td>
@@ -133,16 +121,4 @@
             <input id="paymillElvBankCode" class="elv-bankcode span1" type="text" size="20" value="[{$paymillElvCode}]"/>
         </td>
     </tr>
-    [{if $oxConfig->getShopConfVar('PAYMILL_SHOW_LABEL')}]
-    <tr>
-        <td colspan="3">
-            <div class="paymill_powered">
-                <div class="paymill_credits">
-                    [{ oxmultilang ident="PAYMILL_ELV_POWERED_TEXT" }]
-                    <a href="http://www.paymill.de" target="_blank">PAYMILL</a>
-                </div>
-            </div>
-        </td>
-    </tr>
-    [{/if}]
 [{/if}]
