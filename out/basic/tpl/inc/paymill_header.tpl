@@ -9,6 +9,7 @@
     var PAYMILL_FASTCHECKOUT_CC = [{$fastCheckoutCc}];
     var PAYMILL_FASTCHECKOUT_ELV = [{$fastCheckoutElv}];
     var PAYMILL_DEBUG = '[{$oxConfig->getShopConfVar('PAYMILL_ACTIVATE_DEBUG')}]';
+    var PAYMILL_SEPA = '[{$oxConfig->getShopConfVar('PAYMILL_ACTIVATE_SEPA')}]';
 </script>
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
 <script type="text/javascript">
@@ -51,6 +52,14 @@ pmQuery(document).ready(function ()
         PAYMILL_FASTCHECKOUT_ELV = false;
     });
     
+    pmQuery('#paymillIban').live('focus', function() {
+        PAYMILL_FASTCHECKOUT_ELV = false;
+    });
+    
+    pmQuery('#paymillBic').live('focus', function() {
+        PAYMILL_FASTCHECKOUT_ELV = false;
+    });
+    
     pmQuery('#paymillCardNumber').keyup(function() {
         var brand = paymill.cardType(pmQuery('#paymillCardNumber').val());
         brand = brand.toLowerCase();
@@ -89,6 +98,68 @@ pmQuery(document).ready(function ()
         if(PAYMILL_DEBUG === "1"){
             console.log(message);
         }
+    }
+    
+    function paymillElv()
+    {
+        if (!pmQuery('#paymillElvHolderName').val()) {
+            pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]');
+            pmQuery(".payment-errors.elv").css("display","inline-block");
+            pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
+            return false;
+        }
+
+        if (!paymill.validateAccountNumber(pmQuery('#paymillElvAccount').val())) {
+            pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTNUMBER" }]');
+            pmQuery(".payment-errors.elv").css("display","inline-block");
+            pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
+            return false;
+        }
+
+        if (!paymill.validateBankCode(pmQuery('#paymillElvBankCode').val())) {
+            pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_BANKCODE" }]');
+            pmQuery(".payment-errors.elv").css("display","inline-block");
+            pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
+            return false;
+        }
+
+        var params = {
+            number: pmQuery('#paymillElvAccount').val(),
+            bank: pmQuery('#paymillElvBankCode').val(),
+            accountholder: pmQuery('#paymillElvHolderName').val()
+        };
+        paymill.createToken(params, PaymillResponseHandler);
+    }
+    
+    function paymillSepa()
+    {
+        if (!pmQuery('#paymillElvHolderName').val()) {
+            pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]');
+            pmQuery(".payment-errors.elv").css("display","inline-block");
+            pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
+            return false;
+        }
+
+        if (pmQuery('#paymillIban').val() === "") {
+            pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_IBAN" }]');
+            pmQuery(".payment-errors.elv").css("display","inline-block");
+            pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
+            return false;
+        }
+
+        if (pmQuery('#paymillBic').val() === "") {
+            pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_BIC" }]');
+            pmQuery(".payment-errors.elv").css("display","inline-block");
+            pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
+            return false;
+        }
+
+        var params = {
+            iban: pmQuery('#paymillIban').val(),
+            bic: pmQuery('#paymillBic').val(),
+            accountholder: pmQuery('#paymillElvHolderName').val()
+        };
+        paymill.createToken(params, PaymillResponseHandler);
     }
 
     pmQuery('form[name="order"]').submit(function (event)
@@ -150,33 +221,11 @@ pmQuery(document).ready(function ()
             }
         } else if(pmQuery('#payment_paymill_elv').attr('checked')) {
             if (!PAYMILL_FASTCHECKOUT_ELV) {
-                if (!pmQuery('#paymillElvHolderName').val()) {
-                    pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]');
-                    pmQuery(".payment-errors.elv").css("display","inline-block");
-                    pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                    return false;
+                if (PAYMILL_SEPA === "1") {
+                    paymillSepa();
+                } else {
+                    paymillElv();
                 }
-
-                if (!paymill.validateAccountNumber(pmQuery('#paymillElvAccount').val())) {
-                    pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTNUMBER" }]');
-                    pmQuery(".payment-errors.elv").css("display","inline-block");
-                    pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                    return false;
-                }
-
-                if (!paymill.validateBankCode(pmQuery('#paymillElvBankCode').val())) {
-                    pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_BANKCODE" }]');
-                    pmQuery(".payment-errors.elv").css("display","inline-block");
-                    pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                    return false;
-                }
-
-                var params = {
-                    number: pmQuery('#paymillElvAccount').val(),
-                    bank: pmQuery('#paymillElvBankCode').val(),
-                    accountholder: pmQuery('#paymillElvHolderName').val()
-                };
-                paymill.createToken(params, PaymillResponseHandler);
             } else {
                 pmQuery('form[name="order"]').append("<input type='hidden' name='paymillToken' value='dummyToken'/>");
                 pmQuery('form[name="order"]').get(0).submit();

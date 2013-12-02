@@ -78,6 +78,7 @@
         </td>
     </tr>
 [{elseif $sPaymentID == 'paymill_elv'}]
+    [{if !$oxConfig->getShopConfVar('PAYMILL_ACTIVATE_SEPA')}]
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
         <td>
             <input id="payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]>
@@ -121,4 +122,49 @@
             <input id="paymillElvBankCode" class="elv-bankcode span1" type="text" size="20" value="[{$paymillElvCode}]"/>
         </td>
     </tr>
+    [{else}]
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+        <td>
+            <input id="payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]>
+        </td>
+        <td colspan="2" id="test_PaymentDesc_[{$smarty.foreach.PaymentSelect.iteration}]" >
+            <label for="payment_[{$sPaymentID}]"><b>[{ $paymentmethod->oxpayments__oxdesc->value}]</b></label>
+        </td>
+    </tr>
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+        <td colspan="3">
+            <p class="payment-errors elv" style="display:none;"></p>
+        </td>
+    </tr>
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+        <td>
+        </td>
+        <td>
+            <label class="elv-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNTHOLDER" }]:</label>
+        </td>
+        <td>
+            <input id="paymillElvHolderName" class="elv-holdername span1" type="text" size="20" value="[{$paymillElvHolder}]"/>
+        </td>
+    </tr>
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+        <td>
+        </td>
+        <td>
+            <label class="elv-account-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_IBAN" }]:</label>
+        </td>
+        <td>
+            <input id="paymillIban" class="elv-account span1" type="text" size="20" value="[{$paymillElvIban}]"/>
+        </td>
+    </tr>
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+        <td>
+        </td>
+        <td>
+            <label class="elv-bankcode-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_BIC" }]:</label>
+        </td>
+        <td>
+            <input id="paymillBic" class="elv-bankcode span1" type="text" size="20" value="[{$paymillElvBic}]"/>
+        </td>
+    </tr>
+    [{/if}]
 [{/if}]

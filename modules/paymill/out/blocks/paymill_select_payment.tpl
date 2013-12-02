@@ -62,6 +62,29 @@
             <input id="payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]>
             <label for="payment_[{$sPaymentID}]"><b>[{ $paymentmethod->oxpayments__oxdesc->value}]</b></label>
         </dt>
+    [{if $oxConfig->getShopConfVar('PAYMILL_ACTIVATE_SEPA')}]
+        <dd class="[{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]activePayment[{/if}]">
+            <ul class="form">
+                <li class="controls controls-row">
+                    <p class="payment-errors elv" style="display:none;"></p>
+                    <div id="payment-form-elv">
+                        <div class="controls controls-row">
+                            <label class="elv-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNTHOLDER" }]:</label>
+                            <input id="paymillElvHolderName" class="elv-holdername span3" type="text" size="20" value="[{$paymillElvHolder}]"/>
+                        </div>
+                        <div class="controls controls-row">
+                            <label class="elv-account-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_IBAN" }]:</label>
+                            <input class="elv-account span3" id="paymillIban" type="text" size="20" value="[{$paymillElvIban}]"/>
+                        </div>
+                        <div class="controls controls-row">
+                            <label class="elv-bankcode-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_BIC" }]:</label>
+                            <input class="elv-bankcode span3" id="paymillBic" type="text" size="20" value="[{$paymillElvBic}]"/>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </dd>
+    [{else}]
         <dd class="[{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]activePayment[{/if}]">
             <ul class="form">
                 <li class="controls controls-row">
@@ -83,6 +106,7 @@
                 </li>
             </ul>
         </dd>
+    [{/if}] 
     </dl>
 [{else}]
     [{$smarty.block.parent}]

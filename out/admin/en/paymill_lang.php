@@ -27,5 +27,6 @@ $aLang = array(
     'SHOP_MODULE_PAYMILL_ACTIVATE_FASTCHECKOUT' => 'FastCheckout aktivieren',
     'SHOP_MODULE_PAYMILL_ACTIVATE_DIFFERENTAMOUNT' => 'Abweichender Betrag',
     'SHOP_MODULE_PAYMILL_SHOW_LABEL' => 'Paymill-Label anzeigen',
-    'SHOP_MODULE_PAYMILL_SET_PAYMENTDATE' => 'Mark Order as paid'
+    'SHOP_MODULE_PAYMILL_SET_PAYMENTDATE' => 'Mark Order as paid',
+    'SHOP_MODULE_PAYMILL_ACTIVATE_SEPA' => 'SEPA'
 );
