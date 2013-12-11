@@ -19,10 +19,12 @@ $aModule = array(
         'Services_Paymill_LoggingInterface' => 'paymill/lib/Services/Paymill/LoggingInterface.php',
         'Services_Paymill_Clients' => 'paymill/lib/Services/Paymill/Clients.php',
         'Services_Paymill_Payments' => 'paymill/lib/Services/Paymill/Payments.php',
+        'Services_Paymill_Webhooks' => 'paymill/lib/Services/Paymill/Webhooks.php',
         'paymill_fastcheckout' => 'paymill/core/paymill_fastcheckout.php',
         'paymill_logging' => 'paymill/core/paymill_logging.php',
         'paymill_loglist' => 'paymill/core/paymill_loglist.php',
-        'paymill_util' => 'paymill/util/paymill_util.php'
+        'paymill_util' => 'paymill/util/paymill_util.php',
+        'paymill_hooks' => 'paymill/views/paymill_hooks.php'
     ),
     'blocks' => array(
         array('template' => 'page/checkout/payment.tpl', 'block' => 'select_payment', 'file' => 'paymill_select_payment.tpl'),
