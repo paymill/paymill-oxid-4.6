@@ -72,6 +72,19 @@ $aLang = array(
     'PAYMILL_50500' => 'General timeout.',
     'PAYMILL_50501' => 'Timeout on side of the acquirer.',
     'PAYMILL_50502' => 'Risk management transaction timeout.',
-    'PAYMILL_50600' => 'Duplicate transaction.'
-    
+    'PAYMILL_50600' => 'Duplicate transaction.',
+    'PAYMILL_internal_server_error' => 'Communication with PSP failed',
+    'PAYMILL_invalid_public_key' => 'Public Key is invalid',
+    'PAYMILL_invalid_payment_data' => 'Payment mode, card type, currency or country not accepted.',
+    'PAYMILL_unknown_error' => 'Unknown Error',
+    'PAYMILL_3ds_cancelled' => '3-D Secure process has been aborted',
+    'PAYMILL_field_invalid_card_number' => 'Invalid or missing card number',
+    'PAYMILL_field_invalid_card_exp_year' => 'Invalid or missing expiry year',
+    'PAYMILL_field_invalid_card_exp_month' => 'Invalid or missing expiry month',
+    'PAYMILL_field_invalid_card_exp' => 'Card no longer (or not yet) valid',
+    'PAYMILL_field_invalid_card_cvc' => 'Invalid CVC',
+    'PAYMILL_field_invalid_card_holder' => 'Invalid card holder',
+    'PAYMILL_field_invalid_amount_int' => 'Invalid or missing amount for 3-D Secure',
+    'PAYMILL_field_field_invalid_amount' => 'Invalid or missing amount for 3-D Secure',
+    'PAYMILL_field_field_field_invalid_currency' => 'Invalid or missing currency for 3-D Secure'  
 );
