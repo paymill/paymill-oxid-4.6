@@ -1,4 +1,6 @@
 ## v2.2.0
+ * add elv sepa
+ * add bridge translations
  * maestro handling
  * better logging view
  * better error messages
