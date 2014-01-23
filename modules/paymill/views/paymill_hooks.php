@@ -12,7 +12,8 @@ class paymill_hooks extends oxUBase
                     $order = oxNew("oxorder");
                     $order->load($description[1]);
                     $status = '';
-                    if ($data->event->event_resource->amount == $order->getTotalOrderSum()) {
+                    
+                    if ((int) $data->event->event_resource->amount === (int) round($order->getTotalOrderSum() * 100)) {
                         $order->oxorder__oxstorno = oxNew('oxField', 1, oxField::T_RAW);
                         $status = strtoupper($data->event->event_resource->status);
                     } else {
