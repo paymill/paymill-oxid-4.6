@@ -162,7 +162,7 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
                 );
             }
             
-            if (array_key_exists($client['email'], $client)) {
+            if (array_key_exists('email', $client)) {
                 $this->_paymentProcessor->setClientId($clientId);
             }
         }
