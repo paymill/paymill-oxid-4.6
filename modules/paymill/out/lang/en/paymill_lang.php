@@ -73,6 +73,7 @@ $aLang = array(
     'PAYMILL_50501' => 'Timeout on side of the acquirer.',
     'PAYMILL_50502' => 'Risk management transaction timeout.',
     'PAYMILL_50600' => 'Duplicate transaction.',
+    'PAYMILL_field_invalid_country' => 'The country code is invalid',
     'PAYMILL_internal_server_error' => 'Communication with PSP failed',
     'PAYMILL_invalid_public_key' => 'Public Key is invalid',
     'PAYMILL_invalid_payment_data' => 'Payment mode, card type, currency or country not accepted.',

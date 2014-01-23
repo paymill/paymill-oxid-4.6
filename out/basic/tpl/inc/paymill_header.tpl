@@ -12,6 +12,7 @@
     var PAYMILL_SEPA = '[{$oxConfig->getShopConfVar('PAYMILL_ACTIVATE_SEPA')}]';
     var PAYMILL_TRANSLATION = {
         PAYMILL_internal_server_error : '[{ oxmultilang ident="PAYMILL_internal_server_error" }]',
+        PAYMILL_field_invalid_country : '[{ oxmultilang ident="PAYMILL_field_invalid_country" }]',
         PAYMILL_invalid_public_key : '[{ oxmultilang ident="PAYMILL_invalid_public_key" }]',
         PAYMILL_invalid_payment_data : '[{ oxmultilang ident="PAYMILL_invalid_payment_data" }]',
         PAYMILL_unknown_error : '[{ oxmultilang ident="PAYMILL_unknown_error" }]',
@@ -93,7 +94,13 @@ pmQuery(document).ready(function ()
         if (error) {
             paymillDebug('An API error occured:' + error.apierror);
             // Zeigt den Fehler überhalb des Formulars an
-            pmQuery(".payment-errors").text(PAYMILL_TRANSLATION["PAYMILL_" + error.apierror]);
+            
+            var message = error.apierror;
+            if(PAYMILL_TRANSLATION["PAYMILL_" + error.apierror]){
+                message = PAYMILL_TRANSLATION["PAYMILL_" + error.apierror];
+            }
+            
+            pmQuery(".payment-errors").text(message);
             pmQuery(".payment-errors").css("display", "inline-block");
         } else {
             pmQuery(".payment-errors").css("display", "none");

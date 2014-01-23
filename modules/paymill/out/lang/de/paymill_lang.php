@@ -73,6 +73,7 @@ $aLang = array(
     'PAYMILL_50501' => 'Die Schnittstelle zum Acquirer reagiert nicht, daher bekommen wir keine Antwort ob die Transaktion erfolgreich durchgelaufen ist.',
     'PAYMILL_50502' => 'Es gibt eine Zeit&uuml;berschreitung bei der Risiko-Management Transaktion.',
     'PAYMILL_50600' => 'Doppelte Transaktion.',
+    'PAYMILL_field_invalid_country' => 'Die L&aaml;nderkennung ist nicht g&uuml;ltig',
     'PAYMILL_internal_server_error' => 'Kommunikation mit dem PSP fehlgeschlagen',
     'PAYMILL_invalid_public_key' => ' Public Key ungültig',
     'PAYMILL_invalid_payment_data' => 'Für diesen Zahlungsmodus, Kreditkartentyp, Währung oder Land nicht zugelassen',
