@@ -74,6 +74,7 @@ $aLang = array(
     'PAYMILL_50502' => 'Risk management transaction timeout.',
     'PAYMILL_50600' => 'Duplicate transaction.',
     'PAYMILL_field_invalid_country' => 'The country code is invalid',
+    'PAYMILL_field_invalid_iban' => 'The Iban is invalid',
     'PAYMILL_internal_server_error' => 'Communication with PSP failed',
     'PAYMILL_invalid_public_key' => 'Public Key is invalid',
     'PAYMILL_invalid_payment_data' => 'Payment mode, card type, currency or country not accepted.',
@@ -86,6 +87,6 @@ $aLang = array(
     'PAYMILL_field_invalid_card_cvc' => 'Invalid CVC',
     'PAYMILL_field_invalid_card_holder' => 'Invalid card holder',
     'PAYMILL_field_invalid_amount_int' => 'Invalid or missing amount for 3-D Secure',
-    'PAYMILL_field_field_invalid_amount' => 'Invalid or missing amount for 3-D Secure',
-    'PAYMILL_field_field_field_invalid_currency' => 'Invalid or missing currency for 3-D Secure'  
+    'PAYMILL_field_invalid_amount' => 'Invalid or missing amount for 3-D Secure',
+    'PAYMILL_field_invalid_currency' => 'Invalid or missing currency for 3-D Secure'  
 );

@@ -12,7 +12,6 @@
     var PAYMILL_SEPA = '[{$oxConfig->getShopConfVar('PAYMILL_ACTIVATE_SEPA')}]';
     var PAYMILL_TRANSLATION = {
         PAYMILL_internal_server_error : '[{ oxmultilang ident="PAYMILL_internal_server_error" }]',
-        PAYMILL_field_invalid_country : '[{ oxmultilang ident="PAYMILL_field_invalid_country" }]',
         PAYMILL_invalid_public_key : '[{ oxmultilang ident="PAYMILL_invalid_public_key" }]',
         PAYMILL_invalid_payment_data : '[{ oxmultilang ident="PAYMILL_invalid_payment_data" }]',
         PAYMILL_unknown_error : '[{ oxmultilang ident="PAYMILL_unknown_error" }]',
@@ -24,8 +23,10 @@
         PAYMILL_field_invalid_card_cvc : '[{ oxmultilang ident="PAYMILL_field_invalid_card_cvc" }]',
         PAYMILL_field_invalid_card_holder : '[{ oxmultilang ident="PAYMILL_field_invalid_card_holder" }]',
         PAYMILL_field_invalid_amount_int : '[{ oxmultilang ident="PAYMILL_field_invalid_amount_int" }]',
-        PAYMILL_field_field_invalid_amount : '[{ oxmultilang ident="PAYMILL_field_field_invalid_amount" }]',
-        PAYMILL_field_field_field_invalid_currency : '[{ oxmultilang ident="PAYMILL_field_field_field_invalid_currency" }]'        
+        PAYMILL_field_invalid_amount : '[{ oxmultilang ident="PAYMILLfield_invalid_amount" }]',
+        PAYMILL_field_invalid_currency : '[{ oxmultilang ident="PAYMILL_field_invalid_currency" }]',
+        PAYMILL_field_invalid_iban : '[{ oxmultilang ident="PAYMILL_field_invalid_iban" }]',   
+        PAYMILL_field_invalid_country : '[{ oxmultilang ident="PAYMILL_field_invalid_country" }]'   
     };
 </script>
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
