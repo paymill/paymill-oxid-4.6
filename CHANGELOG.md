@@ -1,6 +1,9 @@
+## v2.3.0
+ * webhook support
+ * translate bridge erros
+ * elv sepa support
+
 ## v2.2.0
- * add elv sepa
- * add bridge translations
  * maestro handling
  * better logging view
  * better error messages
