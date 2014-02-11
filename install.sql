@@ -4,7 +4,7 @@ VALUES
 ('paymill_elv', 1, 'ELV', 0, 'abs', 0, 0, 99999, '', 1, 'Direct Debit', '', '', '', '', '', '', '', '', '', 0, '');
 
 CREATE TABLE IF NOT EXISTS `paymill_fastcheckout` (
-  `oxid` varchar(100) NOT NULL,
+  `oxid` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `clientID` varchar(100) NOT NULL,
   `paymentID_CC` varchar(100) DEFAULT NULL,
   `paymentID_ELV` varchar(100) DEFAULT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `paymill_fastcheckout` (
 );
 
 CREATE TABLE IF NOT EXISTS `paymill_logging` (
-  `oxid` varchar(100) NOT NULL,
+  `oxid` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `identifier` text NOT NULL,
   `debug` text NOT NULL,
   `message` text NOT NULL,
