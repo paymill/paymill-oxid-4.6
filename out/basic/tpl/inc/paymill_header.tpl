@@ -25,15 +25,16 @@
         PAYMILL_field_invalid_amount_int : '[{ oxmultilang ident="PAYMILL_field_invalid_amount_int" }]',
         PAYMILL_field_invalid_amount : '[{ oxmultilang ident="PAYMILLfield_invalid_amount" }]',
         PAYMILL_field_invalid_currency : '[{ oxmultilang ident="PAYMILL_field_invalid_currency" }]',
-        PAYMILL_field_invalid_iban : '[{ oxmultilang ident="PAYMILL_field_invalid_iban" }]',   
-        PAYMILL_field_invalid_country : '[{ oxmultilang ident="PAYMILL_field_invalid_country" }]'   
+        PAYMILL_field_invalid_iban : '[{ oxmultilang ident="PAYMILL_field_invalid_iban" }]',
+        PAYMILL_field_invalid_country : '[{ oxmultilang ident="PAYMILL_field_invalid_country" }]'
     };
 </script>
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
+<script type="text/javascript" src="[{ $oViewConf->getBaseDir() }]modules/paymill/javascript/Iban.js"></script>
 <script type="text/javascript">
 pmQuery = jQuery.noConflict();
-pmQuery(document).ready(function () 
-{   
+pmQuery(document).ready(function ()
+{
     //cc
     pmQuery('#paymillCardNumber').live('focus', function() {
         PAYMILL_FASTCHECKOUT_CC = false;
@@ -60,23 +61,23 @@ pmQuery(document).ready(function ()
     pmQuery('#paymillElvHolderName').live('focus', function() {
         PAYMILL_FASTCHECKOUT_ELV = false;
     });
-    
+
     pmQuery('#paymillElvAccount').live('focus', function() {
         PAYMILL_FASTCHECKOUT_ELV = false;
     });
-    
+
     pmQuery('#paymillElvBankCode').live('focus', function() {
         PAYMILL_FASTCHECKOUT_ELV = false;
     });
-    
+
     pmQuery('#paymillIban').live('focus', function() {
         PAYMILL_FASTCHECKOUT_ELV = false;
     });
-    
+
     pmQuery('#paymillBic').live('focus', function() {
         PAYMILL_FASTCHECKOUT_ELV = false;
     });
-    
+
     pmQuery('#paymillCardNumber').keyup(function() {
         var brand = paymill.cardType(pmQuery('#paymillCardNumber').val());
         brand = brand.toLowerCase();
@@ -85,22 +86,22 @@ pmQuery(document).ready(function ()
             if (brand === 'american express') {
                 brand = 'amex';
             }
-            
+
             pmQuery('#paymillCardNumber').addClass("paymill-card-number-" + brand);
         }
     });
 
-    function PaymillResponseHandler(error, result) 
+    function PaymillResponseHandler(error, result)
     {
         if (error) {
             paymillDebug('An API error occured:' + error.apierror);
             // Zeigt den Fehler überhalb des Formulars an
-            
+
             var message = error.apierror;
             if(PAYMILL_TRANSLATION["PAYMILL_" + error.apierror]){
                 message = PAYMILL_TRANSLATION["PAYMILL_" + error.apierror];
             }
-            
+
             pmQuery(".payment-errors").text(message);
             pmQuery(".payment-errors").css("display", "inline-block");
         } else {
@@ -112,7 +113,7 @@ pmQuery(document).ready(function ()
             pmQuery('form[name="order"]').append("<input type='hidden' name='paymillToken' value='" + result.token + "'/>");
             pmQuery('form[name="order"]').get(0).submit();
         }
-        
+
         pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
     }
 
@@ -122,7 +123,7 @@ pmQuery(document).ready(function ()
             console.log(message);
         }
     }
-    
+
     function paymillElv()
     {
         if (!pmQuery('#paymillElvHolderName').val()) {
@@ -153,7 +154,7 @@ pmQuery(document).ready(function ()
         };
         paymill.createToken(params, PaymillResponseHandler);
     }
-    
+
     function paymillSepa()
     {
         if (!pmQuery('#paymillElvHolderName').val()) {
@@ -163,7 +164,8 @@ pmQuery(document).ready(function ()
             return false;
         }
 
-        if (pmQuery('#paymillIban').val() === "") {
+        var iban = new Iban();
+        if (!iban.validate(pmQuery('#paymillIban').val())) {
             pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_IBAN" }]');
             pmQuery(".payment-errors.elv").css("display","inline-block");
             pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
@@ -221,7 +223,7 @@ pmQuery(document).ready(function ()
                     pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
                     return false;
                 }
-                            
+
                 var cvc = '000';
 
                 if (pmQuery('#paymillCardCvc').val() !== '') {
@@ -257,7 +259,7 @@ pmQuery(document).ready(function ()
             pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
             return true;
         }
-        
+
         return false;
     });
 });
