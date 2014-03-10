@@ -1,3 +1,8 @@
+## v2.4.0
+ * added iban validation
+ * added creditcard predetection and improved validation
+ * added multilang support
+
 ## v2.3.0
  * webhook support
  * translate bridge erros
