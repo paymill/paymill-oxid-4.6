@@ -1,35 +1,19 @@
 <?php
-/**
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * @category  PayIntelligent
- * @package   pi_yapital
- * @copyright (C) 2013 PayIntelligent GmbH  <http://www.payintelligent.de/>
- * @license http://www.gnu.org/licenses/  GNU General Public License 3
- */
 $aLang = array(
-    'charset' => 'UTF-8',
-    'PAYMILL' => 'Paymill',
-    'LOG' => 'Log',
-    'HOOKS' => 'Webhooks',
-    'PAYMILL_HOOK_URL' => 'Hook URL: ',
-    'PAYMILL_HOOK_URL_REGISTER' => 'URL Registrieren',
-    'SHOP_MODULE_GROUP_main' => 'Paymill',
-    'SHOP_MODULE_PAYMILL_PRIVATEKEY' => 'Privatekey',
-    'SHOP_MODULE_PAYMILL_PUBLICKEY' => 'Publickey',
-    'SHOP_MODULE_PAYMILL_ACTIVATE_DEBUG' => 'Debugging aktivieren',
-    'SHOP_MODULE_PAYMILL_ACTIVATE_LOGGING' => 'Logging aktivieren',
-    'SHOP_MODULE_PAYMILL_ACTIVATE_FASTCHECKOUT' => 'FastCheckout aktivieren',
-    'SHOP_MODULE_PAYMILL_ACTIVATE_DIFFERENTAMOUNT' => 'Abweichender Betrag',
-    'SHOP_MODULE_PAYMILL_SHOW_LABEL' => 'Paymill-Label anzeigen',
-    'SHOP_MODULE_PAYMILL_SET_PAYMENTDATE' => 'Bestellung als bezahlt markieren',
-    'SHOP_MODULE_PAYMILL_ACTIVATE_SEPA' => 'SEPA'
+	"charset" => "UTF-8",
+	"PAYMILL" => "PAYMILL",
+	"LOG" => "PAYMILL Log",
+	"HOOKS" => "PAYMILL Hooks",
+	"PAYMILL_HOOK_URL" => "Registrierte Webhook-URL",
+	"PAYMILL_HOOK_URL_REGISTER" => "Webhooks anlegen",
+	"SHOP_MODULE_GROUP_main" => "PAYMILL",
+	"SHOP_MODULE_PAYMILL_PRIVATEKEY" => "Private Key",
+	"SHOP_MODULE_PAYMILL_PUBLICKEY" => "Public Key",
+	"SHOP_MODULE_PAYMILL_ACTIVATE_DEBUG" => "Debugging aktivieren",
+	"SHOP_MODULE_PAYMILL_ACTIVATE_LOGGING" => "Logging aktivieren",
+	"SHOP_MODULE_PAYMILL_ACTIVATE_FASTCHECKOUT" => "Fast Checkout erlauben",
+	"SHOP_MODULE_PAYMILL_ACTIVATE_DIFFERENTAMOUNT" => "Token Toleranz Wert",
+	"SHOP_MODULE_PAYMILL_SHOW_LABEL" => "PAYMILL Label im Checkout anzeigen",
+	"SHOP_MODULE_PAYMILL_SET_PAYMENTDATE" => "Bestellung als bezahlt markieren",
+	"SHOP_MODULE_PAYMILL_ACTIVATE_SEPA" => "SEPA Formular anzeigen",
 );
