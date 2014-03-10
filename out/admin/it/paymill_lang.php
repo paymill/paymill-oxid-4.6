@@ -13,7 +13,7 @@ $aLang = array(
 	"SHOP_MODULE_PAYMILL_ACTIVATE_LOGGING" => "Attivare la registrazione.",
 	"SHOP_MODULE_PAYMILL_ACTIVATE_FASTCHECKOUT" => "Abilitare pagamento veloce",
 	"SHOP_MODULE_PAYMILL_ACTIVATE_DIFFERENTAMOUNT" => "Valore di tolleranza Token",
-	"SHOP_MODULE_PAYMILL_SHOW_LABEL" => "Visualizzare l'etichetta PAYMILL durante il pagamento.",
+	"SHOP_MODULE_PAYMILL_SHOW_LABEL" => "Visualizzare l\'etichetta PAYMILL durante il pagamento.",
 	"SHOP_MODULE_PAYMILL_SET_PAYMENTDATE" => "Segna ordine come pagato",
 	"SHOP_MODULE_PAYMILL_ACTIVATE_SEPA" => "Mostra SEPA da",
 );
