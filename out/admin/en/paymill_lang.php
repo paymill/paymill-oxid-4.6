@@ -1,7 +1,7 @@
 <?php
 $aLang = array(
 	"charset" => "UTF-8",
-	"PAYMILL" => "PAYMILL",
+	"PAYMILL_TITLE" => "PAYMILL",
 	"LOG" => "PAYMILL log",
 	"HOOKS" => "PAYMILL Hooks",
 	"PAYMILL_HOOK_URL" => "Registered Webhook-URL",

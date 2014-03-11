@@ -1,7 +1,7 @@
 <?php
 $aLang = array(
 	"charset" => "UTF-8",
-	"PAYMILL" => "PAYMILL",
+	"PAYMILL_TITLE" => "PAYMILL",
 	"LOG" => "Journal PAYMILL",
 	"HOOKS" => "Les hooks de PAYMILL",
 	"PAYMILL_HOOK_URL" => "URL du Webhook enregistr&eacute;",
@@ -13,7 +13,7 @@ $aLang = array(
 	"SHOP_MODULE_PAYMILL_ACTIVATE_LOGGING" => "Activer la journalisation.",
 	"SHOP_MODULE_PAYMILL_ACTIVATE_FASTCHECKOUT" => "Activer le paiement rapide.",
 	"SHOP_MODULE_PAYMILL_ACTIVATE_DIFFERENTAMOUNT" => "Valeur de tol&eacute;rance des cr&eacute;dits",
-	"SHOP_MODULE_PAYMILL_SHOW_LABEL" => "Afficher l\'&eacute;tiquette PAYMILL lors du paiement.",
+	"SHOP_MODULE_PAYMILL_SHOW_LABEL" => "Afficher l&#039;&eacute;tiquette PAYMILL lors du paiement.",
 	"SHOP_MODULE_PAYMILL_SET_PAYMENTDATE" => "Marquer la commande comme pay&eacute;e",
 	"SHOP_MODULE_PAYMILL_ACTIVATE_SEPA" => "Montrer le formulaire SEPA",
 );

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-15"?>
 <OX>
     <OXMENU id="NAVIGATION_ESHOPADMIN">
-        <MAINMENU id="PAYMILL">
+        <MAINMENU id="PAYMILL_TITLE">
             <SUBMENU id="LOG" cl="paymill_log"></SUBMENU>
             <SUBMENU id="HOOKS" cl="paymill_register_hook"></SUBMENU>
         </MAINMENU>
