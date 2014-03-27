@@ -19,6 +19,7 @@ $aModule = array(
         'Services_Paymill_LoggingInterface' => 'paymill/lib/Services/Paymill/LoggingInterface.php',
         'Services_Paymill_Clients' => 'paymill/lib/Services/Paymill/Clients.php',
         'Services_Paymill_Payments' => 'paymill/lib/Services/Paymill/Payments.php',
+        'Services_Paymill_Transactions' => 'paymill/lib/Services/Paymill/Transactions.php',
         'Services_Paymill_Webhooks' => 'paymill/lib/Services/Paymill/Webhooks.php',
         'paymill_fastcheckout' => 'paymill/core/paymill_fastcheckout.php',
         'paymill_logging' => 'paymill/core/paymill_logging.php',
