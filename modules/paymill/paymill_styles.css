@@ -147,3 +147,32 @@
     border-radius: 100px;
     background: #636363;
 }
+
+
+
+/*
+    Paymill Admin Installmenu
+*/
+.paymill_main{
+    border: solid black 1px;
+    width: 350px;
+    margin: 10px;
+}
+.row{
+    position: relative;
+    border: none;
+}
+.row h3{
+    margin: 0px auto;
+    width: 200px;
+}
+.install_button{
+    position: absolute;
+    right: 10px;
+}
+.paymill_green{
+    color: green;
+}
+.paymill_red{
+    color: red;
+}
