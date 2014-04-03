@@ -32,7 +32,7 @@ class paymill_install extends oxAdminView
             "`paymentID_ELV` varchar(100) DEFAULT NULL, " .
             "PRIMARY KEY (`oxid`) " .
             "); "
-            );
+        );
         oxDb::getDb()->Execute(
             "CREATE TABLE IF NOT EXISTS `paymill_logging` ( " .
             "`oxid` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL, " .
@@ -42,6 +42,10 @@ class paymill_install extends oxAdminView
             "`date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, " .
             "PRIMARY KEY (`oxid`) " .
             ");"
+        );
+        oxDb::getDb()->Execute(
+            "ALTER TABLE  `paymill_fastcheckout` " .
+            "CHANGE  `userID` `oxid` VARCHAR( 100 ) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL;"
         );
     }
 
