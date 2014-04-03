@@ -159,16 +159,15 @@
     margin: 10px;
 }
 .row{
+    padding: 10px;
     position: relative;
-    border: none;
-}
-.row h3{
-    margin: 0px auto;
-    width: 200px;
 }
 .install_button{
+    right: 20px;
+    height: 25px;
+    width: 100px;
     position: absolute;
-    right: 10px;
+    top: 5px;
 }
 .paymill_green{
     color: green;
