@@ -6,7 +6,6 @@ Payment plugin for OXID Version 4.6.x
 Download the module here: https://github.com/Paymill/Paymill-Oxid/archive/master.zip
 
 - Merge the content of the PAYMILL-Oxid-Module directory with your OXID installation.
-- Import the install.sql to your database.
 - In your administration backend activate the Paymill plugin.
 - Go to the configuration section where you can insert your private and public key (that you can find in your Paymill cockpit [https://app.paymill.de/](https://app.paymill.de/ "Paymill cockpit")).
 
