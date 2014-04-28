@@ -128,16 +128,20 @@
             $('#paymentNextStepBottom').attr("disabled", "disabled");
 
             var tokenRequestParams = null;
+            var elv = false;
+            var cc = false;
 
             // @TODO More and better Debugging Messages
             paymillDebug('Paymill: Start form validation');
             if ($('#payment_paymill_cc').attr('checked')
                 && validatePaymillCcFormData()
             ) {
+                cc = true;
                 tokenRequestParams = createCcTokenRequestParams();
             } else if ($('#payment_paymill_elv').attr('checked')
                 && validatePaymillElvFormData()
             ) {
+                elv = true;
                 tokenRequestParams = createElvTokenRequestParams();
             }
 
@@ -145,55 +149,78 @@
             if (tokenRequestParams !== null) {
                 paymill.createToken(tokenRequestParams, PaymillResponseHandler);
             } else {
-                // @TODO Errorhandling if tokenRequestParams are null
+                // @TODO remove this?
+                var paymentErrorSelectorType = cc? '.cc' : '.elv';
+                var paymentError = $(
+                    '.payment-errors' . paymentErrorSelectorType
+                );
+                paymentError.text(
+                    $("<div/>").html(
+                        '[{ oxmultilang ident="PAYMILL_NO_TOKEN_CREATED" }]'
+                    ).text()
+                );
+                paymentError.css("display", "inline-block");
+
+                $("#paymentNextStepBottom").removeAttr("disabled");
             }
         });
 
         function validatePaymillElvFormData()
         {
-            /*
-            if (!$('#paymillElvHolderName').val()) {
-                $(".payment-errors.elv").text($("<div/>").html('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]').text());
-                $(".payment-errors.elv").css("display", "inline-block");
-                $("#paymentNextStepBottom").removeAttr("disabled");
-                return false;
-            }
-            var iban = new Iban();
-            if (!iban.validate($('#paymillIban').val())) {
-                $(".payment-errors.elv").text($("<div/>").html('[{ oxmultilang ident="PAYMILL_VALIDATION_IBAN" }]').text());
-                $(".payment-errors.elv").css("display", "inline-block");
-                $("#paymentNextStepBottom").removeAttr("disabled");
-                return false;
+            var accountNumber = $('#paymillElvAccount').val();
+            var bankCode = ('#paymillElvBankCode').val();
+            var accountHolder = $('#paymillElvHolderName').val();
+
+            var valid = true;
+            var errors = '<ul>';
+
+            if (!accountHolder) {
+                errors .= '<li>'
+                    . '[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]'
+                    . '</li>';
+                valid = false;
             }
 
-            if ($('#paymillBic').val() === "") {
-                $(".payment-errors.elv").text($("<div/>").html('[{ oxmultilang ident="PAYMILL_VALIDATION_BIC" }]').text());
-                $(".payment-errors.elv").css("display", "inline-block");
-                $("#paymentNextStepBottom").removeAttr("disabled");
-                return false;
+            if (isValueAnIban(accountNumber)) {
+                var iban = new Iban();
+                if (!iban.validate($('#paymillIban').val())) {
+                    errors .= '<li>'
+                        . '[{ oxmultilang ident="PAYMILL_VALIDATION_IBAN" }]'
+                        . '</li>';
+                    valid = false;
+                }
+
+                if ($('#paymillBic').val() === "") {
+                    errors .= '<li>'
+                        . '[{ oxmultilang ident="PAYMILL_VALIDATION_BIC" }]'
+                        . '</li>';
+                    valid = false;
+                }
+            } else {
+                if (!paymill.validateAccountNumber($('#paymillElvAccount').val())) {
+                    errors .= '<li>'
+                        . '[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTNUMBER" }]'
+                        . '</li>';
+                    valid = false;
+                }
+
+                if (!paymill.validateBankCode($('#paymillElvBankCode').val())) {
+                    errors .= '<li>'
+                        . '[{ oxmultilang ident="PAYMILL_VALIDATION_BANKCODE" }]'
+                        . '</li>';
+                    valid = false;
+                }
             }
 
-            if (!$('#paymillElvHolderName').val()) {
-                $(".payment-errors.elv").text($("<div/>").html('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]').text());
+            if (!valid) {
+                errors .= '</ul>';
+                $(".payment-errors.elv").text($("<div/>").html(errors).text());
                 $(".payment-errors.elv").css("display", "inline-block");
                 $("#paymentNextStepBottom").removeAttr("disabled");
-                return false;
+                return valid;
             }
 
-            if (!paymill.validateAccountNumber($('#paymillElvAccount').val())) {
-                $(".payment-errors.elv").text($("<div/>").html('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTNUMBER" }]').text());
-                $(".payment-errors.elv").css("display", "inline-block");
-                $("#paymentNextStepBottom").removeAttr("disabled");
-                return false;
-            }
-
-            if (!paymill.validateBankCode($('#paymillElvBankCode').val())) {
-                $(".payment-errors.elv").text($("<div/>").html('[{ oxmultilang ident="PAYMILL_VALIDATION_BANKCODE" }]').text());
-                $(".payment-errors.elv").css("display", "inline-block");
-                $("#paymentNextStepBottom").removeAttr("disabled");
-                return false;
-            }
-             */
+            return valid;
         }
 
         function createElvTokenRequestParams()
@@ -204,7 +231,6 @@
             var accountHolder = $('#paymillElvHolderName').val();
 
             if (isValueAnIban(accountNumber)) {
-                ibanData = $('#paymillElvAccount').val().replace(/\s+/g, "");
                 tokenRequestParams = {
                     iban: accountNumber.replace(/\s+/g, ""),
                     bic: bankCode,
@@ -228,7 +254,6 @@
 
         function validatePaymillCcFormData()
         {
-            /*
             if (!paymill.validateCardNumber($('#paymillCardNumber').val())) {
                 $(".payment-errors.cc").text($("<div/>").html('[{ oxmultilang ident="PAYMILL_VALIDATION_CARDNUMBER" }]').text());
                 $(".payment-errors.cc").css("display", "inline-block");
@@ -259,18 +284,22 @@
                 return false;
             }
 
-            var cvc = '000';
-
-            if ($('#paymillCardCvc').val() !== '') {
-                cvc = $('#paymillCardCvc').val();
-            }
-            */
+            return true;
         }
 
+        /**
+         * Gathers form-input-values and creates request parameters for
+         * creditcard token request.
+         * @return {object} token request paramaters
+         */
         function createCcTokenRequestParams()
         {
-            /*
-            var params = {
+            var cvc = $('#paymillCardCvc').val();
+            if (cvc === '') {
+                cvc = '000';
+            }
+
+            var tokenRequestParams = {
                 amount_int: PAYMILL_AMOUNT, // E.g. "15" for 0.15 Eur
                 currency: PAYMILL_CURRENCY, // ISO 4217 e.g. "EUR"
                 number: $('#paymillCardNumber').val(),
@@ -279,7 +308,8 @@
                 cvc: cvc,
                 cardholder: $('#paymillCardHolderName').val()
             };
-             */
+
+            return tokenRequestParams;
         }
     });
 </script>
