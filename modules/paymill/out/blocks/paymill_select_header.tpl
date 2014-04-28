@@ -128,35 +128,32 @@ jQuery(document).ready(function($) {
 
         var tokenRequestParams = null;
         var cc = $('#payment_paymill_cc').attr('checked');
+        var elv = $('#payment_paymill_elv').attr('checked');
+        var paymentError;
+
+        if (cc || elv) {
+            var paymentErrorSelectorType = cc? '.cc' : '.elv';
+            var paymentError = $(
+                '.payment-errors' + paymentErrorSelectorType
+            );
+
+            // remove old errors
+            $('.payment-errors' + paymentErrorSelectorType + ' ul').remove();
+        }
 
         // @TODO More and better Debugging Messages
         paymillDebug('Paymill: Start form validation');
 
         if (cc && validatePaymillCcFormData()) {
             tokenRequestParams = createCcTokenRequestParams();
-        } else if (!cc && validatePaymillElvFormData()) {
+        } else if (elv && validatePaymillElvFormData()) {
             tokenRequestParams = createElvTokenRequestParams();
         }
 
         // @TODO consider fastcheckout
         if (tokenRequestParams !== null) {
             paymill.createToken(tokenRequestParams, PaymillResponseHandler);
-        } else {
-            var paymentErrorSelectorType = cc? '.cc' : '.elv';
-            var paymentError = $(
-                '.payment-errors' + paymentErrorSelectorType
-            );
-
-            var paymentErrorList = $(
-                '.payment-errors' + paymentErrorSelectorType + ' ul'
-            );
-
-            $('<li />').text(
-                $("<div/>").html(
-                    '[{ oxmultilang ident="PAYMILL_NO_TOKEN_CREATED" }]'
-                ).text()
-            ).appendTo(paymentErrorList);
-
+        } else if (cc || elv) {
             paymentError.css("display", "inline-block");
 
             $("#paymentNextStepBottom").removeAttr("disabled");
