@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css" href="[{ $oViewConf->getBaseDir() }]modules/paymill/paymill_styles.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
+    // @TODO Basic Theme support for new javascript code
     var PAYMILL_PUBLIC_KEY = '[{$paymillPublicKey}]';
     var PAYMILL_AMOUNT = '[{$paymillAmount}]';
     var PAYMILL_CURRENCY = '[{$currency->name}]';
