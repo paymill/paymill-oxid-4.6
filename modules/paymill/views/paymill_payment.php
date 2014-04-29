@@ -8,12 +8,12 @@
 class paymill_payment extends paymill_payment_parent
 {
     private $_fastCheckoutData;
-    
+
     private $_payments;
-    
+
     private $_payment;
-    
-    
+
+
     /**
      * Rewrite of oxid's getPaymentList method
      * adds some errors to the payment selection if necessary
@@ -27,55 +27,56 @@ class paymill_payment extends paymill_payment_parent
                 trim(oxConfig::getInstance()->getShopConfVar('PAYMILL_PRIVATEKEY')),
                 paymill_util::API_ENDPOINT
             );
-            
+
             $this->_fastCheckoutData = oxNew('paymill_fastcheckout');
             $this->_fastCheckoutData->load($this->getUser()->getId());
-            
+
             $this->_setPayment(
                 $this->_fastCheckoutData->paymill_fastcheckout__paymentid_cc->rawValue
             );
-            if (!array_key_exists('last4', $this->_payment)) {
-                $this->addTplParam('fastCheckoutCc', 'false');
-            } else {
+            if (array_key_exists('last4', $this->_payment)) {
                 $this->addTplParam('fastCheckoutCc', 'true');
                 $this->_setPaymillCcPaymentData();
+            } else {
+                $this->addTplParam('fastCheckoutCc', 'false');
             }
-            
+
             $this->_setPayment(
                 $this->_fastCheckoutData->paymill_fastcheckout__paymentid_elv->rawValue
             );
-            if (!array_key_exists('account', $this->_payment)) {
-                $this->addTplParam('fastCheckoutElv', 'false');
-            } else {
+
+            if (array_key_exists('account', $this->_payment) || array_key_exists('iban', $this->_payment)) {
                 $this->addTplParam('fastCheckoutElv', 'true');
                 $this->_setPaymillElvPaymentData();
+            } else {
+                $this->addTplParam('fastCheckoutElv', 'false');
             }
         }
-        
+
         $this->addTplParam(
-            'paymillPublicKey', 
+            'paymillPublicKey',
             trim(oxConfig::getInstance()->getShopConfVar('PAYMILL_PUBLICKEY'))
         );
-        
+
         $this->addTplParam(
             'paymillUtil',
             oxNew('paymill_util')
         );
-        
+
         return parent::render();
     }
-    
+
     private function _setPayment($paymentId)
     {
         $this->_payment = $this->_payments->getOne(
             $paymentId
         );
-        
+
         if (is_null($this->_payment)) {
             $this->_payment = array();
         }
     }
-    
+
     private function _setPaymillCcPaymentData()
     {
         if (!array_key_exists('error', $this->_payment)) {
@@ -91,25 +92,36 @@ class paymill_payment extends paymill_payment_parent
             }
         }
     }
-    
+
     private function _setPaymillElvPaymentData()
     {
         if (!array_key_exists('error', $this->_payment)) {
-            $this->addTplParam('paymillElvCode', $this->_getEntry($this->_payment, 'code'));
             $this->addTplParam('paymillElvHolder', $this->_getEntry($this->_payment, 'holder'));
-            $this->addTplParam('paymillElvAccount', $this->_getEntry($this->_payment, 'account'));
-            
-            $this->addTplParam('paymillElvBic', $this->_getEntry($this->_payment, 'bic'));
-            $this->addTplParam('paymillElvIban', $this->_getEntry($this->_payment, 'iban'));
+
+            $fastCheckoutAccount = $this->_getEntry($this->_payment, 'account');
+            $fastCheckoutCode = $this->_getEntry($this->_payment, 'code');
+            $fastCheckoutIban = $this->_getEntry($this->_payment, 'iban');
+            $fastCheckoutBic = $this->_getEntry($this->_payment, 'bic');
+
+            if (is_null($fastCheckoutAccount) || is_null($fastCheckoutCode)) {
+                $account = $fastCheckoutIban;
+                $code = $fastCheckoutBic;
+            } else {
+                $account = $fastCheckoutAccount;
+                $code = $fastCheckoutCode;
+            }
+
+            $this->addTplParam('paymillElvAccount', $account);
+            $this->addTplParam('paymillElvCode', $code);
         }
     }
-    
+
     private function _getEntry($data, $key)
     {
         if (!is_array($data)) {
             $data = array();
         }
-        
+
         return array_key_exists($key, $data) ? $data[$key] : null;
     }
 
@@ -129,15 +141,16 @@ class paymill_payment extends paymill_payment_parent
         $this->addTplParam('paymillAmount', $amount);
 
         $paymentList = parent::getPaymentList();
-        
+
         $privateKey = oxConfig::getInstance()->getShopConfVar('PAYMILL_PRIVATEKEY');
         $publicKey  = oxConfig::getInstance()->getShopConfVar('PAYMILL_PUBLICKEY');
-        
+
         if (empty($privateKey) || empty($publicKey)) {
+            // @TODO log message so user knows that payment was deactivated because of missing private or public key
             unset($paymentList['paymill_elv']);
             unset($paymentList['paymill_cc']);
         }
-        
+
         return $paymentList;
     }
 
@@ -146,7 +159,7 @@ class paymill_payment extends paymill_payment_parent
      * @overload
      */
     public function validatePayment()
-    {   
+    {
         if (oxConfig::getParameter('paymentid') === "paymill_cc" || oxConfig::getParameter('paymentid') === "paymill_elv") {
             oxSession::deleteVar('paymill_token');
             // set paymill token to session to be available in next step
@@ -154,7 +167,7 @@ class paymill_payment extends paymill_payment_parent
                 oxSession::setVar('paymill_token', oxConfig::getParameter('paymillToken'));
             }
         }
-        
+
         return parent::validatePayment();
     }
 
