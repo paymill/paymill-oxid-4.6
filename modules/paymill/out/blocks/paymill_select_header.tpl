@@ -27,6 +27,7 @@
         PAYMILL_field_invalid_iban: '[{ oxmultilang ident="PAYMILL_field_invalid_iban" }]',
         PAYMILL_field_invalid_country: '[{ oxmultilang ident="PAYMILL_field_invalid_country" }]'
     };
+    var PAYMILL_CC_BRANDS = [{$paymillBrands|@json_encode}];
 
 </script>
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
@@ -52,13 +53,19 @@ jQuery(document).ready(function($) {
         var cardnumber = $('#paymillCardNumber').val();
         var detector = new BrandDetection();
         var brand = detector.detect(cardnumber);
-        if (brand !== 'unknown') {
+
+        if (shouldBrandBeRendered(brand)) {
             $('#paymillCardNumber').addClass("paymill-card-number-" + brand);
             if (!detector.validate(cardnumber)) {
                 $('#paymillCardNumber').addClass("paymill-card-number-grayscale");
             }
         }
     });
+
+    function shouldBrandBeRendered(brand)
+    {
+        return (brand !== 'unknown' && ($.inArray(brand, PAYMILL_CC_BRANDS) !== -1 || PAYMILL_CC_BRANDS.length === 0));
+    }
 
     function paymillDebug(message)
     {

@@ -11,6 +11,13 @@
             <ul class="form">
                 <li class="controls controls-row">
                     <p class="payment-errors cc" style="display:none;"></p>
+                    <div>
+                        <ul id="paymill_brands">
+                            [{foreach key=brandsId from=$paymillBrands item=brand name=paymillBrandSelect}]
+                                <li class="paymill-card-number-[{$brand}]"></li>
+                            [{/foreach}]
+                        </ul>
+                    </div>
                     <div id="payment-form-cc">
                         <div class="controls controls-row">
                             <label class="card-number-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]:</label>
@@ -50,13 +57,6 @@
                                 [{/if}]
                                 [{/foreach}]
                             </select>
-                        </div>
-                        <div>
-                            <ul id="paymill_brands">
-                                [{foreach key=brandsId from=$paymillBrands item=brand name=paymillBrandSelect}]
-                                    <li class="paymill-card-number-[{$brand}]"></li>
-                                [{/foreach}]
-                            </ul>
                         </div>
                     </div>
                 </li>

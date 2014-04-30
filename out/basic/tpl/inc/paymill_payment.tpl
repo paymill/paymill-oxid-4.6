@@ -14,6 +14,16 @@
         <td colspan="3">
             <p class="payment-errors cc" style="display:none;"></p>
         </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <ul id="paymill_brands">
+                [{foreach key=brandsId from=$paymillBrands item=brand name=paymillBrandSelect}]
+                    <li class="paymill-card-number-[{$brand}]"></li>
+                [{/foreach}]
+            </ul>
+        </td>
+    </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
         <td>
         </td>
