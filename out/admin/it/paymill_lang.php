@@ -24,4 +24,13 @@ $aLang = array(
 	"SHOP_MODULE_PAYMILL_SHOW_LABEL" => "Visualizzare l&#039;etichetta PAYMILL durante il pagamento.",
 	"SHOP_MODULE_PAYMILL_SET_PAYMENTDATE" => "Segna ordine come pagato",
 	"SHOP_MODULE_PAYMILL_ACTIVATE_SEPA" => "Mostra SEPA da",
+	"SHOP_MODULE_PAYMILL_VISA" => "VISA",
+	"SHOP_MODULE_PAYMILL_MASTERCARD" => "Mastercard",
+	"SHOP_MODULE_PAYMILL_AMEX" => "American Express",
+	"SHOP_MODULE_PAYMILL_CARTA_SI" => "Carta Si",
+	"SHOP_MODULE_PAYMILL_CARTE_BLEUE" => "Carte Bleue",
+	"SHOP_MODULE_PAYMILL_DINERSCLUB" => "Dinersclub",
+	"SHOP_MODULE_PAYMILL_JCB" => "JCB",
+	"SHOP_MODULE_PAYMILL_MAESTRO" => "Maestro",
+	"SHOP_MODULE_PAYMILL_UNIONPAY" => "Unionpay"
 );
