@@ -88,14 +88,14 @@ jQuery(document).ready(function($) {
             if (!isFastCheckout(cc, elv)) {
                 generateToken(cc, elv);
             } else {
-                fastCheckout();
+                fastCheckout(cc, elv);
             }
         }
 
         return true;
     });
 
-    function isFastCheckout()
+    function isFastCheckout(cc, elv)
     {
         if ((cc && PAYMILL_FASTCHECKOUT_CC) || (elv && PAYMILL_FASTCHECKOUT_ELV)) {
             var formdata = getFormData();

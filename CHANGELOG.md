@@ -1,3 +1,7 @@
+## v2.5.0
+ * united SEPA and regular ELV forms
+ * added backend option to show credit card logos in frontend
+
 ## v2.4.0
  * added iban validation
  * added creditcard predetection and improved validation
