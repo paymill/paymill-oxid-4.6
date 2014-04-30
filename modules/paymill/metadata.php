@@ -47,6 +47,8 @@ $aModule = array(
         array('group' => 'cc', 'name' => 'PAYMILL_DINERSCLUB', 'type' => 'bool', 'value' => 'true', 'position' => 6),
         array('group' => 'cc', 'name' => 'PAYMILL_JCB', 'type' => 'bool', 'value' => 'true', 'position' => 7),
         array('group' => 'cc', 'name' => 'PAYMILL_MAESTRO', 'type' => 'bool', 'value' => 'true', 'position' => 8),
-        array('group' => 'cc', 'name' => 'PAYMILL_UNIONPAY', 'type' => 'bool', 'value' => 'true', 'position' => 9)
+        array('group' => 'cc', 'name' => 'PAYMILL_UNIONPAY', 'type' => 'bool', 'value' => 'true', 'position' => 9),
+        array('group' => 'cc', 'name' => 'PAYMILL_DISCOVER', 'type' => 'bool', 'value' => 'true', 'position' => 10),
+        array('group' => 'cc', 'name' => 'PAYMILL_DANKORT', 'type' => 'bool', 'value' => 'true', 'position' => 11)
     )
 );

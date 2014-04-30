@@ -51,6 +51,13 @@
                                 [{/foreach}]
                             </select>
                         </div>
+                        <div>
+                            <ul id="paymill_brands">
+                                [{foreach key=brandsId from=$paymillBrands item=brand name=paymillBrandSelect}]
+                                    <li class="paymill-card-number-[{$brand}]"></li>
+                                [{/foreach}]
+                            </ul>
+                        </div>
                     </div>
                 </li>
             </ul>

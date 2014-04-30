@@ -71,6 +71,12 @@
     width: 90px;
 }
 
+ul#paymill_brands li {
+    width: 32px;
+    height: 20px;
+    display: inline-block !important;
+}
+
 .paymill-card-number-visa
 {
     background: url('image/32x20_visa.png') no-repeat center right !important;
@@ -94,11 +100,6 @@
 .paymill-card-number-maestro
 {
     background: url('image/32x20_maestro.png') no-repeat center right !important;
-}
-
-.paymill-card-number-carte-bleue
-{
-    background: url('image/32x20_unionpay.png') no-repeat center right !important;
 }
 
 .paymill-card-number-diners-club

@@ -63,6 +63,8 @@ class paymill_payment extends paymill_payment_parent
             oxNew('paymill_util')
         );
 
+        $this->_addToTplWhichCreditCardsToShow();
+
         return parent::render();
     }
 
@@ -169,6 +171,33 @@ class paymill_payment extends paymill_payment_parent
         }
 
         return parent::validatePayment();
+    }
+
+    private function _addToTplWhichCreditCardsToShow()
+    {
+        $settings = array(
+            'visa' => oxConfig::getInstance()->getShopConfVar('PAYMILL_VISA'),
+            'mastercard' => oxConfig::getInstance()->getShopConfVar('PAYMILL_MASTERCARD'),
+            'amex' => oxConfig::getInstance()->getShopConfVar('PAYMILL_AMEX'),
+            'carta-si' => oxConfig::getInstance()->getShopConfVar('PAYMILL_CARTA_SI'),
+            'carte-bleue' => oxConfig::getInstance()->getShopConfVar('PAYMILL_CARTE_BLEUE'),
+            'diners-club' => oxConfig::getInstance()->getShopConfVar('PAYMILL_DINERSCLUB'),
+            'jcb' => oxConfig::getInstance()->getShopConfVar('PAYMILL_JCB'),
+            'maestro' => oxConfig::getInstance()->getShopConfVar('PAYMILL_MAESTRO'),
+            'china-unionpay' => oxConfig::getInstance()->getShopConfVar('PAYMILL_UNIONPAY'),
+            'discover' => oxConfig::getInstance()->getShopConfVar('PAYMILL_DISCOVER'),
+            'dankort' => oxConfig::getInstance()->getShopConfVar('PAYMILL_DANKORT')
+        );
+
+        $ccToShow = array();
+
+        foreach ($settings as $card => $setting) {
+            if ($setting) {
+                array_push($ccToShow, $card);
+            }
+        }
+
+        $this->addTplParam('paymillBrands', $ccToShow);
     }
 
 }
