@@ -10,7 +10,6 @@
     var PAYMILL_FASTCHECKOUT_CC = [{$fastCheckoutCc}];
     var PAYMILL_FASTCHECKOUT_ELV = [{$fastCheckoutElv}];
     var PAYMILL_DEBUG = '[{$oxConfig->getShopConfVar('PAYMILL_ACTIVATE_DEBUG')}]';
-    var PAYMILL_SEPA = '[{$oxConfig->getShopConfVar('PAYMILL_ACTIVATE_SEPA')}]';
     var PAYMILL_TRANSLATION = {
         PAYMILL_internal_server_error: '[{ oxmultilang ident="PAYMILL_internal_server_error" }]',
         PAYMILL_invalid_public_key: '[{ oxmultilang ident="PAYMILL_invalid_public_key" }]',
@@ -34,235 +33,283 @@
 <script type="text/javascript" src="[{ $oViewConf->getBaseDir() }]modules/paymill/javascript/Iban.js"></script>
 <script type="text/javascript" src="[{ $oViewConf->getBaseDir() }]modules/paymill/javascript/BrandDetection.js"></script>
 <script type="text/javascript">
-    pmQuery = jQuery.noConflict();
-    pmQuery(document).ready(function()
-    {
-        //cc
-        pmQuery('#paymillCardNumber').live('focus', function() {
-            PAYMILL_FASTCHECKOUT_CC = false;
+var prefilledInputValues = [];
+
+$.noConflict();
+jQuery(document).ready(function($) {
+    prefilledInputValues = getFormData();
+
+    function getFormData() {
+        var formData = [];
+        $('.paymill_input').each(function() {
+            formData.push($(this).val());
         });
+        return formData;
+    }
 
-        pmQuery('#paymillCardExpiryMonth').live('focus', function() {
-            PAYMILL_FASTCHECKOUT_CC = false;
-        });
-
-
-        pmQuery('#paymillCardExpiryYear').live('focus', function() {
-            PAYMILL_FASTCHECKOUT_CC = false;
-        });
-
-        pmQuery('#paymillCardHolderName').live('focus', function() {
-            PAYMILL_FASTCHECKOUT_CC = false;
-        });
-
-        pmQuery('#paymillCardCvc').live('focus', function() {
-            PAYMILL_FASTCHECKOUT_CC = false;
-        });
-
-        //elv
-        pmQuery('#paymillElvHolderName').live('focus', function() {
-            PAYMILL_FASTCHECKOUT_ELV = false;
-        });
-
-        pmQuery('#paymillElvAccount').live('focus', function() {
-            PAYMILL_FASTCHECKOUT_ELV = false;
-        });
-
-        pmQuery('#paymillElvBankCode').live('focus', function() {
-            PAYMILL_FASTCHECKOUT_ELV = false;
-        });
-
-        pmQuery('#paymillIban').live('focus', function() {
-            PAYMILL_FASTCHECKOUT_ELV = false;
-        });
-
-        pmQuery('#paymillBic').live('focus', function() {
-            PAYMILL_FASTCHECKOUT_ELV = false;
-        });
-
-        pmQuery('#paymillCardNumber').keyup(function() {
-            pmQuery("#paymillCardNumber")[0].className = pmQuery("#paymillCardNumber")[0].className.replace(/paymill-card-number-.*/g, '');
-            var cardnumber = pmQuery('#paymillCardNumber').val();
-            var detector = new BrandDetection();
-            var brand = detector.detect(cardnumber);
-            if (brand !== 'unknown') {
-                pmQuery('#paymillCardNumber').addClass("paymill-card-number-" + brand);
-                if (!detector.validate(cardnumber)) {
-                    pmQuery('#paymillCardNumber').addClass("paymill-card-number-grayscale");
-                }
-            }
-        });
-
-        function PaymillResponseHandler(error, result)
-        {
-            if (error) {
-                paymillDebug('An API error occured:' + error.apierror);
-                // Zeigt den Fehler überhalb des Formulars an
-
-                var message = error.apierror;
-                if (PAYMILL_TRANSLATION["PAYMILL_" + error.apierror]) {
-                    message = PAYMILL_TRANSLATION["PAYMILL_" + error.apierror];
-                }
-
-                pmQuery(".payment-errors").text(message);
-                pmQuery(".payment-errors").css("display", "inline-block");
-            } else {
-                pmQuery(".payment-errors").css("display", "none");
-                pmQuery(".payment-errors").text("");
-                // Token
-                paymillDebug('Received a token: ' + result.token);
-                // Token in das Formular einfügen damit es an den Server übergeben wird
-                pmQuery('form[name="order"]').append("<input type='hidden' name='paymillToken' value='" + result.token + "'/>");
-                pmQuery('form[name="order"]').get(0).submit();
-            }
-
-            pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-        }
-
-        function paymillDebug(message)
-        {
-            if (PAYMILL_DEBUG === "1") {
-                console.log(message);
+    $('#paymillCardNumber').keyup(function() {
+        $("#paymillCardNumber")[0].className = $("#paymillCardNumber")[0].className.replace(/paymill-card-number-.*/g, '');
+        var cardnumber = $('#paymillCardNumber').val();
+        var detector = new BrandDetection();
+        var brand = detector.detect(cardnumber);
+        if (brand !== 'unknown') {
+            $('#paymillCardNumber').addClass("paymill-card-number-" + brand);
+            if (!detector.validate(cardnumber)) {
+                $('#paymillCardNumber').addClass("paymill-card-number-grayscale");
             }
         }
-
-        function paymillElv()
-        {
-            if (!pmQuery('#paymillElvHolderName').val()) {
-                pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]');
-                pmQuery(".payment-errors.elv").css("display", "inline-block");
-                pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                return false;
-            }
-
-            if (!paymill.validateAccountNumber(pmQuery('#paymillElvAccount').val())) {
-                pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTNUMBER" }]');
-                pmQuery(".payment-errors.elv").css("display", "inline-block");
-                pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                return false;
-            }
-
-            if (!paymill.validateBankCode(pmQuery('#paymillElvBankCode').val())) {
-                pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_BANKCODE" }]');
-                pmQuery(".payment-errors.elv").css("display", "inline-block");
-                pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                return false;
-            }
-
-            var params = {
-                number: pmQuery('#paymillElvAccount').val(),
-                bank: pmQuery('#paymillElvBankCode').val(),
-                accountholder: pmQuery('#paymillElvHolderName').val()
-            };
-            paymill.createToken(params, PaymillResponseHandler);
-        }
-
-        function paymillSepa()
-        {
-            if (!pmQuery('#paymillElvHolderName').val()) {
-                pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]');
-                pmQuery(".payment-errors.elv").css("display", "inline-block");
-                pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                return false;
-            }
-
-            var iban = new Iban();
-            if (!iban.validate(pmQuery('#paymillIban').val())) {
-                pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_IBAN" }]');
-                pmQuery(".payment-errors.elv").css("display", "inline-block");
-                pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                return false;
-            }
-
-            if (pmQuery('#paymillBic').val() === "") {
-                pmQuery(".payment-errors.elv").text('[{ oxmultilang ident="PAYMILL_VALIDATION_BIC" }]');
-                pmQuery(".payment-errors.elv").css("display", "inline-block");
-                pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                return false;
-            }
-
-            var params = {
-                iban: pmQuery('#paymillIban').val(),
-                bic: pmQuery('#paymillBic').val(),
-                accountholder: pmQuery('#paymillElvHolderName').val()
-            };
-            paymill.createToken(params, PaymillResponseHandler);
-        }
-
-        pmQuery('form[name="order"]').submit(function(event)
-        {
-            // Absenden Button deaktivieren um weitere Klicks zu vermeiden
-            pmQuery('#test_PaymentNextStepBottom').attr("disabled", "disabled");
-            paymillDebug('Paymill: Start form validation');
-            if (pmQuery('#payment_paymill_cc').attr('checked')) {
-                if (!PAYMILL_FASTCHECKOUT_CC) {
-                    if (!paymill.validateCardNumber(pmQuery('#paymillCardNumber').val())) {
-                        pmQuery(".payment-errors.cc").text('[{ oxmultilang ident="PAYMILL_VALIDATION_CARDNUMBER" }]');
-                        pmQuery(".payment-errors.cc").css("display", "inline-block");
-                        pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                        return false;
-                    }
-
-                    if (!paymill.validateExpiry(pmQuery('#paymillCardExpiryMonth').val(), pmQuery('#paymillCardExpiryYear').val())) {
-                        pmQuery(".payment-errors.cc").text('[{ oxmultilang ident="PAYMILL_VALIDATION_EXP" }]');
-                        pmQuery(".payment-errors.cc").css("display", "inline-block");
-                        pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                        return false;
-                    }
-
-                    if (!paymill.validateCvc(pmQuery('#paymillCardCvc').val(), pmQuery('#paymillCardNumber').val())) {
-                        if (paymill.cardType(pmQuery('#paymillCardNumber').val()).toLowerCase() !== 'maestro') {
-                            pmQuery(".payment-errors.cc").text('[{ oxmultilang ident="PAYMILL_VALIDATION_CVC" }]');
-                            pmQuery(".payment-errors.cc").css("display", "inline-block");
-                            pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                            return false;
-                        }
-                    }
-
-                    if (!paymill.validateHolder(pmQuery('#paymillCardHolderName').val())) {
-                        pmQuery(".payment-errors.cc").text('[{ oxmultilang ident="PAYMILL_VALIDATION_CARDHOLDER" }]');
-                        pmQuery(".payment-errors.cc").css("display", "inline-block");
-                        pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                        return false;
-                    }
-
-                    var cvc = '000';
-
-                    if (pmQuery('#paymillCardCvc').val() !== '') {
-                        cvc = pmQuery('#paymillCardCvc').val();
-                    }
-
-                    var params = {
-                        amount_int: PAYMILL_AMOUNT, // E.g. "15" for 0.15 Eur
-                        currency: PAYMILL_CURRENCY, // ISO 4217 e.g. "EUR"
-                        number: pmQuery('#paymillCardNumber').val(),
-                        exp_month: pmQuery('#paymillCardExpiryMonth').val(),
-                        exp_year: pmQuery('#paymillCardExpiryYear').val(),
-                        cvc: cvc,
-                        cardholder: pmQuery('#paymillCardHolderName').val()
-                    };
-                    paymill.createToken(params, PaymillResponseHandler);
-                } else {
-                    pmQuery('form[name="order"]').append("<input type='hidden' name='paymillToken' value='dummyToken'/>");
-                    pmQuery('form[name="order"]').get(0).submit();
-                }
-            } else if (pmQuery('#payment_paymill_elv').attr('checked')) {
-                if (!PAYMILL_FASTCHECKOUT_ELV) {
-                    if (PAYMILL_SEPA === "1") {
-                        paymillSepa();
-                    } else {
-                        paymillElv();
-                    }
-                } else {
-                    pmQuery('form[name="order"]').append("<input type='hidden' name='paymillToken' value='dummyToken'/>");
-                    pmQuery('form[name="order"]').get(0).submit();
-                }
-            } else {
-                pmQuery("#test_PaymentNextStepBottom").removeAttr("disabled");
-                return true;
-            }
-
-            return false;
-        });
     });
+
+    function paymillDebug(message)
+    {
+        if (PAYMILL_DEBUG === "1") {
+            console.log(message);
+        }
+    }
+
+    $( "form[name='order']" ).submit(function(event) {
+        var cc = $('#payment_paymill_cc').attr('checked') === 'checked';
+        var elv = $('#payment_paymill_elv').attr('checked') === 'checked';
+
+        if (cc || elv) {
+            // prevent form submit
+            event.preventDefault();
+
+            // disable submit-button to prevent multiple clicks
+            $('#test_PaymentNextStepBottom').attr("disabled", "disabled");
+
+            if (!isFastCheckout(cc, elv)) {
+                generateToken(cc, elv);
+            } else {
+                fastCheckout();
+            }
+        }
+
+        return true;
+    });
+
+    function isFastCheckout(cc, elv)
+    {
+        if ((cc && PAYMILL_FASTCHECKOUT_CC) || (elv && PAYMILL_FASTCHECKOUT_ELV)) {
+            var formdata = getFormData();
+            return prefilledInputValues.toString() === formdata.toString();
+        }
+
+        return false;
+    }
+
+    function fastCheckout()
+    {
+        $("#paymill_form").append("<input type='hidden' name='paymillFastcheckout' value='" + true + "'/>");
+        result = new Object();
+        result.token = 'dummyToken';
+        PaymillResponseHandler(null, result);
+    }
+
+    function generateToken(cc, elv)
+    {
+        var tokenRequestParams = null;
+        var paymentError;
+
+        var paymentErrorSelectorType = cc? '.cc' : '.elv';
+        var paymentError = $(
+         '.payment-errors' + paymentErrorSelectorType
+        );
+
+        // remove old errors
+        $('.payment-errors' + paymentErrorSelectorType + ' ul').remove();
+
+        // @TODO More and better Debugging Messages
+        paymillDebug('Paymill: Start form validation');
+
+        if (cc && validatePaymillCcFormData()) {
+         tokenRequestParams = createCcTokenRequestParams();
+        } else if (elv && validatePaymillElvFormData()) {
+         tokenRequestParams = createElvTokenRequestParams();
+        }
+
+        if (tokenRequestParams !== null) {
+            paymill.createToken(tokenRequestParams, PaymillResponseHandler);
+        } else {
+            paymentError.css("display", "inline-block");
+            $("#test_PaymentNextStepBottom").removeAttr("disabled");
+        }
+    }
+
+    function PaymillResponseHandler(error, result)
+    {
+        if (error) {
+            paymillDebug('An API error occured:' + error.apierror);
+            // shows errors above the PAYMILL specific part of the form
+            $(".payment-errors").text($("<div/>").html(PAYMILL_TRANSLATION["PAYMILL_" + error.apierror]).text());
+            $(".payment-errors").css("display", "inline-block");
+        } else {
+            $(".payment-errors").css("display", "none");
+            $(".payment-errors").text("");
+            // Token
+            paymillDebug('Received a token: ' + result.token);
+            // add token into hidden input field for request to the server
+            $("form[name='order']").append("<input type='hidden' name='paymillToken' value='" + result.token + "'/>");
+            $("form[name='order']").get(0).submit();
+        }
+
+        $("#test_PaymentNextStepBottom").removeAttr("disabled");
+    }
+
+    function validatePaymillElvFormData()
+    {
+        var accountNumber = $('#paymillElvAccount').val();
+        var bankCode = $('#paymillElvBankCode').val();
+        var accountHolder = $('#paymillElvHolderName').val();
+
+        var valid = true;
+        var errors = [];
+
+        if (!accountHolder) {
+            errors.push('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]');
+            valid = false;
+        }
+
+        if (isValueAnIban(accountNumber)) {
+            var iban = new Iban();
+            if (!iban.validate($('#paymillIban').val())) {
+                errors.push(
+                    '[{ oxmultilang ident="PAYMILL_VALIDATION_IBAN" }]'
+                );
+                valid = false;
+            }
+
+            if ($('#paymillBic').val() === "") {
+                errors.push(
+                    '[{ oxmultilang ident="PAYMILL_VALIDATION_BIC" }]'
+                );
+                valid = false;
+            }
+        } else {
+            if (!paymill.validateAccountNumber($('#paymillElvAccount').val())) {
+                errors.push(
+                    '[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTNUMBER" }]'
+                );
+                valid = false;
+            }
+
+            if (!paymill.validateBankCode($('#paymillElvBankCode').val())) {
+                errors.push(
+                    '[{ oxmultilang ident="PAYMILL_VALIDATION_BANKCODE" }]'
+                );
+                valid = false;
+            }
+        }
+
+        if (!valid) {
+            createErrorBoxMarkup($(".payment-errors.elv"), errors);
+            return valid;
+        }
+
+        return valid;
+    }
+
+    function createElvTokenRequestParams()
+    {
+        var tokenRequestParams = null;
+        var accountNumber = $('#paymillElvAccount').val();
+        var bankCode = $('#paymillElvBankCode').val();
+        var accountHolder = $('#paymillElvHolderName').val();
+
+        if (isValueAnIban(accountNumber)) {
+            tokenRequestParams = {
+                iban: accountNumber.replace(/\s+/g, ""),
+                bic: bankCode,
+                accountholder: accountHolder
+            };
+        } else {
+            tokenRequestParams = {
+                number: accountNumber,
+                bank: bankCode,
+                accountholder: accountHolder
+            }
+        }
+
+        return tokenRequestParams;
+    }
+
+    function isValueAnIban(inputValue)
+    {
+        return /^\D{2}/.test(inputValue);
+    }
+
+    function validatePaymillCcFormData()
+    {
+        var valid = true;
+        var errors = [];
+
+        if (!paymill.validateCardNumber($('#paymillCardNumber').val())) {
+            errors.push(
+                '[{ oxmultilang ident="PAYMILL_VALIDATION_CARDNUMBER" }]'
+            );
+            valid = false;
+        }
+
+        if (!paymill.validateExpiry($('#paymillCardExpiryMonth').val(), $('#paymillCardExpiryYear').val())) {
+            errors.push('[{ oxmultilang ident="PAYMILL_VALIDATION_EXP" }]');
+            valid = false;
+        }
+
+        if (!paymill.validateCvc($('#paymillCardCvc').val(), $('#paymillCardNumber').val())) {
+            if (paymill.cardType($('#paymillCardNumber').val()).toLowerCase() !== 'maestro') {
+                errors.push('[{ oxmultilang ident="PAYMILL_VALIDATION_CVC" }]');
+                valid = false;
+            }
+        }
+
+        if (!paymill.validateHolder($('#paymillCardHolderName').val())) {
+            errors.push('[{ oxmultilang ident="PAYMILL_VALIDATION_CARDHOLDER" }]');
+            valid = false;
+        }
+
+        if (!valid) {
+            createErrorBoxMarkup($(".payment-errors.cc"), errors);
+            return valid;
+        }
+
+        return valid;
+    }
+
+    /**
+     * Gathers form-input-values and creates request parameters for
+     * creditcard token request.
+     * @return {object} token request paramaters
+     */
+    function createCcTokenRequestParams()
+    {
+        var cvc = $('#paymillCardCvc').val();
+        if (cvc === '') {
+            cvc = '000';
+        }
+
+        var tokenRequestParams = {
+            amount_int: PAYMILL_AMOUNT, // E.g. "15" for 0.15 Eur
+            currency: PAYMILL_CURRENCY, // ISO 4217 e.g. "EUR"
+            number: $('#paymillCardNumber').val(),
+            exp_month: $('#paymillCardExpiryMonth').val(),
+            exp_year: $('#paymillCardExpiryYear').val(),
+            cvc: cvc,
+            cardholder: $('#paymillCardHolderName').val()
+        };
+
+        return tokenRequestParams;
+    }
+
+    function createErrorBoxMarkup(paymentErrorsContainer, errors)
+    {
+        var list = $('<ul />').appendTo(paymentErrorsContainer);
+
+        errors.forEach(function(entry) {
+            $('<li />').text(
+                $("<span />").html(entry).text()
+            ).appendTo(list);
+        });
+    }
+
+});
 </script>

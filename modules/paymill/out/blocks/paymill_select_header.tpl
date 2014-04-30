@@ -9,7 +9,6 @@
     var PAYMILL_FASTCHECKOUT_CC = [{$fastCheckoutCc}];
     var PAYMILL_FASTCHECKOUT_ELV = [{$fastCheckoutElv}];
     var PAYMILL_DEBUG = '[{$oxConfig->getShopConfVar('PAYMILL_ACTIVATE_DEBUG')}]';
-    var PAYMILL_SEPA = '[{$oxConfig->getShopConfVar('PAYMILL_ACTIVATE_SEPA')}]';
     var PAYMILL_TRANSLATION = {
         PAYMILL_internal_server_error: '[{ oxmultilang ident="PAYMILL_internal_server_error" }]',
         PAYMILL_invalid_public_key: '[{ oxmultilang ident="PAYMILL_invalid_public_key" }]',
@@ -79,7 +78,7 @@ jQuery(document).ready(function($) {
             // disable submit-button to prevent multiple clicks
             $('#paymentNextStepBottom').attr("disabled", "disabled");
 
-            if (!isFastCheckout()) {
+            if (!isFastCheckout(cc, elv)) {
                 generateToken(cc, elv);
             } else {
                 fastCheckout();
@@ -91,7 +90,7 @@ jQuery(document).ready(function($) {
 
     function isFastCheckout()
     {
-        if (PAYMILL_FASTCHECKOUT_CC || PAYMILL_FASTCHECKOUT_ELV) {
+        if ((cc && PAYMILL_FASTCHECKOUT_CC) || (elv && PAYMILL_FASTCHECKOUT_ELV)) {
             var formdata = getFormData();
             return prefilledInputValues.toString() === formdata.toString();
         }

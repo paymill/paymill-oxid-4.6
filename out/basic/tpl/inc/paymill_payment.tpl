@@ -21,7 +21,7 @@
             <label class="card-number-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]:</label>
         </td>
         <td>
-            <input id="paymillCardNumber" class="card-number span1 [{if $brand}]paymill-card-number-[{$brand}][{/if}]" type="text" size="20" value="[{$paymillCcLastFour}]"/>
+            <input id="paymillCardNumber" class="paymill_input paymill_input card-number span1 [{if $brand}]paymill-card-number-[{$brand}][{/if}]" type="text" size="20" value="[{$paymillCcLastFour}]"/>
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
@@ -31,7 +31,7 @@
             <label class="card-cvc-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_SECURITYCODE" }]<span class="tooltip" title='[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_CC_TOOLTIP" }]'>?</span>:</label>
         </td>
         <td>
-            <input id="paymillCardCvc" class="card-cvc span1" type="text" size="20" value="[{$paymillCcCvc}]"/>
+            <input id="paymillCardCvc" class="paymill_input paymill_input card-cvc span1" type="text" size="20" value="[{$paymillCcCvc}]"/>
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
@@ -41,7 +41,7 @@
             <label class="card-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_HOLDERNAME" }]:</label>
         </td>
         <td>
-            <input id="paymillCardHolderName" class="card-holdername span1" type="text" size="20" value="[{$paymillCcCardHolder}]" />
+            <input id="paymillCardHolderName" class="paymill_input paymill_input card-holdername span1" type="text" size="20" value="[{$paymillCcCardHolder}]" />
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
@@ -51,7 +51,7 @@
             <label class="card-expiry-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_VALIDUNTIL" }]:</label>
         </td>
         <td>
-            <select id="paymillCardExpiryMonth" class="card-expiry-month">
+            <select id="paymillCardExpiryMonth" class="paymill_input card-expiry-month">
                 <option value="1">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_MONTH_JAN" }]</option>
                 <option value="2">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_MONTH_FEB" }]</option>
                 <option value="3">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_MONTH_MAR" }]</option>
@@ -66,7 +66,7 @@
                 <option value="12">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_MONTH_DEC" }]</option>
             </select>
             <span> / </span>
-            <select id="paymillCardExpiryYear" class="card-expiry-year">
+            <select id="paymillCardExpiryYear" class="paymill_input card-expiry-year">
                 [{foreach from=$oView->getCreditYears() item=year}]
                 [{if $year eq $paymillCcExpireYear}]
                 <option selected="selected">[{$year}]</option>
@@ -78,93 +78,47 @@
         </td>
     </tr>
 [{elseif $sPaymentID == 'paymill_elv'}]
-    [{if !$oxConfig->getShopConfVar('PAYMILL_ACTIVATE_SEPA')}]
-    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td>
-            <input id="payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]>
-        </td>
-        <td colspan="2" id="test_PaymentDesc_[{$smarty.foreach.PaymentSelect.iteration}]" >
-            <label for="payment_[{$sPaymentID}]"><b>[{ $paymentmethod->oxpayments__oxdesc->value}]</b></label>
-        </td>
-    </tr>
-    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td colspan="3">
-            <p class="payment-errors elv" style="display:none;"></p>
-        </td>
-    </tr>
-    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td>
-        </td>
-        <td>
-            <label class="elv-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNTHOLDER" }]:</label>
-        </td>
-        <td>
-            <input id="paymillElvHolderName" class="elv-holdername span1" type="text" size="20" value="[{$paymillElvHolder}]"/>
-        </td>
-    </tr>
-    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td>
-        </td>
-        <td>
-            <label class="elv-account-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNT" }]:</label>
-        </td>
-        <td>
-            <input id="paymillElvAccount" class="elv-account span1" type="text" size="20" value="[{$paymillElvAccount}]"/>
-        </td>
-    </tr>
-    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td>
-        </td>
-        <td>
-            <label class="elv-bankcode-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_BANKCODE" }]:</label>
-        </td>
-        <td>
-            <input id="paymillElvBankCode" class="elv-bankcode span1" type="text" size="20" value="[{$paymillElvCode}]"/>
-        </td>
-    </tr>
-    [{else}]
-    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td>
-            <input id="payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]>
-        </td>
-        <td colspan="2" id="test_PaymentDesc_[{$smarty.foreach.PaymentSelect.iteration}]" >
-            <label for="payment_[{$sPaymentID}]"><b>[{ $paymentmethod->oxpayments__oxdesc->value}]</b></label>
-        </td>
-    </tr>
-    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td colspan="3">
-            <p class="payment-errors elv" style="display:none;"></p>
-        </td>
-    </tr>
-    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td>
-        </td>
-        <td>
-            <label class="elv-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNTHOLDER" }]:</label>
-        </td>
-        <td>
-            <input id="paymillElvHolderName" class="elv-holdername span1" type="text" size="20" value="[{$paymillElvHolder}]"/>
-        </td>
-    </tr>
-    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td>
-        </td>
-        <td>
-            <label class="elv-account-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_IBAN" }]:</label>
-        </td>
-        <td>
-            <input id="paymillIban" class="elv-account span1" type="text" size="20" value="[{$paymillElvIban}]"/>
-        </td>
-    </tr>
-    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
-        <td>
-        </td>
-        <td>
-            <label class="elv-bankcode-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_BIC" }]:</label>
-        </td>
-        <td>
-            <input id="paymillBic" class="elv-bankcode span1" type="text" size="20" value="[{$paymillElvBic}]"/>
-        </td>
-    </tr>
-    [{/if}]
+<tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+    <td>
+        <input id="payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]>
+    </td>
+    <td colspan="2" id="test_PaymentDesc_[{$smarty.foreach.PaymentSelect.iteration}]" >
+        <label for="payment_[{$sPaymentID}]"><b>[{ $paymentmethod->oxpayments__oxdesc->value}]</b></label>
+    </td>
+</tr>
+<tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+    <td colspan="3">
+        <p class="payment-errors elv" style="display:none;"></p>
+    </td>
+</tr>
+<tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+    <td>
+    </td>
+    <td>
+        <label class="elv-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNTHOLDER" }]:</label>
+    </td>
+    <td>
+        <input id="paymillElvHolderName" class="paymill_input elv-holdername span1" type="text" size="20" value="[{$paymillElvHolder}]"/>
+    </td>
+</tr>
+<tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+    <td>
+    </td>
+    <td>
+        <label class="elv-account-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNT" }] / [{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_IBAN" }]:</label>
+    </td>
+    <td>
+        <input id="paymillElvAccount" class="paymill_input elv-account span1" type="text" size="20" value="[{$paymillElvAccount}]"/>
+    </td>
+</tr>
+<tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+    <td>
+    </td>
+    <td>
+        <label class="elv-bankcode-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_BANKCODE" }] / [{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_BIC" }]:</label>
+    </td>
+    <td>
+        <input id="paymillElvBankCode" class="paymill_input elv-bankcode span1" type="text" size="20" value="[{$paymillElvCode}]"/>
+    </td>
+</tr>
 [{/if}]
