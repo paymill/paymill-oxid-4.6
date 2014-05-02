@@ -48,8 +48,7 @@ jQuery(document).ready(function($) {
         return formData;
     }
 
-    // @TODO Test if this works with alle supported browsers
-    $('#paymillCardNumber').on('input', function() {
+    $('#paymillCardNumber').on('input keyup', function() {
         $("#paymillCardNumber")[0].className = $("#paymillCardNumber")[0].className.replace(/paymill-card-number-.*/g, '');
         var cardnumber = $('#paymillCardNumber').val();
         var detector = new BrandDetection();
