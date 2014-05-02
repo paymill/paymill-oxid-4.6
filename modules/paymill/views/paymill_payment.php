@@ -22,7 +22,9 @@ class paymill_payment extends paymill_payment_parent
      */
     public function render()
     {
-        if ($this->getUser()) {
+        // @TODO verify if fastcheckout-data should only be set if fastcheckout is active
+        // @TODO see if we need the request without verifying if fastCheckoutData exists
+        if ($this->getUser() && $this->_isFastCheckoutAllowed()) {
             $this->_payments = new Services_Paymill_Payments(
                 trim(oxConfig::getInstance()->getShopConfVar('PAYMILL_PRIVATEKEY')),
                 paymill_util::API_ENDPOINT
@@ -51,6 +53,9 @@ class paymill_payment extends paymill_payment_parent
             } else {
                 $this->addTplParam('fastCheckoutElv', 'false');
             }
+        } else {
+            $this->addTplParam('fastCheckoutCc', 'false');
+            $this->addTplParam('fastCheckoutElv', 'false');
         }
 
         $this->addTplParam(
@@ -90,6 +95,8 @@ class paymill_payment extends paymill_payment_parent
             if ($this->_getEntry($this->_payment, 'card_type') === 'american express') {
                 $this->addTplParam('brand', 'amex');
             } else {
+                var_dump('test');
+                exit;
                 $this->addTplParam('brand', $this->_getEntry($this->_payment, 'card_type'));
             }
         }
@@ -198,6 +205,19 @@ class paymill_payment extends paymill_payment_parent
         }
 
         $this->addTplParam('paymillBrands', $ccToShow);
+    }
+
+    /**
+     * Get module settings for fast checkout
+     * @return boolean is fast checkout active
+     */
+    public function _isFastCheckoutAllowed()
+    {
+        $isFastCheckoutActive = oxConfig::getInstance()->getShopConfVar(
+            'PAYMILL_ACTIVATE_FASTCHECKOUT'
+        );
+
+        return $isFastCheckoutActive;
     }
 
 }

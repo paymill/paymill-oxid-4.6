@@ -13,8 +13,8 @@
                     <p class="payment-errors cc" style="display:none;"></p>
                     <div>
                         <ul id="paymill_brands">
-                            [{foreach key=brandsId from=$paymillBrands item=brand name=paymillBrandSelect}]
-                                <li class="paymill-card-number-[{$brand}]"></li>
+                            [{foreach key=brandsId from=$paymillBrands item=cardBrand name=paymillBrandSelect}]
+                                <li class="paymill-card-number-[{$cardBrand}]"></li>
                             [{/foreach}]
                         </ul>
                     </div>
