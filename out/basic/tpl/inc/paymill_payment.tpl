@@ -18,8 +18,8 @@
     <tr>
         <td colspan="3">
             <ul id="paymill_brands">
-                [{foreach key=brandsId from=$paymillBrands item=brand name=paymillBrandSelect}]
-                    <li class="paymill-card-number-[{$brand}]"></li>
+                [{foreach key=brandsId from=$paymillBrands item=cardBrand name=paymillBrandSelect}]
+                    <li class="paymill-card-number-[{$cardBrand}]"></li>
                 [{/foreach}]
             </ul>
         </td>
