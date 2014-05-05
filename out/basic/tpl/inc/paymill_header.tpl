@@ -40,15 +40,7 @@ $.noConflict();
 jQuery(document).ready(function($) {
     prefilledInputValues = getFormData();
 
-    function getFormData() {
-        var formData = [];
-        $('.paymill_input').each(function() {
-            formData.push($(this).val());
-        });
-        return formData;
-    }
-
-    $('#paymillCardNumber').keyup(function() {
+    $('#paymillCardNumber').on('input keyup', function() {
         $("#paymillCardNumber")[0].className = $("#paymillCardNumber")[0].className.replace(/paymill-card-number-.*/g, '');
         var cardnumber = $('#paymillCardNumber').val();
         var detector = new BrandDetection();
@@ -61,18 +53,6 @@ jQuery(document).ready(function($) {
             }
         }
     });
-
-    function shouldBrandBeRendered(brand)
-    {
-        return (brand !== 'unknown' && ($.inArray(brand, PAYMILL_CC_BRANDS) !== -1 || PAYMILL_CC_BRANDS.length === 0));
-    }
-
-    function paymillDebug(message)
-    {
-        if (PAYMILL_DEBUG === "1") {
-            console.log(message);
-        }
-    }
 
     $( "form[name='order']" ).submit(function(event) {
         var cc = $('#payment_paymill_cc').attr('checked') === 'checked';
@@ -95,6 +75,51 @@ jQuery(document).ready(function($) {
         return true;
     });
 
+    /**
+     * Get values of PAYMILL-Payment form-inputs
+     * @return {[string]} array of PAYMILL form-input-values
+     */
+    function getFormData() {
+        var formData = [];
+        $('.paymill_input').each(function() {
+            formData.push($(this).val());
+        });
+        return formData;
+    }
+
+    /**
+     * Tests if brand should be rendered in view
+     * @param  {string} brand brand name
+     * @return {boolean} should brand be rendered
+     */
+    function shouldBrandBeRendered(brand)
+    {
+        var shouldBrandBeRendered = brand !== 'unknown' && (
+                $.inArray(brand, PAYMILL_CC_BRANDS) !== -1
+                || PAYMILL_CC_BRANDS.length === 0
+        );
+        return shouldBrandBeRendered;
+    }
+
+    /**
+     * console.log message if PAYMILL_Debug is allowed
+     * @param  {string} message Debug message
+     */
+    function paymillDebug(message)
+    {
+        if (PAYMILL_DEBUG === "1") {
+            console.log(message);
+        }
+    }
+
+    /**
+     * First tests if fast checkout is allowed then verifies if form data has
+     * not changed since the script has loaded, only if the data did not change
+     * fast checkout should be tried.
+     * @param  {Boolean}  cc  user has chosen credit card payment
+     * @param  {Boolean}  elv user has chosen elv payment
+     * @return {Boolean}  is fast checkout allowed in this context
+     */
     function isFastCheckout(cc, elv)
     {
         if ((cc && PAYMILL_FASTCHECKOUT_CC) || (elv && PAYMILL_FASTCHECKOUT_ELV)) {
@@ -105,14 +130,25 @@ jQuery(document).ready(function($) {
         return false;
     }
 
+    /**
+     * Adds dummy token to form and calls the response handler
+     */
     function fastCheckout()
     {
-        $("#paymill_form").append("<input type='hidden' name='paymillFastcheckout' value='" + true + "'/>");
+        $("#paymill_form").append(
+            "<input type='hidden' name='paymillFastcheckout' value='" +
+            true + "'/>"
+        );
         result = new Object();
         result.token = 'dummyToken';
         PaymillResponseHandler(null, result);
     }
 
+    /**
+     * Generate PAYMILL token
+     * @param  {Boolean} cc  has user chosen credit card payment
+     * @param  {Boolean} elv hast user chosen elv payment
+     */
     function generateToken(cc, elv)
     {
         var tokenRequestParams = null;
