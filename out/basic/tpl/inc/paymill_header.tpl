@@ -199,6 +199,10 @@ jQuery(document).ready(function($) {
         $("#test_PaymentNextStepBottom").removeAttr("disabled");
     }
 
+    /**
+     * ELV-form-data validation
+     * @return {Boolean} Are form-data valid
+     */
     function validatePaymillElvFormData()
     {
         var accountNumber = $('#paymillElvAccount').val();

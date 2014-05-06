@@ -40,6 +40,10 @@ $.noConflict();
 jQuery(document).ready(function($) {
     prefilledInputValues = getFormData();
 
+    /**
+     * Get values of PAYMILL-Payment form-inputs
+     * @return {[string]} array of PAYMILL form-input-values
+     */
     function getFormData() {
         var formData = [];
         $('.paymill_input').each(function() {

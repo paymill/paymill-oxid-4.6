@@ -112,12 +112,12 @@ class paymill_payment extends paymill_payment_parent
             $fastCheckoutIban = $this->_getEntry($this->_payment, 'iban');
             $fastCheckoutBic = $this->_getEntry($this->_payment, 'bic');
 
-            if (is_null($fastCheckoutAccount) || is_null($fastCheckoutCode)) {
-                $account = $fastCheckoutIban;
-                $code = $fastCheckoutBic;
-            } else {
+            if (is_null($fastCheckoutIban) && !is_null($fastCheckoutAccount) && !is_null($fastCheckoutCode)) {
                 $account = $fastCheckoutAccount;
                 $code = $fastCheckoutCode;
+            } else {
+                $account = $fastCheckoutIban;
+                $code = $fastCheckoutBic;
             }
 
             $this->addTplParam('paymillElvAccount', $account);
