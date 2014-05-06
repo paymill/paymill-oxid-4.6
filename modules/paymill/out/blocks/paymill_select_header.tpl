@@ -183,28 +183,28 @@ jQuery(document).ready(function($) {
 
         if (isValueAnIban(accountNumber)) {
             var iban = new Iban();
-            if (!iban.validate($('#paymillIban').val())) {
+            if (!iban.validate(accountNumber)) {
                 errors.push(
                     '[{ oxmultilang ident="PAYMILL_VALIDATION_IBAN" }]'
                 );
                 valid = false;
             }
 
-            if ($('#paymillBic').val() === "") {
+            if (bankCode === "") {
                 errors.push(
                     '[{ oxmultilang ident="PAYMILL_VALIDATION_BIC" }]'
                 );
                 valid = false;
             }
         } else {
-            if (!paymill.validateAccountNumber($('#paymillElvAccount').val())) {
+            if (!paymill.validateAccountNumber(accountNumber)) {
                 errors.push(
                     '[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTNUMBER" }]'
                 );
                 valid = false;
             }
 
-            if (!paymill.validateBankCode($('#paymillElvBankCode').val())) {
+            if (!paymill.validateBankCode(bankCode)) {
                 errors.push(
                     '[{ oxmultilang ident="PAYMILL_VALIDATION_BANKCODE" }]'
                 );
