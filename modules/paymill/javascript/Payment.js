@@ -141,7 +141,7 @@ jQuery(document).ready(function($) {
 		var errors = [];
 
 		if (!accountHolder) {
-			errors.push('[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]');
+			errors.push(PAYMILL_TRANSLATION.PAYMILL_VALIDATION_ACCOUNTHOLDER);
 			valid = false;
 		}
 
@@ -149,28 +149,28 @@ jQuery(document).ready(function($) {
 			var iban = new Iban();
 			if (!iban.validate(accountNumber)) {
 				errors.push(
-					'[{ oxmultilang ident="PAYMILL_VALIDATION_IBAN" }]'
+					PAYMILL_TRANSLATION.PAYMILL_VALIDATION_IBAN
 				);
 				valid = false;
 			}
 
 			if (bankCode === "") {
 				errors.push(
-					'[{ oxmultilang ident="PAYMILL_VALIDATION_BIC" }]'
+					PAYMILL_TRANSLATION.PAYMILL_VALIDATION_BIC
 				);
 				valid = false;
 			}
 		} else {
 			if (!paymill.validateAccountNumber(accountNumber)) {
 				errors.push(
-					'[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTNUMBER" }]'
+					PAYMILL_TRANSLATION.PAYMILL_VALIDATION_ACCOUNTNUMBER
 				);
 				valid = false;
 			}
 
 			if (!paymill.validateBankCode(bankCode)) {
 				errors.push(
-					'[{ oxmultilang ident="PAYMILL_VALIDATION_BANKCODE" }]'
+					PAYMILL_TRANSLATION.PAYMILL_VALIDATION_BANKCODE
 				);
 				valid = false;
 			}
@@ -220,25 +220,33 @@ jQuery(document).ready(function($) {
 
 		if (!paymill.validateCardNumber($('#paymillCardNumber').val())) {
 			errors.push(
-				'[{ oxmultilang ident="PAYMILL_VALIDATION_CARDNUMBER" }]'
+				PAYMILL_TRANSLATION.PAYMILL_VALIDATION_CARDNUMBER
 			);
 			valid = false;
 		}
 
-		if (!paymill.validateExpiry($('#paymillCardExpiryMonth').val(), $('#paymillCardExpiryYear').val())) {
-			errors.push('[{ oxmultilang ident="PAYMILL_VALIDATION_EXP" }]');
+		if (!paymill.validateExpiry(
+			$('#paymillCardExpiryMonth').val(),
+			$('#paymillCardExpiryYear').val()
+		)) {
+			errors.push(PAYMILL_TRANSLATION.PAYMILL_VALIDATION_EXP);
 			valid = false;
 		}
 
-		if (!paymill.validateCvc($('#paymillCardCvc').val(), $('#paymillCardNumber').val())) {
-			if (paymill.cardType($('#paymillCardNumber').val()).toLowerCase() !== 'maestro') {
-				errors.push('[{ oxmultilang ident="PAYMILL_VALIDATION_CVC" }]');
+		if (!paymill.validateCvc(
+			$('#paymillCardCvc').val(),
+			$('#paymillCardNumber').val()
+		)) {
+			if (paymill.cardType(
+				$('#paymillCardNumber').val()
+			).toLowerCase() !== 'maestro') {
+				errors.push(PAYMILL_TRANSLATION.PAYMILL_VALIDATION_CVC);
 				valid = false;
 			}
 		}
 
 		if (!paymill.validateHolder($('#paymillCardHolderName').val())) {
-			errors.push('[{ oxmultilang ident="PAYMILL_VALIDATION_CARDHOLDER" }]');
+			errors.push(PAYMILL_TRANSLATION.PAYMILL_VALIDATION_CARDHOLDER);
 			valid = false;
 		}
 
