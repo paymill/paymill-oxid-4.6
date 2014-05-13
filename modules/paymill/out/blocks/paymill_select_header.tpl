@@ -26,7 +26,6 @@
         PAYMILL_field_invalid_currency: '[{ oxmultilang ident="PAYMILL_field_invalid_currency" }]',
         PAYMILL_field_invalid_iban: '[{ oxmultilang ident="PAYMILL_field_invalid_iban" }]',
         PAYMILL_field_invalid_country: '[{ oxmultilang ident="PAYMILL_field_invalid_country" }]',
-        PAYMILL_VALIDATION_ACCOUNTHOLDER: '[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]',
         PAYMILL_VALIDATION_IBAN: '[{ oxmultilang ident="PAYMILL_VALIDATION_IBAN" }]',
         PAYMILL_VALIDATION_BIC: '[{ oxmultilang ident="PAYMILL_VALIDATION_BIC" }]',
         PAYMILL_VALIDATION_ACCOUNTNUMBER: '[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTNUMBER" }]',
@@ -34,8 +33,10 @@
         PAYMILL_VALIDATION_CARDNUMBER: '[{ oxmultilang ident="PAYMILL_VALIDATION_CARDNUMBER" }]',
         PAYMILL_VALIDATION_EXP: '[{ oxmultilang ident="PAYMILL_VALIDATION_EXP" }]',
         PAYMILL_VALIDATION_CVC: '[{ oxmultilang ident="PAYMILL_VALIDATION_CVC" }]',
-        PAYMILL_VALIDATION_CARDHOLDER: '[{ oxmultilang ident="PAYMILL_VALIDATION_CARDHOLDER" }]'
+        PAYMILL_VALIDATION_CARDHOLDER: '[{ oxmultilang ident="PAYMILL_VALIDATION_CARDHOLDER" }]',
+        PAYMILL_VALIDATION_ACCOUNTHOLDER: '[{ oxmultilang ident="PAYMILL_VALIDATION_ACCOUNTHOLDER" }]'
     };
+
     var PAYMILL_CC_BRANDS = [{$paymillBrands|@json_encode}];
 </script>
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
