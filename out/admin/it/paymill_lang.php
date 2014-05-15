@@ -34,5 +34,7 @@ $aLang = array(
 	"SHOP_MODULE_PAYMILL_MAESTRO" => "Maestro",
 	"SHOP_MODULE_PAYMILL_UNIONPAY" => "Unionpay",
 	"SHOP_MODULE_PAYMILL_DISCOVER" => "Discover",
-	"SHOP_MODULE_PAYMILL_DANKORT" => "Dankort"
+    "SHOP_MODULE_PAYMILL_DANKORT" => "Dankort",
+    "SHOP_MODULE_PAYMILL_PRENOTIFICATION" =>"Days until the debit",
+    "PAYMILL_PRENOTIFICATION_TEXT" => "The direct debit is drawn to the following date:"
 );

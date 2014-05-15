@@ -10,6 +10,8 @@ $aLang = array(
 	"PAYMILL_INSTALL_LABEL_PAYMENT" => "Zahlarten installiert",
 	"PAYMILL_INSTALL_LABEL_PAYMENT_CONFIG" => "Zahlarten konfiguriert",
 	"PAYMILL_INSTALL_LABEL_SHIPPING_CONFIG" => "Versandarten konfiguriert",
+    "PAYMILL_INSTALL_LABEL_PRENOTIFICATION" => "Tage bis zum Einzug konfiguriert",
+    "PAYMILL_INSTALL_LABEL_PRENOTIFICATION_FAILED" => "Tage bis zum Einzug nicht konfiguriert: Bitte tragen Sie in den Moduleinstellungen für das Feld \"Tage bis zum Einzug\" eine ganze Zahl, größer null ein. (z.B. 7)",
 	"LOG" => "PAYMILL Log",
 	"HOOKS" => "PAYMILL Hooks",
 	"PAYMILL_HOOK_URL" => "Registrierte Webhook-URL",
@@ -35,5 +37,7 @@ $aLang = array(
 	"SHOP_MODULE_PAYMILL_MAESTRO" => "Maestro",
 	"SHOP_MODULE_PAYMILL_UNIONPAY" => "Unionpay",
 	"SHOP_MODULE_PAYMILL_DISCOVER" => "Discover",
-	"SHOP_MODULE_PAYMILL_DANKORT" => "Dankort"
+	"SHOP_MODULE_PAYMILL_DANKORT" => "Dankort",
+    "SHOP_MODULE_PAYMILL_PRENOTIFICATION" =>"Tage bis zum Einzug",
+    "PAYMILL_PRENOTIFICATION_TEXT" => "Die Lastschrift wird zu dem folgenden Termin eingezogen:"
 );

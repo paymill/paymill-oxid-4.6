@@ -74,6 +74,14 @@
             [{if $paymillIsShippingConfigured}]&#10003;[{else}]&#10007;[{/if}]
             <label>[{ oxmultilang ident="PAYMILL_INSTALL_LABEL_SHIPPING_CONFIG" }]</label>
         </div>
+        <div class="row [{if $paymillIsPrenotificationSet}]paymill_green[{else}]paymill_red[{/if}]">
+            [{if $paymillIsPrenotificationSet}]
+            &#10003;
+            <label>[{ oxmultilang ident="PAYMILL_INSTALL_LABEL_PRENOTIFICATION" }]</label>
+            [{else}]
+            X <label>[{ oxmultilang ident="PAYMILL_INSTALL_LABEL_PRENOTIFICATION_FAILED" }]</label>
+            [{/if}]
+        </div>
     [{include file="pagetabsnippet.tpl"}]
 
     [{include file="bottomnaviitem.tpl"}]

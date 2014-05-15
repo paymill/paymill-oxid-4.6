@@ -68,6 +68,7 @@ class paymill_install extends oxAdminView
         $this->addTplParam('paymillIsPaymentInstalled', $this->isPaymentInstalled());
         $this->addTplParam('paymillIsPaymentConfigured', $this->isPaymentConfigured());
         $this->addTplParam('paymillIsShippingConfigured', $this->isShippingConfigured());
+        $this->addTplParam('paymillIsPrenotificationSet', $this->isPrenotificationSet());
         $this->addTplParam('paymillPublicKey', $this->publicKey);
     }
 
@@ -128,6 +129,15 @@ class paymill_install extends oxAdminView
             'SELECT oxobjectid FROM oxobject2payment WHERE oxpaymentid IN("paymill_cc", "paymill_elv") AND oxtype = "oxdelset"'
         );
         return $result->recordCount() > 0;
+    }
+
+    private function isPrenotificationSet()
+    {
+        $result = (int) $this->getConfig()->getConfigParam('PAYMILL_PRENOTIFICATION');
+
+        $isSet = is_int($result) && $result > 0;
+
+        return $isSet;
     }
 
 }
