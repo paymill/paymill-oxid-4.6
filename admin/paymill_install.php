@@ -43,6 +43,7 @@ class paymill_install extends oxAdminView
             "PRIMARY KEY (`oxid`) " .
             ");"
         );
+        // @TODO throws exception if userID does not exist
         oxDb::getDb()->Execute(
             "ALTER TABLE  `paymill_fastcheckout` " .
             "CHANGE  `userID` `oxid` VARCHAR( 100 ) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL;"
