@@ -13,7 +13,7 @@ $aModule = array(
     'extend' => array(
         'payment' => 'paymill/views/paymill_payment',
         'oxpaymentgateway' => 'paymill/views/paymill_paymentgateway',
-        'pdfarticlesummary' => 'paymill/core/paymill_prenotification_invoice'
+        'oxemail' => 'paymill/core/paymill_oxemail'
     ),
     'files' => array(
         'Services_Paymill_PaymentProcessor' => 'paymill/lib/Services/Paymill/PaymentProcessor.php',
@@ -26,12 +26,12 @@ $aModule = array(
         'paymill_logging' => 'paymill/core/paymill_logging.php',
         'paymill_loglist' => 'paymill/core/paymill_loglist.php',
         'paymill_util' => 'paymill/util/paymill_util.php',
-        'paymill_hooks' => 'paymill/views/paymill_hooks.php',
-        'paymill_prenotification_invoice' => 'paymill/core/paymill_prenotification_invoice.php'
+        'paymill_hooks' => 'paymill/views/paymill_hooks.php'
     ),
     'blocks' => array(
         array('template' => 'page/checkout/payment.tpl', 'block' => 'select_payment', 'file' => 'paymill_select_payment.tpl'),
         array('template' => 'page/checkout/payment.tpl', 'block' => 'checkout_payment_main', 'file' => 'paymill_select_header.tpl'),
+        array('template' => 'email/html/order_cust.tpl', 'block' => 'email_html_order_cust_paymentinfo', 'file' => 'paymill_order_cust.tpl')
     ),
     'settings' => array(
         array('group' => 'main', 'name' => 'PAYMILL_PRIVATEKEY', 'type' => 'str', 'value' => ''),

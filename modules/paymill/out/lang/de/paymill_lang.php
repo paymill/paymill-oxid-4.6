@@ -87,4 +87,6 @@ $aLang = array(
 	"PAYMILL_field_invalid_amount_int" => "Missing amount for 3-D Secure",
 	"PAYMILL_field_invalid_amount" => "Missing amount for 3-D Secure",
 	"PAYMILL_field_invalid_currency" => "Invalid currency for 3-D Secure",
+	"PAYMILL_PRENOTIFICATION_TEXT" => "Die Lastschrift wird zu dem folgenden Termin eingezogen:",
+	"PAYMILL_DATE_FORMAT" => "d.m.Y"
 );
