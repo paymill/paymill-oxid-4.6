@@ -89,6 +89,43 @@ New:
 <!--PAYMILL END-->
 [{else}]
 ```
+- Open "Shoproot/out/basic/tpl/email/html/order_cust.tpl" in your preferred editor.
+- Change the following lines:
+
+Old:
+```php
+[{if $payment->oxuserpayments__oxpaymentsid->value != "oxempty"}][{ oxmultilang ident="EMAIL_ORDER_CUST_HTML_PAYMENTMETHOD" }] <b>[{ $payment->oxpayments__oxdesc->value }] [{ if $basket->getPaymentCosts() }]([{ $basket->getFPaymentCosts() }] [{ $currency->sign}])[{/if}]</b><br>
+[{/if}]<br>
+```
+New:
+```php
+[{if $payment->oxuserpayments__oxpaymentsid->value != "oxempty"}][{ oxmultilang ident="EMAIL_ORDER_CUST_HTML_PAYMENTMETHOD" }] <b>[{ $payment->oxpayments__oxdesc->value }] [{ if $basket->getPaymentCosts() }]([{ $basket->getFPaymentCosts() }] [{ $currency->sign}])[{/if}]</b><br>
+[{/if}]<br>
+<!--PAYMILL START-->
+[{if $paymillIsPaymillElv}]
+  <p>[{oxmultilang ident="PAYMILL_PRENOTIFICATION_TEXT"}] [{$paymillDaysUntilWithdraw}]</p>
+[{/if}]
+<!--PAYMILL END-->
+```
+
+- Open "Shoproot/out/basic/tpl/email/plain/order_cust.tpl" in your preferred editor.
+- Change the following lines:
+
+Old:
+```php
+[{if $payment->oxuserpayments__oxpaymentsid->value != "oxempty"}][{ oxmultilang ident="EMAIL_ORDER_CUST_HTML_PAYMENTMETHOD" }] [{ $payment->oxpayments__oxdesc->getRawValue() }] [{ if $basket->getPaymentCosts() }]([{ $basket->getFPaymentCosts() }] [{ $currency->sign}])[{/if}]
+[{/if}]
+```
+New:
+```php
+[{if $payment->oxuserpayments__oxpaymentsid->value != "oxempty"}][{ oxmultilang ident="EMAIL_ORDER_CUST_HTML_PAYMENTMETHOD" }] [{ $payment->oxpayments__oxdesc->getRawValue() }] [{ if $basket->getPaymentCosts() }]([{ $basket->getFPaymentCosts() }] [{ $currency->sign}])[{/if}]
+[{/if}]
+<!--PAYMILL START-->
+[{if $paymillIsPaymillElv}]
+  <br>[{oxmultilang ident="PAYMILL_PRENOTIFICATION_TEXT"}] [{$paymillDaysUntilWithdraw}]<br>
+[{/if}]
+<!--PAYMILL END-->
+```
 
 # Error handling
 
@@ -105,3 +142,6 @@ Open the javascript console in your browser and check the debug messages during 
 Fast Checkout: Fast checkout can be enabled by selecting the option in the PAYMILL Basic Settings. If any customer completes a purchase while the option is active this customer will not be asked for data again. Instead a reference to the customer data will be saved allowing comfort during checkout.
 
 The payment is processed when an order is placed in the shop frontend.
+
+# Notes about Prenotification in ELV
+

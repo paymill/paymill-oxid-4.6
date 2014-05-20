@@ -38,6 +38,5 @@ $aLang = array(
 	"SHOP_MODULE_PAYMILL_UNIONPAY" => "Unionpay",
 	"SHOP_MODULE_PAYMILL_DISCOVER" => "Discover",
 	"SHOP_MODULE_PAYMILL_DANKORT" => "Dankort",
-    "SHOP_MODULE_PAYMILL_PRENOTIFICATION" =>"Tage bis zum Einzug",
-    "PAYMILL_PRENOTIFICATION_TEXT" => "Die Lastschrift wird zu dem folgenden Termin eingezogen:"
+    "SHOP_MODULE_PAYMILL_PRENOTIFICATION" =>"Tage bis zum Einzug"
 );

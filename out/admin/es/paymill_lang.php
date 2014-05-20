@@ -10,6 +10,8 @@ $aLang = array(
 	"PAYMILL_INSTALL_LABEL_PAYMENT" => "Payment installed",
 	"PAYMILL_INSTALL_LABEL_PAYMENT_CONFIG" => "Payment configured",
 	"PAYMILL_INSTALL_LABEL_SHIPPING_CONFIG" => "Shipping configured",
+	"PAYMILL_INSTALL_LABEL_PRENOTIFICATION" => "Days until the debit configured",
+	"PAYMILL_INSTALL_LABEL_PRENOTIFICATION_FAILED" => "Days until the debit not configured: Please set the field \"Days until the debit\" in the PAYMILL extention settings. (for example: 7)",
 	"LOG" => "Registro de PAYMILL",
 	"HOOKS" => "Enlaces PAYMILL",
 	"PAYMILL_HOOK_URL" => "Webhook-URL registrada",
@@ -35,6 +37,5 @@ $aLang = array(
 	"SHOP_MODULE_PAYMILL_UNIONPAY" => "Unionpay",
 	"SHOP_MODULE_PAYMILL_DISCOVER" => "Discover",
     "SHOP_MODULE_PAYMILL_DANKORT" => "Dankort",
-    "SHOP_MODULE_PAYMILL_PRENOTIFICATION" =>"Days until the debit",
-    "PAYMILL_PRENOTIFICATION_TEXT" => "The direct debit is drawn to the following date:"
+    "SHOP_MODULE_PAYMILL_PRENOTIFICATION" =>"Days until the debit"
 );
