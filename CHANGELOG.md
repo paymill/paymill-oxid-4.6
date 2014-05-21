@@ -1,6 +1,8 @@
 ## v2.5.0
  * united SEPA and regular ELV forms
  * added backend option to show credit card logos in frontend
+ * added prenotification in order mail for direct debit (see Readme.md "Notes about direct debit (ELV) Prenotification" regarding invoice pdf)
+ * fixed exception in install with alter table sql
 
 ## v2.4.0
  * added iban validation

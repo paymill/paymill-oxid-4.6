@@ -3,6 +3,10 @@
 class paymill_oxemail extends paymill_oxemail_parent
 {
 
+    /**
+     * [_addUserInfoOrderEMail description]
+     * @param [type] $oOrder [description]
+     */
     protected function _addUserInfoOrderEMail($oOrder)
     {
         $isPaymillElv = false;
