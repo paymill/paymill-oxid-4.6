@@ -128,7 +128,7 @@ New:
 
 # Error handling
 
-In case of any errors turn on the debug mode in the Paymill payment method configuration.
+In case of any errors turn on the debug mode in the PAYMILL payment method configuration.
 Open the javascript console in your browser and check the debug messages during the checkout process.
 
 # Logging
