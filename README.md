@@ -145,7 +145,7 @@ The payment is processed when an order is placed in the shop frontend.
 # Notes about direct debit (ELV) Prenotification
 Because the invoice pdf cannot be automatically extended without breaking custom invoices, we decided to not extend the invoice pdf. To add prenotification to the invoice manually add following snippet:
 
-- Open "Shoproot/out/modules/invoicepdf/myorder.php" in your preferred editor.
+- Open "Shoproot/modules/invoicepdf/myorder.php" in your preferred editor.
 - Change the following lines:
 
 Old:
