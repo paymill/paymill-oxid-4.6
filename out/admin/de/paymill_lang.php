@@ -5,6 +5,7 @@ $aLang = array(
 	"PAYMILL_INSTALL" => "Checkliste",
 	"PAYMILL_INSTALL_BUTTON" => "installieren",
 	"PAYMILL_INSTALL_LABEL_DATABASE" => "Datenbanktabellen angelegt",
+	"PAYMILL_INSTALL_LABEL_BLOCKS" => "Blockeinträge angelegt",
 	"PAYMILL_INSTALL_LABEL_PRIVATEKEY" => "PrivateKey valide",
 	"PAYMILL_INSTALL_LABEL_PUBLICKEY" => "PublicKey valide",
 	"PAYMILL_INSTALL_LABEL_PAYMENT" => "Zahlarten installiert",

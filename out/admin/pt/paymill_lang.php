@@ -5,6 +5,7 @@ $aLang = array(
     "PAYMILL_INSTALL" => "Checklist",
     "PAYMILL_INSTALL_BUTTON" => "install",
     "PAYMILL_INSTALL_LABEL_DATABASE" => "Database tables exsist",
+    "PAYMILL_INSTALL_LABEL_BLOCKS" => "Block entries exist",
     "PAYMILL_INSTALL_LABEL_PRIVATEKEY" => "PrivateKey valid",
     "PAYMILL_INSTALL_LABEL_PUBLICKEY" => "PublicKey valid",
     "PAYMILL_INSTALL_LABEL_PAYMENT" => "Payment installed",

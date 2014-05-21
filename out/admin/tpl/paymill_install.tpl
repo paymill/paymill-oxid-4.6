@@ -46,6 +46,18 @@
             </form>
             [{/if}]
         </div>
+        <div class="row [{if $paymillAreTplBlocksSet}]paymill_green[{else}]paymill_red[{/if}]">
+            [{if $paymillAreTplBlocksSet}]&#10003;[{else}]&#10007;[{/if}]
+            <label>[{ oxmultilang ident="PAYMILL_INSTALL_LABEL_BLOCKS }]</label>
+            [{if !$paymillAreTplBlocksSet}]
+            <form id="paymill_payments" action="[{$oViewConf->getSelfLink()}]" method="post">
+                <input type="hidden" name="cl" value="[{$oViewConf->getActiveClassName()}]">
+                [{$oViewConf->getHiddenSid()}]
+                <input type="submit" class="install_button" value='[{ oxmultilang ident="PAYMILL_INSTALL_BUTTON" }]'>
+                <input type="hidden" name="fnc" value="updateBlocks">
+            </form>
+            [{/if}]
+        </div>
         <div class="row [{if $paymillIsPrivateKeyValid}]paymill_green[{else}]paymill_red[{/if}]">
             [{if $paymillIsPrivateKeyValid}]&#10003;[{else}]&#10007;[{/if}]
             <label>[{ oxmultilang ident="PAYMILL_INSTALL_LABEL_PRIVATEKEY" }]</label>

@@ -66,6 +66,7 @@ class paymill_install extends oxAdminView
         $this->addTplParam('paymillIsShippingConfigured', $this->isShippingConfigured());
         $this->addTplParam('paymillIsPrenotificationSet', $this->isPrenotificationSet());
         $this->addTplParam('paymillPublicKey', $this->publicKey);
+        $this->addTplParam('paymillAreTplBlocksSet', $this->areBlocksSet());
     }
 
     private function isDatabaseInstalled()
@@ -134,6 +135,91 @@ class paymill_install extends oxAdminView
         $isSet = is_int($result) && $result > 0;
 
         return $isSet;
+    }
+
+    /**
+     * Are email blocks set in oxtplblocks table
+     * @return bool
+     */
+    private function areBlocksSet()
+    {
+        $emailHtml = $this->queryForBlock('email_html_order_cust_paymentinfo');
+        $emailPlain = $this->queryForBlock(
+            'email_plain_order_cust_paymentinfo'
+        );
+        return $emailHtml && $emailPlain;
+    }
+
+    /**
+     * Db query for oxBlockname specified, returns true if block in table
+     * oxtplblocks present
+     * @param  string $oxBlockname
+     * @return bool
+     */
+    private function queryForBlock($oxBlockname)
+    {
+        $shopId   = $this->getConfig()->getShopId();
+        $db = oxDb::getDb();
+        $result = $db->getOne(
+            "SELECT 1 FROM oxtplblocks"
+            . " WHERE oxmodule = 'paymill'"
+            . " AND oxshopid = " . $db->quote($shopId)
+            . " AND oxblockname = " . $db->quote($oxBlockname)
+            . " LIMIT 1"
+        );
+
+        return (bool) $result;
+    }
+
+    /**
+     * Update new PAYMILL blocks if missing
+     */
+    public function updateBlocks()
+    {
+        if (!$this->queryForBlock('email_html_order_cust_paymentinfo')) {
+            $this->insertBlock(
+                'email_html_order_cust_paymentinfo',
+                'email/html/order_cust.tpl',
+                'paymill_html_order_cust.tpl'
+            );
+        }
+
+        if (!$this->queryForBlock('email_plain_order_cust_paymentinfo')) {
+            $this->insertBlock(
+                'email_plain_order_cust_paymentinfo',
+                'email/plain/order_cust.tpl',
+                'paymill_plain_order_cust.tpl'
+            );
+        }
+    }
+
+    /**
+     * Insert entry for PAYMILL to oxtplblocks table
+     * @param  string $oxBlockname
+     * @param  string $oxTemplate
+     * @param  string $oxFile
+     */
+    private function insertBlock($oxBlockname, $oxTemplate, $oxFile)
+    {
+        $db = oxDb::getDb();
+        $shopId = $this->getConfig()->getShopId();
+        $oxId = oxUtilsObject::getInstance()->generateUId();
+        $sql = "INSERT INTO `oxtplblocks` (
+                    `OXID`, `OXACTIVE`, `OXSHOPID`, `OXTEMPLATE`,
+                    `OXBLOCKNAME`, `OXPOS`, `OXFILE`, `OXMODULE`
+                ) VALUES (
+                    " . $db->quote($oxId) . ",
+                    1,
+                    " . $db->quote($shopId) . ",
+                    " . $db->quote($oxTemplate) . ",
+                    " . $db->quote($oxBlockname) . ",
+                    '1',
+                    ".$db->quote($oxFile).", 'paymill'
+                )
+        ";
+
+        // @TODO add exception handling
+        $db->execute($sql);
     }
 
 }
