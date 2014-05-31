@@ -28,7 +28,7 @@ If you want to update from an version earlier than 2.1 you have to run the updat
 # Template-Support
 
 - Basic and Azure template are supported by default.
-- To support a custom template adapt the template structure within the out/azure directory to your custom theme.
+- To support a custom template adapt the template structure within the modules/paymill/out/blocks directory to your custom theme. The files most interesting for you are 'paymill_select_payment.tpl and 'paymill_select_header.tpl'.
 
 ## Enable Basic Templatesupport
 - Open "Shoproot/out/basic/tpl/page/checkout/payment.tpl" in your preferred editor.
