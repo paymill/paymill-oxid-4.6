@@ -25,7 +25,7 @@ To activate PAYMILL payment follow these steps:
 - Repeat last 2 steps for other shipping types
 
 # Update
-If you want to update from an version earlier than 2.1 you have to run the update.sql first.
+If you want to update from an version earlier than 2.1 (starting from 2.0.0) you have to run the update.sql first.
 
 # Template-Support
 
