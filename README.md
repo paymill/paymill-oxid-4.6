@@ -3,11 +3,13 @@ PAYMILL - Oxid 4.6
 
 Payment plugin for OXID Version 4.6.x
 
-Download the module here: https://github.com/Paymill/Paymill-Oxid/archive/master.zip
+Download the module here: https://github.com/Paymill/paymill-oxid-4.6/archive/master.zip
 
 - Merge the content of the PAYMILL-Oxid-Module directory with your OXID installation.
+- Clear the OXID tmp folder.
 - In your administration backend activate the Paymill plugin.
-- Go to the configuration section where you can insert your private and public key (that you can find in your Paymill cockpit [https://app.paymill.de/](https://app.paymill.de/ "Paymill cockpit")).
+- Go to the configuration section where you can insert your private and public key (which you can find in your Paymill cockpit [https://app.paymill.de/](https://app.paymill.de/ "Paymill cockpit")).
+- In the main menu goto **PAYMILL > Checklist**; The checklist allows you to verify that the module has been successfully configured. It also fixes missing tables, block etc.
 
 # Activate PAYMILL Payment
 
@@ -29,7 +31,7 @@ If you want to update from an version earlier than 2.1 you have to run the updat
 
 - Basic and Azure template are supported by default.
 - To support a custom template based on Azure, adapt the template structure within the modules/paymill/out/blocks directory to your custom theme. The files most interesting for you are 'paymill_select_payment.tpl and 'paymill_select_header.tpl'.
-- To support a custom template based on Basic, adapt the template structure within the out/basic/tpl/inc/ directory to your custom theme. See also [Enable Basic Templatesupport](## Enable Basic Templatesupport).
+- To support a custom template based on Basic, adapt the template structure within the out/basic/tpl/inc/ directory to your custom theme. See also **Enable Basic Templatesupport**.
 
 ## Enable Basic Templatesupport
 - Open "Shoproot/out/basic/tpl/page/checkout/payment.tpl" in your preferred editor.
@@ -129,17 +131,16 @@ New:
 
 # Error handling
 
-In case of any errors turn on the debug mode in the PAYMILL payment method configuration.
+In case of any errors turn on the debug mode in the PAYMILL module settings.
 Open the javascript console in your browser and check the debug messages during the checkout process.
 
 # Logging
 
-- If you enable logging in the plugin configuration make sure that log.txt inside the plugin directory is writable by your web server. Otherwise logging information will not be stored to the logfile.
-- You can access the logging within your administration backend under Paymill -> Log
+You can access the logging within your administration backend under **PAYMILL > PAYMILL log**
 
 # Notes about the payment process
 
-Fast Checkout: Fast checkout can be enabled by selecting the option in the PAYMILL Basic Settings. If any customer completes a purchase while the option is active this customer will not be asked for data again. Instead a reference to the customer data will be saved allowing comfort during checkout.
+Fast Checkout: Fast checkout can be enabled by selecting the option in the PAYMILL module Settings. If any customer completes a purchase while the option is active this customer will not be asked for data again. Instead a reference to the customer data will be saved allowing comfort during checkout.
 
 The payment is processed when an order is placed in the shop frontend.
 
@@ -159,6 +160,7 @@ protected function _setPayUntilInfo( &$iStartPos )
     $iStartPos += 4;
 }
 ```
+
 New:
 ```php
 protected function _setPayUntilInfo( &$iStartPos )
