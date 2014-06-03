@@ -140,9 +140,9 @@ You can access the logging within your administration backend under **PAYMILL > 
 
 # Notes about the payment process
 
-Fast Checkout: Fast checkout can be enabled by selecting the option in the PAYMILL module Settings. If any customer completes a purchase while the option is active this customer will not be asked for data again. Instead a reference to the customer data will be saved allowing comfort during checkout.
-
 The payment is processed when an order is placed in the shop frontend.
+
+Fast Checkout: Fast checkout can be enabled by selecting the option in the PAYMILL Basic Settings. If any customer completes a purchase while the option is active this customer will not be asked for data again. Instead a reference to the customer data will be saved allowing comfort during checkout.
 
 # Notes about direct debit (ELV) Prenotification
 Because the invoice pdf cannot be automatically extended without breaking custom invoices, we decided to not extend the invoice pdf. To add prenotification to the invoice manually add following snippet:
