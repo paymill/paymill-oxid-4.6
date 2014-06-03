@@ -13,13 +13,13 @@ Download the module here: https://github.com/Paymill/Paymill-Oxid/archive/master
 
 To activate PAYMILL payment follow these steps:
 
-- In the main menu goto **Shopeinstellungen > Zahlungsarten**
+- In the main menu goto **Shop Settings > Payment Methods**
 - Choose the payment method you want to activate
-- Click on **Benutzergruppen zuordnen** and assign the right user groups
-- Go to tab **Länder**, click on **Länder zuordnen**, and assign the right countries
-- In the main menu goto **Shopeinstellungen > Versandarten**
-- Choose a shipping type (e.g. **Standard**) and go to tab **Zahlungsarten**
-- Click on **Zahlungsarten zuordnen** and assign the payment method
+- Click on **Assign User Groups** and assign the right user groups
+- Go to tab **Country**, click on **Assign Countries**, and assign the right countries
+- In the main menu goto **Shop Settings > Shipping Methods**
+- Choose a shipping type (e.g. **Standard**) and go to tab **Payment**
+- Click on **Assign Payment Methods** and assign the payment method
 - Repeat last 2 steps for other shipping types
 
 # Update
@@ -28,7 +28,8 @@ If you want to update from an version earlier than 2.1 you have to run the updat
 # Template-Support
 
 - Basic and Azure template are supported by default.
-- To support a custom template adapt the template structure within the modules/paymill/out/blocks directory to your custom theme. The files most interesting for you are 'paymill_select_payment.tpl and 'paymill_select_header.tpl'.
+- To support a custom template based on Azure, adapt the template structure within the modules/paymill/out/blocks directory to your custom theme. The files most interesting for you are 'paymill_select_payment.tpl and 'paymill_select_header.tpl'.
+- To support a custom template based on Basic, adapt the template structure within the out/basic/tpl/inc/ directory to your custom theme. See also [Enable Basic Templatesupport](## Enable Basic Templatesupport).
 
 ## Enable Basic Templatesupport
 - Open "Shoproot/out/basic/tpl/page/checkout/payment.tpl" in your preferred editor.
@@ -159,6 +160,7 @@ protected function _setPayUntilInfo( &$iStartPos )
 }
 ```
 New:
+```php
 protected function _setPayUntilInfo( &$iStartPos )
 {
     // PAYMILL Start
