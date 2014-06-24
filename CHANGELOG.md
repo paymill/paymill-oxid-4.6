@@ -1,3 +1,7 @@
+## 2.6.0
+ * ui change: added support for payment long description (configurable in the OXID backend payment methods settings)
+ * ui change: credit card form - valid until months are shown in a new format instead of just having the name of the month it also shows the number, e.g. "1 - January"
+
 ## v2.5.0
  * united SEPA and regular ELV forms
  * added backend option to show credit card logos in frontend
