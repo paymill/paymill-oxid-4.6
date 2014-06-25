@@ -174,6 +174,10 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
             $oOrder->oxorder__oxbilllname->value . ', ' . $oOrder->oxorder__oxbillfname->value
         );
 
+        $description = 'OrderID: ' . $oOrder->oxorder__oxid . ' - OrderNumber: ' . $oOrder->oxorder__oxordernr . ' - ' . $utf8Name;
+
+        $description = strlen($description) > 128? substr($description,0,128) : $description;
+
         $this->_paymentProcessor = new Services_Paymill_PaymentProcessor(
             trim(oxConfig::getInstance()->getShopConfVar('PAYMILL_PRIVATEKEY')),
             $this->_apiUrl,
@@ -184,7 +188,7 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
                 'currency' => strtoupper($oOrder->oxorder__oxcurrency->rawValue),
                 'name' => $utf8Name,
                 'email' => $oOrder->oxorder__oxbillemail->value,
-                'description' => 'OrderID: ' . $oOrder->oxorder__oxid . ' - OrderNumber: ' . $oOrder->oxorder__oxordernr . ' - ' . $utf8Name
+                'description' => $description
             ),
             $this
         );
