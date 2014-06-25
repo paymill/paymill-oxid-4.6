@@ -31,7 +31,7 @@
             <label class="card-number-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]:</label>
         </td>
         <td>
-            <input id="paymillCardNumber" class="paymill_input paymill_input card-number span1 [{if $brand}]paymill-card-number-[{$brand}][{/if}]" type="text" size="20" value="[{$paymillCcLastFour}]"/>
+            <input id="paymillCardNumber" class="paymill_input paymill_input card-number span1 [{if $brand}]paymill-card-number-[{$brand}][{/if}]" type="text" autocomplete="off" size="20" value="[{$paymillCcLastFour}]"/>
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
@@ -41,7 +41,7 @@
             <label class="card-cvc-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_SECURITYCODE" }]<span class="tooltip" title='[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_CC_TOOLTIP" }]'>?</span>:</label>
         </td>
         <td>
-            <input id="paymillCardCvc" class="paymill_input paymill_input card-cvc span1" type="text" size="20" value="[{$paymillCcCvc}]"/>
+            <input id="paymillCardCvc" class="paymill_input paymill_input card-cvc span1" type="text" autocomplete="off" size="20" value="[{$paymillCcCvc}]"/>
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
@@ -118,7 +118,7 @@
         <label class="elv-account-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_ACCOUNT" }] / [{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_IBAN" }]:</label>
     </td>
     <td>
-        <input id="paymillElvAccount" class="paymill_input elv-account span1" type="text" size="20" value="[{$paymillElvAccount}]"/>
+        <input id="paymillElvAccount" class="paymill_input elv-account span1" type="text" autocomplete="off" size="20" value="[{$paymillElvAccount}]"/>
     </td>
 </tr>
 <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
@@ -128,7 +128,7 @@
         <label class="elv-bankcode-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_BANKCODE" }] / [{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_BIC" }]:</label>
     </td>
     <td>
-        <input id="paymillElvBankCode" class="paymill_input elv-bankcode span1" type="text" size="20" value="[{$paymillElvCode}]"/>
+        <input id="paymillElvBankCode" class="paymill_input elv-bankcode span1" type="text" autocomplete="off" size="20" value="[{$paymillElvCode}]"/>
     </td>
 </tr>
 [{/if}]

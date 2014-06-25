@@ -1,4 +1,5 @@
 ## 2.6.0
+ * added autocomplete="off" for input fields, browser shall not save sensitive data like credit card number and card verification value
  * ui change: added support for payment long description (configurable in the OXID backend payment methods settings)
  * ui change: credit card form - valid until months are shown in a new format instead of just having the name of the month it also shows the number, e.g. "1 - January"
 
@@ -16,7 +17,7 @@
 
 ## v2.3.0
  * webhook support
- * translate bridge erros
+ * translate bridge errors
  * elv sepa support
 
 ## v2.2.0
