@@ -25,7 +25,7 @@
                         </div>
                         <div class="controls controls-row">
                             <label class="card-cvc-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_SECURITYCODE" }]<span class="tooltip" title='[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_CC_TOOLTIP" }]'>?</span>:</label>
-                            <input id="paymillCardCvc" class="paymill_input card-cvc span1" type="text" autocomplete="off" size="4" value="[{$paymillCcCvc}]"/>
+                            <input id="paymillCardCvc" class="paymill_input card-cvc span1" type="password" autocomplete="off" size="4" value="[{$paymillCcCvc}]"/>
                         </div>
                         <div class="controls controls-row">
                             <label class="card-holdername-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_HOLDERNAME" }]:</label>

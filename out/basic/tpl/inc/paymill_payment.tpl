@@ -41,7 +41,7 @@
             <label class="card-cvc-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_SECURITYCODE" }]<span class="tooltip" title='[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_CC_TOOLTIP" }]'>?</span>:</label>
         </td>
         <td>
-            <input id="paymillCardCvc" class="paymill_input paymill_input card-cvc span1" type="text" autocomplete="off" size="20" value="[{$paymillCcCvc}]"/>
+            <input id="paymillCardCvc" class="paymill_input paymill_input card-cvc span1" type="password" autocomplete="off" size="20" value="[{$paymillCcCvc}]"/>
         </td>
     </tr>
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
