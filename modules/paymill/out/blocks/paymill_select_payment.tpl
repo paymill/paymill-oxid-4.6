@@ -24,7 +24,13 @@
                             <input id="paymillCardNumber" class="paymill_input card-number span1 [{if $brand}]paymill-card-number-[{$brand}][{/if}]" type="text" autocomplete="off" size="20" value="[{$paymillCcLastFour}]"/>
                         </div>
                         <div class="controls controls-row">
-                            <label class="card-cvc-label">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_SECURITYCODE" }]<span class="tooltip" title='[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_CC_TOOLTIP" }]'>?</span>:</label>
+                            <label class="card-cvc-label">
+                                [{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_SECURITYCODE" }]
+                                <span class="pmTooltip">
+                                    <a href="#" style="border-bottom: 1px dotted black;">?</a>
+                                    <strong class="pmTooltipRight">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_CC_TOOLTIP" }]</strong>
+                                </span>:
+                            </label>
                             <input id="paymillCardCvc" class="paymill_input card-cvc span1" type="password" autocomplete="off" size="4" value="[{$paymillCcCvc}]"/>
                         </div>
                         <div class="controls controls-row">
