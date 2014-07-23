@@ -135,6 +135,10 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
             if (oxConfig::getInstance()->getShopConfVar('PAYMILL_SET_PAYMENTDATE')) {
                 $this->_setPaymentDate($oOrder);
             }
+
+            // set transactionId to session for updating the description after order execute
+            $transactionId = $this->_paymentProcessor->getTransactionId();
+            $this->getSession()->setVar('paymillPgTransId', $transactionId);
         } else {
             oxUtilsView::getInstance()->addErrorToDisplay($this->_getErrorMessage($this->_paymentProcessor->getErrorCode()));
         }
@@ -174,7 +178,13 @@ class paymill_paymentgateway extends paymill_paymentgateway_parent implements Se
             $oOrder->oxorder__oxbilllname->value . ', ' . $oOrder->oxorder__oxbillfname->value
         );
 
-        $description = 'OrderID: ' . $oOrder->oxorder__oxid . ' - OrderNumber: ' . $oOrder->oxorder__oxordernr . ' - ' . $utf8Name;
+        $description = 'OrderID: ' . $oOrder->oxorder__oxid;
+
+        if (!$this->getConfig()->getConfigParam('blStoreOrderNrInFinalize')) {
+            $description .= ' - OrderNumber: ' . $oOrder->oxorder__oxordernr;
+        }
+
+        $description .= ' - ' . $utf8Name;
 
         $description = strlen($description) > 128? substr($description,0,128) : $description;
 

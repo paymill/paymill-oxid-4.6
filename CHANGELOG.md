@@ -5,6 +5,7 @@
  * ui change: credit card form - valid until months are shown in a new format instead of just having the name of the month it also shows the number, e.g. "1 - January"
  * ui change: hover tooltip for CVV input field (azure theme only)
  * max length of transaction description set to 128 characters
+ * added: order number will be updated to the transaction after successful execution of order
 
 ## v2.5.0
  * united SEPA and regular ELV forms
