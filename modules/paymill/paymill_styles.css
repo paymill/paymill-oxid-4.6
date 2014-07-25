@@ -56,9 +56,15 @@
     margin-bottom: 10px;
 }
 
+.card-expiry-month, .card-expiry-year
+{
+    width: 70px;
+}
+
 .card-expiry-month
 {
     margin-right: 6px;
+    width: 110px;
 }
 
 .card-expiry-year
@@ -66,9 +72,14 @@
     margin-left: 6px;
 }
 
-.card-expiry-month, .card-expiry-year
-{
-    width: 90px;
+#paymillCardCvc.piazure {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #8c8989;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    height: 15px;
+    line-height: 14px;
+    padding: 1px 5px;
 }
 
 ul#paymill_brands li {
@@ -100,6 +111,11 @@ ul#paymill_brands li {
 .paymill-card-number-maestro
 {
     background: url('image/32x20_maestro.png') no-repeat center right !important;
+}
+
+.paymill-card-number-carte-bleue
+{
+    background: url('image/32x20_unionpay.png') no-repeat center right !important;
 }
 
 .paymill-card-number-diners-club
@@ -149,8 +165,6 @@ ul#paymill_brands li {
     background: #636363;
 }
 
-
-
 /*
     Paymill Admin Installmenu
 */
@@ -180,7 +194,7 @@ ul#paymill_brands li {
 /**
  * Tooltip
  */
-.pmTooltip, .pmTooltipClick {
+.pmTooltip {
     position: relative !important;
     display: inline-block;
 }
