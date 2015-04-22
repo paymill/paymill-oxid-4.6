@@ -1,24 +1,81 @@
-*.rbc
-*.sassc
-.sass-cache
-capybara-*.html
-.rspec
-/.bundle
-/vendor/bundle
-/log/*
-/tmp/*
-/db/*.sqlite3
-/public/system/*
-/coverage/
-/spec/tmp/*
-**.orig
-rerun.txt
-pickle-email-*.html
-<<<<<<< .merge_file_a17016
-.idea
-/nbproject/private/
-/Paymill-Oxid-Module/nbproject/private/*
-/Paymill-Oxid-Module/nbproject/*
-=======
-.idea
->>>>>>> .merge_file_a19552
+## SublimeText
+# cache files for sublime text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+
+# workspace files are user-specific
+*.sublime-workspace
+
+# project files should be checked into the repository, unless a significant
+# proportion of contributors will probably not be using SublimeText
+*.sublime-project
+
+# sftp configuration file
+sftp-config.json
+
+## NetBeans
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+.nb-gradle/
+
+## OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+## Linux
+*~
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+## Windows
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
