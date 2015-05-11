@@ -23,6 +23,7 @@ $aLang = array(
     "PAGE_CHECKOUT_PAYMENT_MONTH_SEP" => "Settembre",
     "PAGE_CHECKOUT_PAYMENT_MONTH_NOV" => "Novembre",
     "PAGE_CHECKOUT_PAYMENT_MONTH_DEC" => "Dicembre",
+    "PAGE_CHECKOUT_PAYMENT_IFRAME_CHANGE" => "Cambiare",
     "PAYMILL_VALIDATION_CARDNUMBER" => "Inserire un numero di carta di credito valido.",
     "PAYMILL_VALIDATION_ACCOUNTNUMBER" => "Inserire un numero di conto di addebito diretto valido",
     "PAYMILL_VALIDATION_BANKCODE" => "Inserire un codice di addebito bancario diretto valido.",
