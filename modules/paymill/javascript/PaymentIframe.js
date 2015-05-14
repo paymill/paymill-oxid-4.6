@@ -1,26 +1,5 @@
 jQuery(document).ready(function($) {
-    var options = {
-        labels: {
-            number: decodeTranslations(PAYMILL_TRANSLATION_LABELS.PAYMILL_card_number_label),
-            cvc: decodeTranslations(PAYMILL_TRANSLATION_LABELS.PAYMILL_card_cvc_label),
-            cardholder: decodeTranslations(PAYMILL_TRANSLATION_LABELS.PAYMILL_card_holdername_label),
-            exp: decodeTranslations(PAYMILL_TRANSLATION_LABELS.PAYMILL_card_expiry_label)
-        },
-        placeholders: {
-            number: 'XXXX XXXX XXXX XXXX',
-            cvc: 'XXX',
-            cardholder: 'John Doe',
-            exp_month: 'MM',
-            exp_year: 'YYYY'
-        },
-        errors: {
-            number: decodeTranslations(PAYMILL_TRANSLATION.PAYMILL_VALIDATION_CARDNUMBER),
-            cvc: decodeTranslations(PAYMILL_TRANSLATION.PAYMILL_VALIDATION_CVC),
-            exp: decodeTranslations(PAYMILL_TRANSLATION.PAYMILL_VALIDATION_EXP)
-        }
-    };
-
-    paymill.embedFrame('payment-form-cc', options, function(error) {
+    paymill.embedFrame('payment-form-cc', function(error) {
         if (error && PAYMILL_DEBUG === "1") {
             console.log(error.apierror, error.message);
         } else {

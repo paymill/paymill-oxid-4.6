@@ -40,7 +40,6 @@
     var PAYMILL_CC_BRANDS = [{$paymillBrands|@json_encode}];
 
     var PAYMILL_COMPLIANCE = ('[{ $paymillCompliance }]' == '0');
-    var PAYMILL_COMPLIANCE_CSS = '[{ $paymillComplianceCss }]';
 
     var PAYMILL_PAYMENT_FORM = '#payment';
     var PAYMILL_NEXT_STEP_BUTTON = '#paymentNextStepBottom';
@@ -52,12 +51,6 @@
 
 [{if $paymillCompliance == '0'}]
     <script type="text/javascript">
-        var PAYMILL_TRANSLATION_LABELS = {
-            PAYMILL_card_number_label: '[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]',
-            PAYMILL_card_cvc_label: '[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_SECURITYCODE" }]',
-            PAYMILL_card_holdername_label: '[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_HOLDERNAME" }]',
-            PAYMILL_card_expiry_label: '[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_VALIDUNTIL" }]'
-        };
         var PAYMILL_FASTCHECKOUT_CC_CHANGED = false;
     </script>
     <script type="text/javascript" src="[{ $oViewConf->getBaseDir() }]modules/paymill/javascript/PaymentIframe.js"></script>

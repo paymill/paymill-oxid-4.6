@@ -76,11 +76,6 @@ class paymill_payment extends paymill_payment_parent
             $oxConfig->getShopConfVar('PAYMILL_COMPLIANCE')
         );
 
-        $this->addTplParam(
-            'paymillComplianceCss',
-            $oxConfig->getShopConfVar('PAYMILL_COMPLIANCE_CSS')
-        );
-
         return parent::render();
     }
 

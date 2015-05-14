@@ -40,7 +40,6 @@
     var PAYMILL_CC_BRANDS = [{$paymillBrands|@json_encode}];
 
     var PAYMILL_COMPLIANCE = ('[{ $paymillCompliance }]' == '0');
-    var PAYMILL_COMPLIANCE_CSS = '[{ $paymillComplianceCss }]';
 
     var PAYMILL_PAYMENT_FORM = "form[name='order']";
     var PAYMILL_NEXT_STEP_BUTTON = '#test_PaymentNextStepBottom';
