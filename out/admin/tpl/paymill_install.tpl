@@ -4,32 +4,41 @@
         <title>[{ oxmultilang ident="GENERAL_ADMIN_TITLE" }]</title>
         <link rel="stylesheet" type="text/css" href="[{ $oViewConf->getBaseDir() }]modules/paymill/paymill_styles.css" />
         <script type="text/javascript">
-            var PAYMILL_PUBLIC_KEY = '[{$paymillPublicKey}]';</script>
-        <script type="text/javascript" src="https://bridge.paymill.com/"></script>
+            var PAYMILL_PUBLIC_KEY = '[{$paymillPublicKey}]';
+        </script>
+        <script type="text/javascript" src="https://bridge.paymill.com/dss3"></script>
         <script type="text/javascript">
-            function PaymillResponseHandler(error, result)
-            {
-                var publicKey = document.getElementById('paymillPublicKey');
-                var newClass = ' paymill_green';
-                var icon = '&#10003';
-                if (error !== null && error.hasOwnProperty('apierror')) {
-                    if (error.apierror === 'invalid_public_key') {
-                        newClass = ' paymill_red';
-                        icon = '&#10007';
+            var paymillInit = function() {
+                function PaymillResponseHandler(error, result)
+                {
+                    var publicKey = document.getElementById('paymillPublicKey');
+                    var newClass = ' paymill_green';
+                    var icon = '&#10003';
+                    if (error !== null && error.hasOwnProperty('apierror')) {
+                        if (error.apierror === 'invalid_public_key') {
+                            newClass = ' paymill_red';
+                            icon = '&#10007';
+                        }
                     }
+                    publicKey.className = publicKey.className + newClass;
+                    document.getElementById('paymillPublicKeyIcon').innerHTML = icon;
                 }
-                publicKey.className = publicKey.className + newClass;
-                document.getElementById('paymillPublicKeyIcon').innerHTML = icon;
+
+                paymill.createToken({
+                    amount_int: 1, // E.g. "15" for 0.15 Eur
+                    currency: "EUR", // ISO 4217 e.g. "EUR"
+                    number: "5105105105105100",
+                    exp_month: 02,
+                    exp_year: 2020,
+                    cvc: 123
+                }, PaymillResponseHandler);
             }
 
-            paymill.createToken({
-                amount_int: 1, // E.g. "15" for 0.15 Eur
-                currency: "EUR", // ISO 4217 e.g. "EUR"
-                number: "5105105105105100",
-                exp_month: 02,
-                exp_year: 2020,
-                cvc: 123
-            }, PaymillResponseHandler);
+            if (window.addEventListener){
+                window.addEventListener("load", paymillInit);
+            } else if (window.attachEvent){
+                window.attachEvent("onload", paymillInit);
+            } else window.onload = paymillInit;
         </script>
     </head>
     <body>
@@ -101,4 +110,3 @@
     [{include file="bottomitem.tpl"}]
 </body>
 </html>
-

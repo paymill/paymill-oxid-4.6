@@ -1,4 +1,5 @@
 <?php
+
 $aLang = array(
     "charset" => "UTF-8",
     "PAYMILL_TITLE" => "PAYMILL",
@@ -13,7 +14,6 @@ $aLang = array(
     "PAYMILL_INSTALL_LABEL_SHIPPING_CONFIG" => "Shipping configured",
     "PAYMILL_INSTALL_LABEL_PRENOTIFICATION" => "Days until the debit configured",
     "PAYMILL_INSTALL_LABEL_PRENOTIFICATION_FAILED" => "Days until the debit not configured: Please set the field \"Days until the debit\" in the PAYMILL extention settings. (for example: 7)",
-    "PAYMILL_INSTALL_Label_CSS_URL" => "SAQ-A CSS URL valid",
     "LOG" => "Journal PAYMILL",
     "HOOKS" => "Les hooks de PAYMILL",
     "PAYMILL_HOOK_URL" => "URL du Webhook enregistr&eacute;",
@@ -39,7 +39,7 @@ $aLang = array(
     "SHOP_MODULE_PAYMILL_UNIONPAY" => "Unionpay",
     "SHOP_MODULE_PAYMILL_DISCOVER" => "Discover",
     "SHOP_MODULE_PAYMILL_DANKORT" => "Dankort",
-    "SHOP_MODULE_PAYMILL_PRENOTIFICATION" =>"Days until the debit",
+    "SHOP_MODULE_PAYMILL_PRENOTIFICATION" => "Days until the debit",
     "PAYMILL_PRENOTIFICATION_TEXT" => "The direct debit is drawn to the following date:",
     "PAYMILL_DATE_FORMAT" => "Y-m-d",
     "SHOP_MODULE_PAYMILL_COMPLIANCE" => "PCI-DSS Compliance",

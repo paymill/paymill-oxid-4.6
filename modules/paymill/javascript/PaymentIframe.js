@@ -20,10 +20,6 @@ jQuery(document).ready(function($) {
         }
     };
 
-    if (PAYMILL_COMPLIANCE_CSS && PAYMILL_COMPLIANCE_CSS.match("^https://.*$")) {
-        options.stylesheet = PAYMILL_COMPLIANCE_CSS;
-    }
-
     paymill.embedFrame('payment-form-cc', options, function(error) {
         if (error && PAYMILL_DEBUG === "1") {
             console.log(error.apierror, error.message);
@@ -31,8 +27,6 @@ jQuery(document).ready(function($) {
             // Frame was loaded successfully and is ready to be used.
         }
     });
-
-    console.log(PAYMILL_PAYMENT_FORM);
 
     $(PAYMILL_PAYMENT_FORM).submit(function (event) {
         var cc;
