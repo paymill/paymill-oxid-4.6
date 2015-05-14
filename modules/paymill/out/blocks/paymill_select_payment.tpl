@@ -120,13 +120,9 @@
                             </td>
                             </tr>
                         </table>
-
-                        <div id="payment-form-cc" style="display:none;">
-                        </div>
-                    [{else}]
-                        <div id="payment-form-cc">
-                        </div>
                     [{/if}]
+                    <div id="payment-form-cc">
+                    </div>
                 </li>
             </ul>
             [{block name="checkout_payment_longdesc"}]

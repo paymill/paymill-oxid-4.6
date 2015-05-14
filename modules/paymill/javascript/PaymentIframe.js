@@ -1,11 +1,14 @@
 jQuery(document).ready(function($) {
-    paymill.embedFrame('payment-form-cc', function(error) {
-        if (error && PAYMILL_DEBUG === "1") {
-            console.log(error.apierror, error.message);
-        } else {
-            // Frame was loaded successfully and is ready to be used.
-        }
-    });
+
+    if (PAYMILL_FASTCHECKOUT_CC) {
+        $('#paymillFastCheckoutIframeChange').click(function (event) {
+            PAYMILL_FASTCHECKOUT_CC_CHANGED = true;
+            embedIframe();
+            $('#paymillFastCheckoutTable').remove();
+        });
+    } else {
+        embedIframe();
+    }
 
     $(PAYMILL_PAYMENT_FORM).submit(function (event) {
         var cc;
@@ -34,16 +37,22 @@ jQuery(document).ready(function($) {
     $('#payment_paymill_cc').click(clearErrors);
     $('#payment_paymill_elv').click(clearErrors);
 
+    function embedIframe()
+    {
+        paymill.embedFrame('payment-form-cc', function(error) {
+            if (error && PAYMILL_DEBUG === "1") {
+                console.log(error.apierror, error.message);
+            } else {
+                // Frame was loaded successfully and is ready to be used.
+            }
+        });
+    }
+
     function clearErrors()
     {
         $(".payment-errors").css("display", "none");
         $(".payment-errors").text("");
     }
-
-    $('#paymillFastCheckoutIframeChange').click(function (event) {
-        $('#payment-form-cc').toggle();
-        PAYMILL_FASTCHECKOUT_CC_CHANGED = true;
-    });
 
     function createToken()
     {

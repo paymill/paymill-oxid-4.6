@@ -115,7 +115,7 @@
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
         <td colspan="3">
             [{if $fastCheckoutCc == 'true'}]
-                <table id="paymillFastCheckoutTable">
+                <table id="paymillFastCheckoutTable" class="pm_basic_theme">
                     <tr>
                         <td>[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]: </td>
                         <td id="paymillFcCardNumber" class="paymill-card-number-[{$brand}]">[{$paymillCcLastFour}]</td>
@@ -139,13 +139,9 @@
                     </td>
                     </tr>
                 </table>
-
-                <div id="payment-form-cc" class="pm_basic_theme" style="display:none;">
-                </div>
-            [{else}]
-                <div id="payment-form-cc" class="pm_basic_theme">
-                </div>
             [{/if}]
+            <div id="payment-form-cc" class="pm_basic_theme">
+            </div>
         </td>
     </tr>
 [{elseif $sPaymentID == 'paymill_elv'}]
