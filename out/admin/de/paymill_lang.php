@@ -44,6 +44,6 @@ $aLang = array(
     "PAYMILL_PRENOTIFICATION_TEXT" => "Die Lastschrift wird zu dem folgenden Termin eingezogen:",
     "PAYMILL_DATE_FORMAT" => "d.m.Y",
     "SHOP_MODULE_PAYMILL_COMPLIANCE" => "PCI-DSS Compliance",
-    "SHOP_MODULE_PAYMILL_COMPLIANCE_0" => "Einfach (SAQ-A)",
+    "SHOP_MODULE_PAYMILL_COMPLIANCE_0" => "Einfach (SAQ A)",
     "SHOP_MODULE_PAYMILL_COMPLIANCE_1" => "Erweitert (SAQ A-EP)"
 );
