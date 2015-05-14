@@ -140,10 +140,10 @@
                     </tr>
                 </table>
 
-                <div id="payment-form-cc" style="display:none;">
+                <div id="payment-form-cc" class="pm_basic_theme" style="display:none;">
                 </div>
             [{else}]
-                <div id="payment-form-cc">
+                <div id="payment-form-cc" class="pm_basic_theme">
                 </div>
             [{/if}]
         </td>

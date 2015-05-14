@@ -275,3 +275,7 @@ button#paymillFastCheckoutIframeChange:active {
 table#paymillFastCheckoutTable > tbody > tr > td#paymillFcCardNumber {
     padding-right: 35px;
 }
+
+.pm_basic_theme {
+    margin-left: 23px;
+}
