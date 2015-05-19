@@ -12,14 +12,14 @@
                 function PaymillResponseHandler(error, result)
                 {
                     var publicKey = document.getElementById('paymillPublicKey');
-                    var newClass = ' paymill_green';
-                    var icon = '&#10003';
-                    if (error !== null && error.hasOwnProperty('apierror')) {
-                        if (error.apierror === 'invalid_public_key') {
-                            newClass = ' paymill_red';
-                            icon = '&#10007';
-                        }
+                    var newClass = ' paymill_red';
+                    var icon = '&#10007';
+
+                    if (error === null) {
+                        newClass = ' paymill_green';
+                        icon = '&#10003';
                     }
+
                     publicKey.className = publicKey.className + newClass;
                     document.getElementById('paymillPublicKeyIcon').innerHTML = icon;
                 }
