@@ -43,6 +43,7 @@
 
     var PAYMILL_PAYMENT_FORM = '#payment';
     var PAYMILL_NEXT_STEP_BUTTON = '#paymentNextStepBottom';
+    var PAYMILL_IS_BASIC_THEME = false;
 </script>
 <script type="text/javascript" src="https://bridge.paymill.com/dss3"></script>
 <script type="text/javascript" src="[{ $oViewConf->getBaseDir() }]modules/paymill/javascript/Iban.js"></script>

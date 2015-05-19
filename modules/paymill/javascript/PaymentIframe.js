@@ -7,7 +7,13 @@ jQuery(document).ready(function($) {
             $('#paymillFastCheckoutTable').remove();
         });
     } else {
-        embedIframe();
+        if($('#payment_paymill_cc').is(':checked') || PAYMILL_IS_BASIC_THEME) {
+            embedIframe();
+        } else {
+            $('#payment_paymill_cc').click(function (event) {
+                embedIframe();
+            });
+        }
     }
 
     $(PAYMILL_PAYMENT_FORM).submit(function (event) {
