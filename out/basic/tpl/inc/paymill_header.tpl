@@ -53,6 +53,7 @@
 [{if $paymillCompliance == '0'}]
     <script type="text/javascript">
         var PAYMILL_FASTCHECKOUT_CC_CHANGED = false;
+        var PAYMILL_LANG_OPTION = '[{ oxmultilang ident="PAYMILL_IFRAME_OPTION_LANG" }]';
     </script>
     <script type="text/javascript" src="[{ $oViewConf->getBaseDir() }]modules/paymill/javascript/PaymentIframe.js"></script>
 [{/if}]

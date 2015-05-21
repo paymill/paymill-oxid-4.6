@@ -24,6 +24,7 @@ $aLang = array(
     "PAGE_CHECKOUT_PAYMENT_MONTH_NOV" => "Novembre",
     "PAGE_CHECKOUT_PAYMENT_MONTH_DEC" => "D&eacute;cembre",
     "PAGE_CHECKOUT_PAYMENT_IFRAME_CHANGE" => "Changer",
+    "PAYMILL_IFRAME_OPTION_LANG" => "fr",
     "PAYMILL_VALIDATION_CARDNUMBER" => "Veuillez saisir un num&eacute;ro de carte de cr&eacute;dit valide.",
     "PAYMILL_VALIDATION_ACCOUNTNUMBER" => "Veuillez saisir un num&eacute;ro de compte de d&eacute;bit direct valide",
     "PAYMILL_VALIDATION_BANKCODE" => "Veuillez saisir un code bancaire de d&eacute;bit direct valide.",
