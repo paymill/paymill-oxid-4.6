@@ -42,7 +42,7 @@ $aLang = array(
     "SHOP_MODULE_PAYMILL_PRENOTIFICATION" => "Days until the debit",
     "PAYMILL_PRENOTIFICATION_TEXT" => "The direct debit is drawn to the following date:",
     "PAYMILL_DATE_FORMAT" => "Y-m-d",
-    "SHOP_MODULE_PAYMILL_COMPLIANCE" => "PCI-DSS Compliance",
-    "SHOP_MODULE_PAYMILL_COMPLIANCE_0" => "Simple (SAQ A)",
-    "SHOP_MODULE_PAYMILL_COMPLIANCE_1" => "Advanced (SAQ A-EP)"
+    "SHOP_MODULE_PAYMILL_COMPLIANCE" => "Formulaire de paiement",
+    "SHOP_MODULE_PAYMILL_COMPLIANCE_0" => "PayFrame intégré (nécessite PCI SAQ A)",
+    "SHOP_MODULE_PAYMILL_COMPLIANCE_1" => "integration direct (nécessite PCI SAQ A-EP)"
 );

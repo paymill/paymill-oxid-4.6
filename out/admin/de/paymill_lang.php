@@ -43,7 +43,7 @@ $aLang = array(
     "SHOP_MODULE_PAYMILL_PRENOTIFICATION" => "Tage bis zum Einzug",
     "PAYMILL_PRENOTIFICATION_TEXT" => "Die Lastschrift wird zu dem folgenden Termin eingezogen:",
     "PAYMILL_DATE_FORMAT" => "d.m.Y",
-    "SHOP_MODULE_PAYMILL_COMPLIANCE" => "PCI-DSS Compliance",
-    "SHOP_MODULE_PAYMILL_COMPLIANCE_0" => "Einfach (SAQ A)",
-    "SHOP_MODULE_PAYMILL_COMPLIANCE_1" => "Erweitert (SAQ A-EP)"
+    "SHOP_MODULE_PAYMILL_COMPLIANCE" => "Zahlungsformular",
+    "SHOP_MODULE_PAYMILL_COMPLIANCE_0" => "eingebettetes PayFrame (erfordert PCI SAQ A)",
+    "SHOP_MODULE_PAYMILL_COMPLIANCE_1" => "direkte Integration (erfordert PCI SAQ A-EP)"
 );
