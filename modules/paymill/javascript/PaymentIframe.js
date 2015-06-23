@@ -81,17 +81,10 @@ jQuery(document).ready(function($) {
         // Handle error or process result.
         if (error) {
             paymillDebug('An API error occured:' + error.apierror);
-            // shows errors above the PAYMILL specific part of the form
-            $('.payment-errors.cc').text($("<div/>").html(PAYMILL_TRANSLATION["PAYMILL_" + error.apierror]).text());
-            $('.payment-errors.cc').css("display", "inline-block");
         } else {
             // Token
             paymillDebug('Received a token: ' + result.token);
-            // add token into hidden input field for request to the server
-            $(PAYMILL_PAYMENT_FORM).append("<input type='hidden' name='paymillToken' value='" + result.token + "'/>");
-            $(PAYMILL_PAYMENT_FORM).get(0).submit();
         }
-
         $(PAYMILL_NEXT_STEP_BUTTON).removeAttr("disabled");
     }
 
