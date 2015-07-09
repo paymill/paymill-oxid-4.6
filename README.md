@@ -3,7 +3,14 @@ PAYMILL - OXID 4.6
 
 Payment module for OXID Version 4.6.x
 
-# Introduced with version 2.7.0
+# Your Advantages
+ * PCI DSS compatibility
+ * Payment means: Credit Card (Visa, Visa Electron, Mastercard, Maestro, Diners, Discover, JCB, AMEX, China Union Pay), Direct Debit (ELV)
+ * Optional fast checkout configuration allowing your customers not to enter their payment detail over and over during checkout
+ * Improved payment form with visual feedback for your customers
+ * Supported Languages: German, English, Spanish, French, Italian, Portuguese
+ * Backend Log with custom View accessible from your shop backend
+
 ## PayFrame
 We’ve introduced a “payment form” option for easier compliance with PCI requirements.
 In addition to having a payment form directly integrated in your checkout page, you can use our embedded PayFrame solution to ensure that payment data never touches your website.
