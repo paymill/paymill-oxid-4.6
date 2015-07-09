@@ -3,6 +3,14 @@ PAYMILL - OXID 4.6
 
 Payment module for OXID Version 4.6.x
 
+# Introduced with version 2.7.0
+## PayFrame
+We’ve introduced a “payment form” option for easier compliance with PCI requirements.
+In addition to having a payment form directly integrated in your checkout page, you can use our embedded PayFrame solution to ensure that payment data never touches your website.
+PayFrame is enabled by default, but you can choose between both options in the plugin settings. Later this year, we’re bringing you the ability to customise the appearance and text content of the PayFrame version.
+To learn more about the benefits of PayFrame, please visit our [FAQ](https://www.paymill.com/en/faq/how-does-paymills-payframe-solution-work "FAQ").
+
+# Installation and Usage
 Download the module here: https://github.com/Paymill/paymill-oxid-4.6/archive/master.zip
 
 - Merge the content of the PAYMILL-OXID-Module directory with your OXID installation.
@@ -11,7 +19,7 @@ Download the module here: https://github.com/Paymill/paymill-oxid-4.6/archive/ma
 - Go to the configuration section where you can insert your private and public key (which you can find in your Paymill cockpit [https://app.paymill.de/](https://app.paymill.de/ "Paymill cockpit")).
 - In the main menu goto **PAYMILL > Checklist**; The checklist allows you to verify that the module has been successfully configured. It also fixes missing tables, block etc.
 
-# Activate PAYMILL Payment
+## Activate PAYMILL Payment
 
 To activate PAYMILL payment follow these steps:
 
@@ -24,16 +32,16 @@ To activate PAYMILL payment follow these steps:
 - Click on **Assign Payment Methods** and assign the payment method
 - Repeat last 2 steps for other shipping types
 
-# Update
+## Update
 If you want to update from an version earlier than 2.1 (starting from 2.0.0) you have to run the update.sql first.
 
-# Template-Support
+## Template-Support
 
 - Basic and Azure template are supported by default.
 - To support a custom template based on Azure, adapt the template structure within the modules/paymill/out/blocks directory to your custom theme. The files most interesting for you are 'paymill_select_payment.tpl and 'paymill_select_header.tpl'.
 - To support a custom template based on Basic, adapt the template structure within the out/basic/tpl/inc/ directory to your custom theme. See also **Enable Basic Templatesupport**.
 
-## Enable Basic Templatesupport
+### Enable Basic Templatesupport
 - Open "Shoproot/out/basic/tpl/page/checkout/payment.tpl" in your preferred editor.
 - Change the following lines:
 
@@ -129,22 +137,22 @@ New:
 <!--PAYMILL END-->
 ```
 
-# Error handling
+## Error handling
 
 In case of any errors turn on the debug mode in the PAYMILL module settings.
 Open the javascript console in your browser and check the debug messages during the checkout process.
 
-# Logging
+## Logging
 
 You can access the logging within your administration backend under **PAYMILL > PAYMILL log**
 
-# Notes about the payment process
+## Notes about the payment process
 
 The payment is processed when an order is placed in the shop frontend.
 
 Fast Checkout: Fast checkout can be enabled by selecting the option in the PAYMILL Basic Settings. If any customer completes a purchase while the option is active this customer will not be asked for data again. Instead a reference to the customer data will be saved allowing comfort during checkout.
 
-# Notes about direct debit (ELV) Prenotification
+## Notes about direct debit (ELV) Prenotification
 Because the invoice pdf cannot be automatically extended without breaking custom invoices, we decided to not extend the invoice pdf. To add prenotification to the invoice manually add following snippet:
 
 - Open "Shoproot/modules/invoicepdf/myorder.php" in your preferred editor.

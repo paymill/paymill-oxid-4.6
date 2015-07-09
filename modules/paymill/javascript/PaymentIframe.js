@@ -84,6 +84,9 @@ jQuery(document).ready(function($) {
         } else {
             // Token
             paymillDebug('Received a token: ' + result.token);
+            // add token into hidden input field for request to the server
+            $(PAYMILL_PAYMENT_FORM).append("<input type='hidden' name='paymillToken' value='" + result.token + "'/>");
+            $(PAYMILL_PAYMENT_FORM).get(0).submit();
         }
         $(PAYMILL_NEXT_STEP_BUTTON).removeAttr("disabled");
     }
@@ -93,17 +96,6 @@ jQuery(document).ready(function($) {
         if (PAYMILL_DEBUG === "1") {
             console.log(message);
         }
-    }
-
-    /**
-     * Warning potentially harmful should only be used with date from trusted source.
-     * @param  {string} translation
-     * @return {string}
-     */
-    function decodeTranslations(translation) {
-        var textarea = document.createElement("textarea");
-        textarea.innerHTML = translation;
-        return textarea.value;
     }
 
 });
