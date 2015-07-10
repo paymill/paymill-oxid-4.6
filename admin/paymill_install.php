@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * paymill_install
+ *
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
+ */
 class paymill_install extends oxAdminView
 {
 

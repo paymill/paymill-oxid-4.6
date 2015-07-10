@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * paymill_oxemail
+ *
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
+ */
 class paymill_oxemail extends paymill_oxemail_parent
 {
 

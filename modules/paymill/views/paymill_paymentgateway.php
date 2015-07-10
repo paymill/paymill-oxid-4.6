@@ -3,8 +3,7 @@
 /**
  * paymill_paymentgateway
  *
- * @author     Copyright (c) 2013 PayIntelligent GmbH (http://www.payintelligent.de)
- * @copyright  Copyright (c) 2013 Paymill GmbH (https://www.paymill.com)
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
  */
 class paymill_paymentgateway extends paymill_paymentgateway_parent implements Services_Paymill_LoggingInterface
 {

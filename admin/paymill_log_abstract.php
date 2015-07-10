@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * paymill_log_abstract
+ *
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
+ */
 abstract class paymill_log_abstract extends oxAdminView
 {
     public function render()
@@ -7,11 +12,11 @@ abstract class paymill_log_abstract extends oxAdminView
         parent::render();
         $this->addTplParam('listUrl', $this->_getAdminUrl() . '&cl=paymill_log_list');
     }
-    
+
     protected function _getAdminUrl()
     {
-        return oxConfig::getInstance()->getShopUrl(null, true) 
-                . 'admin/index.php?stoken=' . oxConfig::getParameter('stoken') 
+        return oxConfig::getInstance()->getShopUrl(null, true)
+                . 'admin/index.php?stoken=' . oxConfig::getParameter('stoken')
                 . '&force_admin_sid=' . oxConfig::getParameter('force_admin_sid');
     }
 }

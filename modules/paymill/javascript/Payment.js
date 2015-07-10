@@ -1,3 +1,9 @@
+/**
+ * Payment
+ *
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
+ */
+
 var prefilledInputValues = [];
 
 $.noConflict();

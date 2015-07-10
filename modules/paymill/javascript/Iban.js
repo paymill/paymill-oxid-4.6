@@ -1,3 +1,9 @@
+/**
+ * Iban
+ *
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
+ */
+
 Iban = function() {
 };
 Iban.prototype.countries = {
@@ -138,7 +144,7 @@ Iban.prototype.validate = function(iban) {
     ibanWithoutCheckDigits = this.iban.substr(0, this.iban.length - 2);
     ibanWithZeroCheckDigits = ibanWithoutCheckDigits + "00";
     ibanCheckDigits = this.iban.substr(this.iban.length - 2, 2);
-    
+
     calcCheckDigits = (98 - this.calculate(ibanWithZeroCheckDigits)).toString();
 
     if (calcCheckDigits.length === 1) {

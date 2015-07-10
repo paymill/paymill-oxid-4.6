@@ -1,3 +1,9 @@
+/**
+ * Brand Detection
+ *
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
+ */
+
 BrandDetection = function() {};
 
 BrandDetection.prototype.option =

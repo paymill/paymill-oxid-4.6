@@ -1,3 +1,9 @@
+/**
+ * Payment iFrame
+ *
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
+ */
+
 jQuery(document).ready(function($) {
 
     if (PAYMILL_FASTCHECKOUT_CC) {

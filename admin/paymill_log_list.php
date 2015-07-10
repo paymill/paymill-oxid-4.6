@@ -1,15 +1,20 @@
 <?php
 
+/**
+ * paymill_log_list
+ *
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
+ */
 class paymill_log_list extends paymill_log_abstract
 {
     private $_searchKey;
-    
+
     private $_page;
-    
+
     private $_recordLimit = 8;
-    
+
     private $_pageCount;
-    
+
     public function render()
     {
         parent::render();
@@ -22,25 +27,25 @@ class paymill_log_list extends paymill_log_abstract
     }
 
     private function _getData()
-    {   
+    {
         $logList = oxNew('paymill_loglist');
-        
+
         $where = null;
         if (!empty($this->_searchKey)) {
             $where = 'debug like "%' . $this->_searchKey . '%"';
         }
-        
+
         if (empty($this->_page)) {
             $this->_page = 1;
         }
 
         $start = $this->_page * $this->_recordLimit - $this->_recordLimit;
-        
+
         $this->_pageCount = count($logList->getFilteredList($where)) / $this->_recordLimit;
-        
+
         $data = $logList->setLimit($start, $this->_recordLimit)->getFilteredList($where)->getArray();
-        
+
         return $data;
     }
-    
+
 }
