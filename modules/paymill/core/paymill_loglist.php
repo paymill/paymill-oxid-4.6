@@ -3,8 +3,7 @@
 /**
  * paymill_logging
  *
- * @author     Copyright (c) 2013 PayIntelligent GmbH (http://www.payintelligent.de)
- * @copyright  Copyright (c) 2013 Paymill GmbH (https://www.paymill.com)
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
  */
 class paymill_loglist extends oxList
 {
@@ -15,20 +14,20 @@ class paymill_loglist extends oxList
      * @var string
      */
     protected $_sCoreTable = 'paymill_logging';
-    
+
     /**
      * List Object class name
      *
      * @var string
      */
     protected $_sObjectsInListName = 'paymill_logging';
-    
+
     protected $_limit;
-    
+
     public function setLimit($start, $limit)
     {
         $this->_limit = ' LIMIT ' . $start . ', ' . $limit;
-        
+
         return $this;
     }
 
@@ -64,11 +63,11 @@ class paymill_loglist extends oxList
         } else {
             $query .= ' order by date desc';
         }
-        
+
         if ($this->_limit) {
             $query .= $this->_limit;
         }
-        
+
         $this->selectString($query);
 
         return $this;

@@ -3,11 +3,11 @@
 $sMetadataVersion = '1.0';
 $aModule = array(
     'id' => 'paymill',
-    'title' => 'Paymill',
-    'description' => 'Paymill Payment',
+    'title' => 'PAYMILL',
+    'description' => 'PAYMILL Payment',
     'thumbnail' => 'image/logo.png',
-    'version' => '2.6.0',
-    'author' => 'Paymill GmbH',
+    'version' => '2.7.0',
+    'author' => 'PAYMILL GmbH',
     'url' => 'http://www.paymill.de',
     'email' => 'support@paymill.de',
     'extend' => array(
@@ -39,6 +39,7 @@ $aModule = array(
     'settings' => array(
         array('group' => 'main', 'name' => 'PAYMILL_PRIVATEKEY', 'type' => 'str', 'value' => ''),
         array('group' => 'main', 'name' => 'PAYMILL_PUBLICKEY', 'type' => 'str', 'value' => ''),
+        array('group' => 'main', 'name' => 'PAYMILL_COMPLIANCE', 'type' => 'select', 'value' => '0', 'constraints' => '0|1'),
         array('group' => 'main', 'name' => 'PAYMILL_ACTIVATE_DEBUG', 'type' => 'bool', 'value' => 'false'),
         array('group' => 'main', 'name' => 'PAYMILL_ACTIVATE_LOGGING', 'type' => 'bool', 'value' => 'false'),
         array('group' => 'main', 'name' => 'PAYMILL_ACTIVATE_DIFFERENTAMOUNT', 'type' => 'str', 'value' => 0),

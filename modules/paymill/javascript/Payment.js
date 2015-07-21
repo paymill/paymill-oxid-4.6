@@ -1,3 +1,9 @@
+/**
+ * Payment
+ *
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
+ */
+
 var prefilledInputValues = [];
 
 $.noConflict();
@@ -42,16 +48,17 @@ jQuery(document).ready(function($) {
 		}
 	}
 
-	$('#payment').submit(function(event) {
+	$(PAYMILL_PAYMENT_FORM).submit(function(event) {
 		var cc = $('#payment_paymill_cc').attr('checked') === 'checked';
 		var elv = $('#payment_paymill_elv').attr('checked') === 'checked';
 
-		if (cc || elv) {
+		if ((cc && !PAYMILL_COMPLIANCE) || elv) {
 			// prevent form submit
 			event.preventDefault();
+			clearErrors();
 
 			// disable submit-button to prevent multiple clicks
-			$('#paymentNextStepBottom').attr("disabled", "disabled");
+			$(PAYMILL_NEXT_STEP_BUTTON).attr("disabled", "disabled");
 
 			if (!isFastCheckout(cc, elv)) {
 				generateToken(cc, elv);
@@ -62,6 +69,15 @@ jQuery(document).ready(function($) {
 
 		return true;
 	});
+
+    $('#payment_paymill_cc').click(clearErrors);
+    $('#payment_paymill_elv').click(clearErrors);
+
+    function clearErrors()
+    {
+        $(".payment-errors").css("display", "none");
+        $(".payment-errors").text("");
+    }
 
 	function isFastCheckout(cc, elv)
 	{
@@ -107,7 +123,7 @@ jQuery(document).ready(function($) {
 			paymill.createToken(tokenRequestParams, PaymillResponseHandler);
 		} else {
 			paymentError.css("display", "inline-block");
-			$("#paymentNextStepBottom").removeAttr("disabled");
+			$(PAYMILL_NEXT_STEP_BUTTON).removeAttr("disabled");
 		}
 	}
 
@@ -119,16 +135,14 @@ jQuery(document).ready(function($) {
 			$(".payment-errors").text($("<div/>").html(PAYMILL_TRANSLATION["PAYMILL_" + error.apierror]).text());
 			$(".payment-errors").css("display", "inline-block");
 		} else {
-			$(".payment-errors").css("display", "none");
-			$(".payment-errors").text("");
 			// Token
 			paymillDebug('Received a token: ' + result.token);
 			// add token into hidden input field for request to the server
-			$("#payment").append("<input type='hidden' name='paymillToken' value='" + result.token + "'/>");
-			$("#payment").get(0).submit();
+			$(PAYMILL_PAYMENT_FORM).append("<input type='hidden' name='paymillToken' value='" + result.token + "'/>");
+			$(PAYMILL_PAYMENT_FORM).get(0).submit();
 		}
 
-		$("#paymentNextStepBottom").removeAttr("disabled");
+		$(PAYMILL_NEXT_STEP_BUTTON).removeAttr("disabled");
 	}
 
 	function validatePaymillElvFormData()

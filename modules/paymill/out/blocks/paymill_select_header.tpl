@@ -38,9 +38,23 @@
     };
 
     var PAYMILL_CC_BRANDS = [{$paymillBrands|@json_encode}];
+
+    var PAYMILL_COMPLIANCE = ('[{ $paymillCompliance }]' == '0');
+
+    var PAYMILL_PAYMENT_FORM = '#payment';
+    var PAYMILL_NEXT_STEP_BUTTON = '#paymentNextStepBottom';
+    var PAYMILL_IS_BASIC_THEME = false;
 </script>
-<script type="text/javascript" src="https://bridge.paymill.com/"></script>
+<script type="text/javascript" src="https://bridge.paymill.com/dss3"></script>
 <script type="text/javascript" src="[{ $oViewConf->getBaseDir() }]modules/paymill/javascript/Iban.js"></script>
 <script type="text/javascript" src="[{ $oViewConf->getBaseDir() }]modules/paymill/javascript/BrandDetection.js"></script>
 <script type="text/javascript" src="[{ $oViewConf->getBaseDir() }]modules/paymill/javascript/Payment.js"></script>
+
+[{if $paymillCompliance == '0'}]
+    <script type="text/javascript">
+        var PAYMILL_FASTCHECKOUT_CC_CHANGED = false;
+        var PAYMILL_LANG_OPTION = '[{ oxmultilang ident="PAYMILL_IFRAME_OPTION_LANG" }]';
+    </script>
+    <script type="text/javascript" src="[{ $oViewConf->getBaseDir() }]modules/paymill/javascript/PaymentIframe.js"></script>
+[{/if}]
 [{$smarty.block.parent}]

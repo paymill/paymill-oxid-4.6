@@ -1,5 +1,5 @@
 [{assign var="oxConfig" value=$oView->getConfig()}]
-[{if $sPaymentID == 'paymill_cc'}]
+[{if $sPaymentID == 'paymill_cc' && $paymillCompliance == '1'}]
     <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
         <td>
             <input id="payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]>
@@ -85,6 +85,63 @@
                 [{/if}]
                 [{/foreach}]
             </select>
+        </td>
+    </tr>
+[{elseif $sPaymentID == 'paymill_cc' && $paymillCompliance == '0'}]
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+        <td>
+            <input id="payment_[{$sPaymentID}]" type="radio" name="paymentid" value="[{$sPaymentID}]" [{if $oView->getCheckedPaymentId() == $paymentmethod->oxpayments__oxid->value}]checked[{/if}]>
+        </td>
+        <td colspan="2" id="test_PaymentDesc_[{$smarty.foreach.PaymentSelect.iteration}]">
+            <label for="payment_[{$sPaymentID}]">
+                <b>[{ $paymentmethod->oxpayments__oxdesc->value}]</b>
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <p class="payment-errors cc" style="display:none;"></p>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <ul id="paymill_brands">
+                [{foreach key=brandsId from=$paymillBrands item=cardBrand name=paymillBrandSelect}]
+                    <li class="paymill-card-number-[{$cardBrand}]"></li>
+                [{/foreach}]
+            </ul>
+        </td>
+    </tr>
+    <tr onclick="oxid.form.select('paymentid',[{$inptcounter}]);">
+        <td colspan="3">
+            [{if $fastCheckoutCc == 'true'}]
+                <table id="paymillFastCheckoutTable" class="pm_basic_theme">
+                    <tr>
+                        <td>[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_NUMBER" }]: </td>
+                        <td id="paymillFcCardNumber" class="paymill-card-number-[{$brand}]">[{$paymillCcLastFour}]</td>
+                    </tr>
+                    <tr>
+                        <td>[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_SECURITYCODE" }]: </td>
+                        <td>[{$paymillCcCvc}]</td>
+                    </tr>
+                    <tr>
+                        <td>[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_HOLDERNAME" }]: </td>
+                        <td>[{$paymillCcCardHolder}]</td>
+                    </tr>
+                    <tr>
+                        <td>[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_VALIDUNTIL" }]: </td>
+                        <td>[{$paymillCcExpireMonth}]/[{$paymillCcExpireYear}]</td>
+                    </tr>
+                    <tr>
+                    <td></td>
+                    <td>
+                    <button id="paymillFastCheckoutIframeChange" type="button">[{ oxmultilang ident="PAGE_CHECKOUT_PAYMENT_IFRAME_CHANGE }]</button>
+                    </td>
+                    </tr>
+                </table>
+            [{/if}]
+            <div id="payment-form-cc" class="pm_basic_theme">
+            </div>
         </td>
     </tr>
 [{elseif $sPaymentID == 'paymill_elv'}]

@@ -3,8 +3,7 @@
 /**
  * paymill_order
  *
- * @author     Copyright (c) 2013 PayIntelligent GmbH (http://www.payintelligent.de)
- * @copyright  Copyright (c) 2013 Paymill GmbH (https://www.paymill.com)
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
  */
 class paymill_order extends paymill_order_parent
 {

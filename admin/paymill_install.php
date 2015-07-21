@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * paymill_install
+ *
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
+ */
 class paymill_install extends oxAdminView
 {
 
@@ -33,6 +38,7 @@ class paymill_install extends oxAdminView
             "PRIMARY KEY (`oxid`) " .
             "); "
         );
+
         oxDb::getDb()->Execute(
             "CREATE TABLE IF NOT EXISTS `paymill_logging` ( " .
             "`oxid` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL, " .

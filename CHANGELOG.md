@@ -1,4 +1,7 @@
-## 2.6.0
+## v2.7.0
+ * Integration of PayFrame to enable use of SAQ A for easier PCI DSS 3.0 compliance.
+
+## v2.6.0
  * added autocomplete="off" for input fields, browser shall not save sensitive data like credit card number and card verification value
  * changed CVV input field type from "text" to "password"
  * ui change: added support for payment long description (configurable in the OXID backend payment methods settings)
@@ -43,7 +46,7 @@
  * support specialchars in names
 
 ## v2.1.0
- *  improve payment workflow
+ * improve payment workflow
  * update readme
  * update install.sql
  * update update.sql

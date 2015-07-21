@@ -2,8 +2,7 @@
 /**
  * paymill_payment
  *
- * @author     Copyright (c) 2013 PayIntelligent GmbH (http://www.payintelligent.de)
- * @copyright  Copyright (c) 2013 Paymill GmbH (https://www.paymill.com)
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (https://www.paymill.com)
  */
 class paymill_payment extends paymill_payment_parent
 {
@@ -22,11 +21,12 @@ class paymill_payment extends paymill_payment_parent
      */
     public function render()
     {
+        $oxConfig = oxConfig::getInstance();
         // @TODO verify if fastcheckout-data should only be set if fastcheckout is active
         // @TODO see if we need the request without verifying if fastCheckoutData exists
         if ($this->getUser() && $this->_isFastCheckoutAllowed()) {
             $this->_payments = new Services_Paymill_Payments(
-                trim(oxConfig::getInstance()->getShopConfVar('PAYMILL_PRIVATEKEY')),
+                trim($oxConfig->getShopConfVar('PAYMILL_PRIVATEKEY')),
                 paymill_util::API_ENDPOINT
             );
 
@@ -60,7 +60,7 @@ class paymill_payment extends paymill_payment_parent
 
         $this->addTplParam(
             'paymillPublicKey',
-            trim(oxConfig::getInstance()->getShopConfVar('PAYMILL_PUBLICKEY'))
+            trim($oxConfig->getShopConfVar('PAYMILL_PUBLICKEY'))
         );
 
         $this->addTplParam(
@@ -69,6 +69,11 @@ class paymill_payment extends paymill_payment_parent
         );
 
         $this->_addToTplWhichCreditCardsToShow();
+
+        $this->addTplParam(
+            'paymillCompliance',
+            $oxConfig->getShopConfVar('PAYMILL_COMPLIANCE')
+        );
 
         return parent::render();
     }

@@ -1,4 +1,5 @@
 <?php
+
 $aLang = array(
     "charset" => "UTF-8",
     "PAYMILL_TITLE" => "PAYMILL",
@@ -38,7 +39,10 @@ $aLang = array(
     "SHOP_MODULE_PAYMILL_UNIONPAY" => "Unionpay",
     "SHOP_MODULE_PAYMILL_DISCOVER" => "Discover",
     "SHOP_MODULE_PAYMILL_DANKORT" => "Dankort",
-    "SHOP_MODULE_PAYMILL_PRENOTIFICATION" =>"Days until the debit",
+    "SHOP_MODULE_PAYMILL_PRENOTIFICATION" => "Days until the debit",
     "PAYMILL_PRENOTIFICATION_TEXT" => "The direct debit is drawn to the following date:",
-    "PAYMILL_DATE_FORMAT" => "Y-m-d"
+    "PAYMILL_DATE_FORMAT" => "Y-m-d",
+    "SHOP_MODULE_PAYMILL_COMPLIANCE" => "Payment form",
+    "SHOP_MODULE_PAYMILL_COMPLIANCE_0" => "embedded PayFrame (requires PCI SAQ A)",
+    "SHOP_MODULE_PAYMILL_COMPLIANCE_1" => "direct integration (requires PCI SAQ A-EP)"
 );
